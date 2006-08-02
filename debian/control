@@ -1,0 +1,13 @@
+Source: freegeek-extras
+Section: base
+Priority: optional
+Maintainer: Martin Chase <stillflame@freegeek.org>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.1
+
+Package: freegeek-extras
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libtui-ruby
+Description: Tools and customizations for freegeek users
+ Freegeek's diagnostic scripts and some extra files and
+ configuration settings.

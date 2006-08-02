@@ -1,0 +1,4 @@
+basiccheck /usr/bin/
+basicchecks.yml /usr/share/freekbox3/
+pctel-0.9.7-9-rht-6.tar.gz /opt/
+pctel-fix /etc/init.d/

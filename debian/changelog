@@ -1,0 +1,7 @@
+freegeek-extras (0.0-1) unstable; urgency=low
+
+  * Initial Release.
+  * Basiccheck and PCTel support.
+
+ -- Martin Chase <stillflame@freegeek.org>  Tue,  1 Aug 2006 18:11:39 -0700
+
