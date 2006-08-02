@@ -1,0 +1,23 @@
+#!/bin/bash
+
+sources="/opt/pctel-0.9.7-9-rht-6.tar.gz"
+pctel_configured="/var/opt/pctel-$(uname -r)-configured"
+
+echo -n "checking pctel drivers..."
+
+if [ -f $pctel_configured ]; then
+    echo -n "    all good"
+else
+    echo -n "    broken!!!  recompiling from scratch..."
+    if [ -f $sources ]; then
+	cd /opt
+	tar -xzf $sources
+	cd pctel-0.9.7-9-rht-6
+	./setup && touch $pctel_configured
+	echo -n "  done"
+    else
+	echo -n "  failed!!!  missing source"
+    fi
+fi
+
+echo "."
