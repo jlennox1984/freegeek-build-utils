@@ -1,3 +1,9 @@
+freegeek-extras (0.0-2) unstable; urgency=low
+
+  * added more dependencies
+
+ -- Martin Chase <stillflame@fgdefault>  Wed,  2 Aug 2006 19:20:15 -0700
+
 freegeek-extras (0.0-1) unstable; urgency=low
 
   * Initial Release.
