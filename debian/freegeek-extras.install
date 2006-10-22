@@ -2,4 +2,6 @@ basiccheck /usr/bin/
 basicchecks.yml /usr/share/freekbox3/
 pctel-0.9.7-9-rht-6.tar.gz /opt/
 init.d/pctel-fix /etc/init.d/
+init.d/reset-users /etc/init.d/
 rc2.d/S98pctel-fix /etc/rc2.d/
+rc4.d/S11reset-users /etc/rc4.d

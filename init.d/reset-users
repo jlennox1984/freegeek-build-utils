@@ -1,0 +1,12 @@
+#!/bin/bash
+
+OLD_DIR="/tmp/old_home"
+mkdir -p $OLD_DIR
+cd /home
+
+for i in $(echo * | grep -ve '^oem'); do
+  deluser $i
+  mv -f $i $OLD_DIR/$i
+done
+
+exec /etc/init.d/oem-config start

@@ -1,3 +1,9 @@
+freegeek-extras (0.0-5) unstable; urgency=low
+
+  * added init script for resetting the user accounts 
+
+ -- Martin Chase <stillflame@fgdefault>  Sat, 21 Oct 2006 16:50:45 -0700
+
 freegeek-extras (0.0-4) unstable; urgency=low
 
   * stupid ubuntu kernel version changes
