@@ -1,3 +1,9 @@
+freegeek-extras (0.0-7) unstable; urgency=low
+
+  * updated basiccheck
+
+ -- Martin Chase <stillflame@freegeek.org>  Tue, 20 Mar 2007 15:05:51 -0700
+
 freegeek-extras (0.0-6) unstable; urgency=low
 
   * moved in the latest pctel package and script for making packages

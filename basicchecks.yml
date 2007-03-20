@@ -3,10 +3,10 @@ tests:
     command: "#$DMESG | egrep '^hd[b-d]'"
     title: "Checking status of CD ROM:"
     explanation: |-
-      The output should contain reference to a CD ROM which should
-      show up as hdb, hdc, or hdd.  If not, it is likely cabled or
-      jumpered incorrectly.  Please note where the CD ROM is on the
-      build sheet.
+      The output should contain reference to a CD ROM and possibly a
+      DVD ROM which should each show up as one of hdb, hdc, or hdd.
+      If not, it is likely cabled or jumpered incorrectly.  Please
+      note where the CD ROM is on the build sheet.
       NOTE: The CD ROM may not show up in BIOS. This is not a
       problem.
   checkHardDrive: 
@@ -17,7 +17,7 @@ tests:
       harddrive that has been installed in this system, and each line
       should begin with 'hda'.  If this is not true, the harddrive is
       improperly jumpered.  Shut down the computer and rejumper the
-      drive.  Otherwise, make sure the size is correctly recorded in
+      drive.  Otherwise, make sure the size is correct and recorded in
       the paperwork.
   checkVideoCard: 
     command: lspci | grep VGA | grep -vi 'non-vga'
@@ -28,15 +28,16 @@ tests:
     title: "Checking IRQ configuration:"
     explanation: |-
       The left column values are IRQs, the right values are
-      devices. The onboard serial port should use IRQ 3 or 4.  It may
-      or may not show up, but nothing else should be using IRQ 3 or 4.
+      devices.  On older systems or systems with hardware (ISA)
+      modems, you should check for conflicts.  These will show up as
+      multiple, comma-separated devices on the same line.
   checkNetwork: 
     title: "Checking networking:"
     test: "system(\"ping -c 1 #$SERVER\")"
     explanation: |-
       This command tests communication over the network by requesting
       a simple message be sent back from our build server.
-    fallback_command: sudo ifup eth0
+    fallback_command: sudo /etc/init.d/networking restart
     success: Networking seems to work.
     failure: |-
       Networking is not responding.  Your network card may be broken
@@ -45,14 +46,15 @@ tests:
     command: "#$DMESG | grep ttyS | grep -v LSR"
     title: "Checking status of serial ports:"
     explanation: |-
-      Your modem may show up as a serial port, if it is a hardware
-      modem.  Your motherboard should also have at least one serial
-      port showing.  Look for potential conflicts over IRQ numbers,
-      and make sure all the devices you expect to show up are present.
+      Serial ports (the 9-pin connectors built into most motherboards)
+      and hardware modems will show up in this list.  For ISA modems,
+      look for potential conflicts over IRQ numbers, and make sure all
+      the devices you expect to show up are present.
   checkFloppyDrive: 
     title: "Checking status of floppy drive:"
     pretest: "Please insert any floppy disk with data on it."
     commands: 
+    - pmount /media/floppy
     - ls /media/floppy
     - "#$DMESG | grep fd"
     explanation: |-
@@ -104,8 +106,8 @@ tests:
       
       Make sure that this info fits within the specifications of the
       box that you are building.
-  checkParport: 
-    command: "#$DMESG | grep par"
+  checkParallel: 
+    command: "#$DMESG | grep parport"
     title: "Checking status of parallel port:"
     explanation: |-
       This command is showing information about the parallel port.
@@ -120,10 +122,9 @@ tests:
       smaller than this, your video card may not have enough memory.
       If it is larger, it is ok as long as you can read it.
   checkMemory: 
-    command: "grep 'MemTotal' /proc/meminfo | awk '{print $2}'"
+    command: "free -m | egrep '^Mem' | awk '{print $2}'"
     title: "Checking amount of memory:"
     explanation: |-
-      The value should be the number of kilobytes of memory you have
-      installed in this system.  Note that a megabyte is 1024
-      kilobytes, not 1000.
+      The value should be the number of megabytes of memory you have
+      installed in this system.
 server: chasm
