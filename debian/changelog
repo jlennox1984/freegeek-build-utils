@@ -1,3 +1,9 @@
+freegeek-extras (0.0-6) unstable; urgency=low
+
+  * moved in the latest pctel package and script for making packages
+
+ -- Martin Chase <stillflame@freegeek.org>  Tue, 20 Mar 2007 13:30:05 -0700
+
 freegeek-extras (0.0-5) unstable; urgency=low
 
   * added init script for resetting the user accounts

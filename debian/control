@@ -2,12 +2,12 @@ Source: freegeek-extras
 Section: base
 Priority: optional
 Maintainer: Martin Chase <stillflame@freegeek.org>
-Build-Depends: debhelper (>= 4.0.0)
+Build-Depends: debhelper (>= 4.0.0), cdbs
 Standards-Version: 3.6.1
 
 Package: freegeek-extras
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libtui-ruby, make, gcc, linux-headers-2.6.15-27-386, linux-kernel-headers, libc6-dev
+Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, make, gcc, linux-headers-2.6.15-27-386, linux-kernel-headers, libc6-dev
 Description: Tools and customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
  configuration settings.
