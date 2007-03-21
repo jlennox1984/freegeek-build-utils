@@ -1,3 +1,11 @@
+freegeek-extras (0.1-1) unstable; urgency=low
+
+  * moved headers dependency to be generic
+  * moved to 386 version of the pctel package
+  * pctel-fix uses tgz2deb script
+
+ -- Martin Chase <stillflame@freegeek.org>  Tue, 20 Mar 2007 18:31:52 -0700
+
 freegeek-extras (0.0-7) unstable; urgency=low
 
   * updated basiccheck

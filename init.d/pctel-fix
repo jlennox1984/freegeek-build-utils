@@ -114,19 +114,19 @@ pctel_configured="/var/opt/pctel-$(uname -r)-configured"
 
 echo -n "checking PCTel modems..."
 
-autodetection
-if [ $target = "error" ]; then
-    echo -n "       no PCTel modems found"
+if [ -f $pctel_configured ]; then
+    echo -n "    all good"
 else
-    if [ -f $pctel_configured ]; then
-	echo -n "    all good"
+    if [ $target = "error" ]; then
+	echo -n "       no PCTel modems found"
     else
 	echo -n "    broken!!!  recompiling from scratch..."
+	autodetection
 	if [ -f $sources ]; then
 	    cd /opt
-	    tar -xzf $sources
-	    cd pctel-0.9.7-9-rht-6
-	    ./setup && touch $pctel_configured
+	    ./pctel_tgz2deb $sources
+	    dpkg -i "/opt/pctel-$(uname -r)_0.9.7-9-rht-6.deb"
+	    touch $pctel_configured
 	    echo -n "  done"
 	else
 	    echo -n "  failed!!!  missing source"
