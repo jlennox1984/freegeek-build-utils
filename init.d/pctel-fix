@@ -93,15 +93,6 @@ function autodetection
             "0x13f6")
                target=cm8738
                ;; 
-            "0x8086")
-               target=i8xx
-               ;;
-            "0x1039")
-               target=sis
-               ;;
-            "0x1106")
-               target=via686a
-               ;;
             esac
          done
       fi
