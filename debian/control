@@ -7,7 +7,7 @@ Standards-Version: 3.6.1
 
 Package: freegeek-extras
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, make, gcc, libc6-dev, linux-headers-386
+Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, make, gcc, libc6-dev, linux-headers-386, freegeek-archive-keyring
 Description: Tools and customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
  configuration settings.
