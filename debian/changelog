@@ -1,3 +1,9 @@
+freegeek-extras (1.0-0) unstable; urgency=low
+
+  * move to feisty
+
+ -- Martin Chase <mchase@freegeek.org>  Sat,  7 Jul 2007 12:26:39 -0700
+
 freegeek-extras (0.1-2) unstable; urgency=low
 
   * fixed the pctel-fix init script to not look for 2.4-specific
