@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ "$1" = "purge" ]; then
+    update-rc.d pctel-fix remove > /dev/null
+    update-rc.d reset-users remove > /dev/null
+fi
+
+#DEBHELPER#

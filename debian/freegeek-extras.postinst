@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ "$1" = "configure" ]; then
+    update-rc.d pctel-fix start 98 2 . > /dev/null
+    update-rc.d reset-users start 11 4 . > /dev/null
+fi
+
+#DEBHELPER#
