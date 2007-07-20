@@ -1,5 +1,11 @@
 #!/bin/bash
 
+case "$1" in
+  start) ;;
+  stop) exit 0 ;;
+  restart) exit 0 ;;
+  force-reload) exit 0 ;;
+esac
 
 ################################################################
 # autodetection
