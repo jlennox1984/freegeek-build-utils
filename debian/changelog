@@ -1,3 +1,17 @@
+freegeek-extras (1.0.1) ubuntu; urgency=low
+
+  [Martin Chase]
+  * fixed pctel-fix
+
+  [Vagrant Cascadian]
+  * switch to native revisions
+  * add freegeek-archive-keyring to dependencies
+  * remove crufty useless comments from debian/rules
+  * removed unnecessary files from debian dir
+  * add apt repositories for freegeek packages
+
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Fri, 20 Jul 2007 10:21:45 -0700
+
 freegeek-extras (1.0-0) unstable; urgency=low
 
   * move to feisty
