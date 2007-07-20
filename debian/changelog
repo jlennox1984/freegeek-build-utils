@@ -9,8 +9,12 @@ freegeek-extras (1.0.1) ubuntu; urgency=low
   * remove crufty useless comments from debian/rules
   * removed unnecessary files from debian dir
   * add apt repositories for freegeek packages
+  * depend on debhelper 5.0.0
+  * update to standards version 3.7.2, no changes needed(we hope).
+  * updated FSF address
+  * properly handle runlevel scripts 
 
- -- Vagrant Cascadian <vagrant@freegeek.org>  Fri, 20 Jul 2007 10:21:45 -0700
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Fri, 20 Jul 2007 11:01:08 -0700
 
 freegeek-extras (1.0-0) unstable; urgency=low
 
