@@ -108,7 +108,8 @@ function autodetection
 
 source_version="0.9.7-9-rht-6"
 kernel_version="$(uname -r)"
-sources="/opt/pctel-$source_version.tar.gz"
+source_dir="/opt"
+sources="$source_dir/pctel-$source_version.tar.gz"
 pctel_configured="/var/opt/pctel-$kernel_version-configured"
 
 echo -n "checking PCTel modems..."
@@ -122,9 +123,9 @@ else
 	echo -n "    broken!!!  recompiling from scratch..."
 	autodetection
 	if [ -f ${sources} ]; then
-	    cd /opt
+	    cd $source_dir
 	    ./pctel_tgz2deb $sources
-	    dpkg -i "/opt/pctel-${kernel_version}_$source_version.deb"
+	    dpkg -i "$source_dir/pctel-${kernel_version}_$source_version.deb"
 	    touch $pctel_configured
 	    echo -n "  done"
 	else
