@@ -1,8 +1,5 @@
 basiccheck /usr/bin/
 basicchecks.yml /usr/share/freekbox3/
-pctel/pctel-0.9.7-9-rht-7.tar.gz /usr/src/
-pctel/pctel_tgz2deb /usr/src/
-pctel/pctel-2.6.15-28-386_0.9.7-9-rht-7.deb /usr/src/
 init.d/pctel-fix /etc/init.d/
 init.d/reset-users /etc/init.d/
 freekbox.list /etc/apt/sources.list.d
