@@ -1,3 +1,10 @@
+freegeek-extras (1.0.2) ubuntu; urgency=low
+
+  * split out pctel stuff into freegeek-pctel package 
+  * change freekbox3 to freekbox in basiccheck
+
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Sat, 21 Jul 2007 12:33:32 -0700
+
 freegeek-extras (1.0.1) ubuntu; urgency=low
 
   [Martin Chase]
