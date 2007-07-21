@@ -106,10 +106,11 @@ function autodetection
 }
 
 
-source_version="0.9.7-9-rht-6"
 kernel_version="$(uname -r)"
 source_dir="/usr/src"
-sources="$source_dir/pctel-$source_version.tar.gz"
+# FIXME: handle multiple pctel source tarballs
+sources="$source_dir/pctel-*.tar.gz"
+source_version="$(echo $sources 0.9.7-9-rht-7 | sed -e 's,.*pctel-,,g' -e 's,.tar.gz,,g')"
 pctel_configured="/lib/modules/$kernel_version/extra/pctel.ko"
 
 echo -n "checking PCTel modems..."
