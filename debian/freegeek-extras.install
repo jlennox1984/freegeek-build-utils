@@ -1,5 +1,5 @@
 basiccheck /usr/bin/
-basicchecks.yml /usr/share/freekbox3/
+basicchecks.yml /usr/share/freekbox/
 init.d/pctel-fix /etc/init.d/
 init.d/reset-users /etc/init.d/
 freekbox.list /etc/apt/sources.list.d

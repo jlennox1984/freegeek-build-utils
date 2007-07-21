@@ -44,12 +44,12 @@ end
 # configuration
 
 # if i'm developing, the file is in ../data/, if i'm in production,
-# the file is in /usr/share/freekbox3/, which would also be
-# ../share/freekbox3 from where this script is installed.
+# the file is in /usr/share/freekbox/, which would also be
+# ../share/freekbox from where this script is installed.
 filename = 'basicchecks.yml'
 this_dir = File.dirname( File.expand_path( __FILE__ ) )
-directory = [ "/usr/share/freekbox3",
-    "#{this_dir}/../share/freekbox3",
+directory = [ "/usr/share/freekbox",
+    "#{this_dir}/../share/freekbox",
     "#{this_dir}/../data"
 ].find {|dir|
     FileTest.exists?( File.join( dir, filename ) )
