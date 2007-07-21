@@ -106,7 +106,8 @@ function autodetection
 }
 
 
-sources="/opt/pctel-0.9.7-9-rht-6.tar.gz"
+source_version="0.9.7-9-rht-6"
+sources="/opt/pctel-$source_version.tar.gz"
 pctel_configured="/var/opt/pctel-$(uname -r)-configured"
 
 echo -n "checking PCTel modems..."
@@ -122,7 +123,7 @@ else
 	if [ -f ${sources} ]; then
 	    cd /opt
 	    ./pctel_tgz2deb $sources
-	    dpkg -i "/opt/pctel-$(uname -r)_0.9.7-9-rht-6.deb"
+	    dpkg -i "/opt/pctel-$(uname -r)_$source_version.deb"
 	    touch $pctel_configured
 	    echo -n "  done"
 	else
