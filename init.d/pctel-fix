@@ -87,7 +87,7 @@ function autodetection
          fi
       done
 
-      if test $found = "yes"; then
+      if test ${found} = "yes"; then
          eval test \"\$modem_${MODEM_VENDOR}\" = yes && continue
          eval modem_${MODEM_VENDOR}=yes      
          for i in $MODEM_VENDOR
@@ -111,15 +111,15 @@ pctel_configured="/var/opt/pctel-$(uname -r)-configured"
 
 echo -n "checking PCTel modems..."
 
-if [ -f $pctel_configured ]; then
+if [ -f ${pctel_configured} ]; then
     echo -n "    all good"
 else
-    if [ $target = "error" ]; then
+    if [ ${target} = "error" ]; then
 	echo -n "       no PCTel modems found"
     else
 	echo -n "    broken!!!  recompiling from scratch..."
 	autodetection
-	if [ -f $sources ]; then
+	if [ -f ${sources} ]; then
 	    cd /opt
 	    ./pctel_tgz2deb $sources
 	    dpkg -i "/opt/pctel-$(uname -r)_0.9.7-9-rht-6.deb"
