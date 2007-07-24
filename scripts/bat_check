@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -e ~/bat_time ]; 
+  then rm ~/bat_time;
+fi
+while true; 
+  do echo $(date) >> ~/bat_time; 
+  sleep 60s; 
+done
+
