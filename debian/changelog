@@ -1,3 +1,9 @@
+freegeek-extras (1.0.3) ubuntu; urgency=low
+
+  * added printme, 4reboots, bat_check, and magix 
+
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Tue, 24 Jul 2007 13:32:23 -0700
+
 freegeek-extras (1.0.2) ubuntu; urgency=low
 
   * split out pctel stuff into freegeek-pctel package
