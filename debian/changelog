@@ -1,3 +1,10 @@
+freegeek-extras (1.0.6) ubuntu; urgency=low
+
+  * run autodetection function earlier to set target
+  * pctel-fix: use 4 spaces instead of tabs
+
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Fri, 27 Jul 2007 13:21:33 -0700
+
 freegeek-extras (1.0.5) ubuntu; urgency=low
 
   * strip the executable bit from cruft in /usr/local
