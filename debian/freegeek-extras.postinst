@@ -5,4 +5,15 @@ if [ "$1" = "configure" ]; then
     update-rc.d reset-users start 11 4 . > /dev/null
 fi
 
+# strip the executable bit from old unpackaged cruft in /usr/local/
+for f in basiccheck bat_check printme 4reboots magix ; do
+    for d in bin sbin ; do
+        script="/usr/local/$d/$f"
+        if [ -x "$script" ]; then
+            echo "WARNING: disabling obsolete script: $script"
+            chmod -x "$script"
+        fi
+    done
+done
+
 #DEBHELPER#
