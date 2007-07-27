@@ -124,11 +124,11 @@ echo -n "checking PCTel modems..."
 if [ "true" = "$pctel_configured" ]; then
     echo -n "    all good"
 else
+    autodetection
     if [ ${target} = "error" ]; then
 	echo -n "       no PCTel modems found"
     else
 	echo -n "    broken!!!  recompiling from scratch..."
-	autodetection
 	if [ -f ${sources} ]; then
 	    cd $source_dir
 	    ./pctel_tgz2deb $sources
