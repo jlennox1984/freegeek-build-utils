@@ -1,3 +1,10 @@
+freegeek-extras (1.0.5) ubuntu; urgency=low
+
+  * strip the executable bit from cruft in /usr/local
+  * fix check if pctel is configured with the appropriate versions
+
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Fri, 27 Jul 2007 12:49:02 -0700
+
 freegeek-extras (1.0.4) ubuntu; urgency=low
 
   * improved version handling for pctel-fix init script
