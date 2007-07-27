@@ -114,12 +114,14 @@ source_version="$(echo $sources | sed -e 's,.*pctel-,,g' -e 's,.tar.gz,,g')"
 pctel_version="$(dpkg -l pctel-$kernel_version | awk '/^ii/{print $3}')"
 
 if [ "$source_version" = "$pctel_version" ]; then
-    pctel_configured="/lib/modules/$kernel_version/extra/pctel.ko"
+    if [ -f "/lib/modules/$kernel_version/extra/pctel.ko" ]; then
+        pctel_configured=true
+    fi
 fi
 
 echo -n "checking PCTel modems..."
 
-if [ -f ${pctel_configured} ]; then
+if [ "true" = "$pctel_configured" ]; then
     echo -n "    all good"
 else
     if [ ${target} = "error" ]; then
