@@ -111,7 +111,11 @@ source_dir="/usr/src"
 # FIXME: handle multiple pctel source tarballs
 sources="$source_dir/pctel-*.tar.gz"
 source_version="$(echo $sources | sed -e 's,.*pctel-,,g' -e 's,.tar.gz,,g')"
-pctel_configured="/lib/modules/$kernel_version/extra/pctel.ko"
+pctel_version="$(dpkg -l pctel-$kernel_version | awk '/^ii/{print $3}')"
+
+if [ "$source_version" = "$pctel_version" ]; then
+    pctel_configured="/lib/modules/$kernel_version/extra/pctel.ko"
+fi
 
 echo -n "checking PCTel modems..."
 
