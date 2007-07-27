@@ -126,17 +126,17 @@ if [ "true" = "$pctel_configured" ]; then
 else
     autodetection
     if [ ${target} = "error" ]; then
-	echo -n "       no PCTel modems found"
+        echo -n "       no PCTel modems found"
     else
-	echo -n "    broken!!!  recompiling from scratch..."
-	if [ -f ${sources} ]; then
-	    cd $source_dir
-	    ./pctel_tgz2deb $sources
-	    dpkg -i "$source_dir/pctel-${kernel_version}_$source_version.deb"
-	    echo -n "  done"
-	else
-	    echo -n "  failed!!!  missing source"
-	fi
+        echo -n "    broken!!!  recompiling from scratch..."
+        if [ -f ${sources} ]; then
+            cd $source_dir
+            ./pctel_tgz2deb $sources
+            dpkg -i "$source_dir/pctel-${kernel_version}_$source_version.deb"
+            echo -n "  done"
+        else
+            echo -n "  failed!!!  missing source"
+        fi
     fi
 fi
 echo "."
