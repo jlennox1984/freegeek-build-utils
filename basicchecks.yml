@@ -22,7 +22,7 @@ tests:
   checkVideoCard: 
     command: lspci | grep VGA | grep -vi 'non-vga'
     title: "Checking for video card:"
-    explanation: Note the model name on the build sheet.
+    explanation: Note the manufacturer name on the build sheet.
   checkIrq: 
     command: cat /proc/interrupts
     title: "Checking IRQ configuration:"
@@ -127,4 +127,4 @@ tests:
     explanation: |-
       The value should be the number of megabytes of memory you have
       installed in this system.
-server: chasm
+server: proxy
