@@ -1,37 +1,76 @@
-#!/bin/sh
+#!/usr/bin/ruby
 
+require 'xml/libxml'
+require 'rubytui'
+include RubyTUI
 
-#Copyright: Free Geek (2005)
-#	    dave, matteo, and the distro group
-#License: GPL v2 or any later version
-#	  On Debian GNU/Linux systems, the complete text of the GNU General
-#	  Public License (GPL) can be found below /usr/share/common-licenses/
-#	  or check it out at http://www.gnu.org/licenses/gpl.html
+builder = prompt('Who built the box?')
 
-reset
+qcer = prompt('Who is QCing the box?')
 
-echo ""
-echo "Enter your name:"
-read QC_NAME
-echo ""
-echo "Enter the builder's name:"
-read BUILDER_NAME
-echo ""
-echo ""
-echo "Hey $QC_NAME, make sure that the printer cable is plugged in"
-echo "to your computer's parallel port, and press <enter> to print"
-read pause
+message('Please ensure the printer is connected and press enter')
 
-PROC_TYPE=$(cat /proc/cpuinfo | grep "model name")
-PROC_SPEED=$(cat /proc/cpuinfo | grep "cpu MHz")
-MEM_SIZE=$(cat /proc/meminfo | grep MemTotal)
+waitasec
 
-date +"%A %D" > /tmp/printfile
-echo "This computer was built by $BUILDER_NAME and" >> /tmp/printfile
-echo " doublechecked for quality by $QC_NAME" >> /tmp/printfile
-echo "" >> /tmp/printfile
-echo "      $PROC_TYPE" >> /tmp/printfile
-echo "      $PROC_SPEED" >> /tmp/printfile
-echo "      $MEM_SIZE" >> /tmp/printfile
-#lpr /tmp/printfile #hope it's ok to use enscript instead.
-enscript --header="this freekbox can print!" /tmp/printfile
+filename = '/tmp/lshw.xml'
+
+`lshw -xml>#{filename}`
+
+doc = XML::Document.file(filename)
+
+def to_megabytes(num)
+    num.to_i / 1024 / 1024
+end
+
+def format_megabytes(num)
+    '%d megabytes' % to_megabytes(num)
+end
+
+classes = {
+    'processor'=> nil,
+    'communication'=> nil, 
+    'network'=> {'product' => '%s', 'vendor' => '%s'},
+    'memory'=> {'size' => method('format_megabytes')},
+    'display'=> {'product' => '%s', 'vendor' => '%s', 'size' => method('format_megabytes')}, 
+    'multimedia'=> nil, 
+    'disk' => {'vendor' => '%s','capacity' => method('format_megabytes')}
+}
+
+ordered = %w[processor disk memory network display multimedia communication]
+
+printable = <<EOF
+Built by: %s
+QCed by: %s
+
+EOF
+
+printable %= [builder, qcer]
+
+ordered.each {|c|
+    if c == 'memory'
+        xpath = 'descendant::*[attribute::id="%s"]' % c
+    else
+        xpath = 'descendant::*[attribute::class="%s"]' % c
+    end
+    subnodes = classes[c] || {'product' => '%s'}
+    nodes = doc.root.find(xpath)
+    printable += "#{c}: \n    " 
+    printable += nodes.map {|n|
+        subnodes.map {|sub,format|
+            n.find('child::%s' % sub).map {|prod| 
+                if format.respond_to?('call')
+                    format.call(prod.content)
+                else
+                    format % prod.content
+                end
+            }.join("\n    ")
+        }.join("\n    ")
+    }.join("\n\n    ")
+    printable += "\n\n"
+}
+
+f = open('|lpr','w')
+f.write(printable)
+f.close()
+
+message 'go pick up your paper'
