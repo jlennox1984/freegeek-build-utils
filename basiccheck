@@ -50,7 +50,8 @@ filename = 'basicchecks.yml'
 this_dir = File.dirname( File.expand_path( __FILE__ ) )
 directory = [ "/usr/share/freekbox",
     "#{this_dir}/../share/freekbox",
-    "#{this_dir}/../data"
+    "#{this_dir}/../data",
+    "#{this_dir}"
 ].find {|dir|
     FileTest.exists?( File.join( dir, filename ) )
 } or
@@ -181,13 +182,17 @@ def doTest( test )
     end
     
     if instructions.has_key?('test')
-        rubytest = eval( %Q/%Q,#{instructions['test']},/ )
+        rubytest = instructions['test']
         echo "The following is ruby code:\n\n"
         display rubytest + "\n\n"
         message instructions['explanation'] + "\n\n"
         retval = eval( rubytest )
         
-        if( ! retval and instructions.has_key?('fallback_command') )
+        if retval
+            display "Test succeeded.\n\n"
+            message instructions['success'] + "\n\n"
+            answer = "yes"
+        elsif instructions.has_key?('fallback_command')
             command = eval( %Q/%Q,#{instructions['fallback_command']},/ )
             highlight "Test failed.\n\n"
             message "Trying fallback command:\n\n"
@@ -195,12 +200,6 @@ def doTest( test )
             message "With output of:\n\n"
             display `#{command}`
             retval = eval( rubytest )
-        end
-        
-        if retval
-            display "Test succeeded.\n\n"
-            message instructions['success'] + "\n\n"
-            answer = "yes"
         else
             highlight "Test failed.\n\n"
             message instructions['failure'] + "\n\n"

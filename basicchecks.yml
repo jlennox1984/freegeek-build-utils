@@ -10,27 +10,45 @@ tests:
       NOTE: The CD ROM may not show up in BIOS. This is not a
       problem.
   checkHardDrive: 
-    command: "#$DMESG | egrep '^hda'"
+    command: "#$DMESG | egrep '^[hs]da'"
     title: "Checking status of hard drive:"
     explanation: |-
       This command is showing information corresponding to the
       harddrive that has been installed in this system, and each line
-      should begin with 'hda'.  If this is not true, the harddrive is
-      improperly jumpered.  Shut down the computer and rejumper the
-      drive.  Otherwise, make sure the size is correct and recorded in
-      the paperwork.
-  checkVideoCard: 
-    command: lspci | grep VGA | grep -vi 'non-vga'
-    title: "Checking for video card:"
-    explanation: Note the manufacturer name on the build sheet.
-  checkIrq: 
-    command: cat /proc/interrupts
-    title: "Checking IRQ configuration:"
+      should begin with 'hda' or 'sda'.  If this is not true, the
+      harddrive is improperly jumpered.  Shut down the computer and
+      rejumper the drive.  Otherwise, make sure the size is correct
+      and recorded in the paperwork.
+  checkInstallerChoices:
+    title: "Checking the installer choices"
+    pretest: |-
+      This test will look through the installation choices that were
+      made and verify that they are correct.  You may be required to
+      type in the sudo password.
+    test: |-
+      selections = `sudo debconf-get-selections --installer`
+      {
+        'mirror/http/hostname' => 'us.archive.ubuntu.com',
+        'languagechooser/language-name' => 'English',
+        'countrychooser/country-name' => 'United States',
+        'netcfg/get_hostname' => 'freekbox'
+      }.map {|key,val|
+        md = selections.match(/^d-i\s+#{key}\s+\S+\s+(.+)$/)
+        md and (md[1] == val)
+      }.inject(true) {|total, this|
+        total && this
+      }
     explanation: |-
-      The left column values are IRQs, the right values are
-      devices.  On older systems or systems with hardware (ISA)
-      modems, you should check for conflicts.  These will show up as
-      multiple, comma-separated devices on the same line.
+      This code has looked through the installer choices made during
+      the installation of the operating system and tries to verify
+      that they are correct.  To look at these by hand, use:
+        sudo debconf-get-selections --installer | less
+      or better (e.g.):
+        sudo debconf-get-selections --installer | grep mirror/http/hostname
+    success: "All the settings are correct."
+    failure: |-
+      Some setting is incorrect.  Please ask your build instructor to
+      look for a way to fix this.
   checkNetwork: 
     title: "Checking networking:"
     test: "system(\"ping -c 1 #$SERVER\")"
@@ -57,16 +75,17 @@ tests:
     - pmount /media/floppy
     - ls /media/floppy
     - "#$DMESG | grep fd"
+    - pumount /media/floppy
     explanation: |-
       Floppy disk activity should generate some messages above.  If no
-      messages show up, the floppy drive is not working.  You can
-      remove the floppy disk now.
+      messages show up, or i errors are listed, the floppy drive is not
+      working.  You can remove the floppy disk now.
   checkSound: 
     command: aplay /usr/share/sounds/login.wav
     title: "Checking sound:"
     pretest: |-
       A sound is about to play.  Please make sure the speakers are
-      plugged in and on.
+      plugged in and on, with the volume set to ~50%.
     explanation: |-
       A sound should have played just now at an audible level without
       distortion.
@@ -79,8 +98,7 @@ tests:
       hardware.
       
       If the sound was too quiet, try using the 'alsamixer' command to
-      adjust the volume levels, and make sure the speakers are powered
-      and turned up.
+      adjust the volume levels, setting "Master" and "PCM" to ~90 each.
       
       If the sound is distorted, turn down the volume in both
       'alsamixer' and on the speakers, or decide that the speakers are
@@ -96,18 +114,22 @@ tests:
       cpu MHz should match what was written on the label on the case.
       If it does not you must stop and figure out why.
       
+      For various AMD chips, the model name will differ from the
+      MHz.  The model number (e.g. "1800+") will be the rating off of
+      which you should determine the system's inclusion into a given
+      spec, and should therefore also be the number written on the
+      case tag.  Ask somebody what this means if these instructions
+      are not clear.
+      
+      Make sure that this info fits within the specifications of the
+      box that you are building.
+      
       It is important that the bogomips rating is close to twice the
       cpu MHz rating, so we are sure that the cpu is not slow.  If the
       bogomips rating is low, call over your friendly build
       instructor.
-      
-      For Pentium I and K-6 and K-62 chips, cpu family should be 5.
-      For Pentium II, cpu family should be 6
-      
-      Make sure that this info fits within the specifications of the
-      box that you are building.
   checkParallel: 
-    command: "#$DMESG | grep parport"
+    command: "#$DMESG | egrep '^parport'"
     title: "Checking status of parallel port:"
     explanation: |-
       This command is showing information about the parallel port.
@@ -119,8 +141,13 @@ tests:
     explanation: |-
       This is the number of pixels displayed on the screen.  For
       usability purposes, this should be set to 1024x768.  If it is
-      smaller than this, your video card may not have enough memory.
-      If it is larger, it is ok as long as you can read it.
+      smaller than this, your video display is probably
+      misconfigured. Read through the instructions at:
+      http://wiki.freegeek.org/index.php/Build_tips
+      under the "Video" section to fix this.
+      
+      If the resolution is larger, it is ok as long as you can read
+      it.
   checkMemory: 
     command: "free -m | egrep '^Mem' | awk '{print $2}'"
     title: "Checking amount of memory:"
