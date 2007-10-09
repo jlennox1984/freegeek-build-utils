@@ -1,4 +1,4 @@
-freegeek-extras (1.0.7) UNRELEASED; urgency=low
+freegeek-extras (1.0.7) ubuntu; urgency=low
 
   [ Vagrant and Martin ]
   * modified printme to have more useful information
@@ -8,7 +8,7 @@ freegeek-extras (1.0.7) UNRELEASED; urgency=low
   * added basiccheck of installer choices
   * cleaned out some unused basicchecks
 
- -- Martin Chase <mchase@freegeek.org>  Tue,  9 Oct 2007 16:23:06 -0700
+ -- Martin Chase <mchase@freegeek.org>  Tue,  9 Oct 2007 16:31:20 -0700
 
 freegeek-extras (1.0.6) ubuntu; urgency=low
 
