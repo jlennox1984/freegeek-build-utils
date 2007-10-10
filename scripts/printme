@@ -70,8 +70,8 @@ ordered.each {|c|
     printable += "\n\n"
 }
 
-puts printable
-exit
+#puts printable
+#exit
 
 f = open('|lpr','w')
 f.write(printable)

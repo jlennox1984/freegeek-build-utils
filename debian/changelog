@@ -1,3 +1,9 @@
+freegeek-extras (1.0.10) ubuntu; urgency=low
+
+  * removed my stupid debugging i had left in
+
+ -- Martin Chase <mchase@freegeek.org>  Tue,  9 Oct 2007 19:08:22 -0700
+
 freegeek-extras (1.0.9) ubuntu; urgency=low
 
   * more fixes to printme for working with dapper libxml-ruby
