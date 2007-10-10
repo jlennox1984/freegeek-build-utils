@@ -1,3 +1,9 @@
+freegeek-extras (1.0.9) ubuntu; urgency=low
+
+  * more fixes to printme for working with dapper libxml-ruby
+
+ -- Martin Chase <mchase@freegeek.org>  Tue,  9 Oct 2007 19:03:02 -0700
+
 freegeek-extras (1.0.8) ubuntu; urgency=low
 
   * fixed printme to work with the dapper version of libxml-ruby

@@ -5,11 +5,8 @@ require 'rubytui'
 include RubyTUI
 
 builder = prompt('Who built the box?')
-
 qcer = prompt('Who is QCing the box?')
-
 message('Please ensure the printer is connected and press enter')
-
 waitasec
 
 filename = '/tmp/lshw.xml'
@@ -59,16 +56,22 @@ ordered.each {|c|
     printable += nodes.map {|n|
         subnodes.map {|sub,format|
             n.find('child::%s' % sub).map {|prod| 
+                if prod.content and ! prod.content.empty?
+                    prod = prod.content
+                end
                 if format.respond_to?('call')
-                    format.call(prod.content)
+                    format.call(prod.to_s)
                 else
-                    format % prod.content
+                    format % prod.to_s
                 end
             }.join("\n    ")
         }.join("\n    ")
     }.join("\n\n    ")
     printable += "\n\n"
 }
+
+puts printable
+exit
 
 f = open('|lpr','w')
 f.write(printable)
