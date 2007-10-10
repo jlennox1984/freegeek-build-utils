@@ -54,6 +54,7 @@ ordered.each {|c|
     end
     subnodes = classes[c] || {'product' => '%s'}
     nodes = doc.root.find(xpath)
+    nodes.class.class_eval {include Enumerable}
     printable += "#{c}: \n    " 
     printable += nodes.map {|n|
         subnodes.map {|sub,format|
