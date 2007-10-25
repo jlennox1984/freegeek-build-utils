@@ -8,7 +8,8 @@ Standards-Version: 3.7.2
 
 Package: freegeek-extras
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, freegeek-archive-keyring, freegeek-pctel, python, libxml-ruby, lshw, debconf-utils
+Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, freegeek-archive-keyring, python, libxml-ruby, lshw, debconf-utils
+Recommends: freegeek-pctel
 Description: Tools and customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
  configuration settings.
