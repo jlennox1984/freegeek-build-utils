@@ -11,7 +11,7 @@ waitasec
 
 filename = '/tmp/lshw.xml'
 
-`lshw -xml>#{filename}`
+`sudo lshw -xml>#{filename}`
 
 doc = XML::Document.file(filename)
 
