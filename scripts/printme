@@ -15,16 +15,21 @@ filename = '/tmp/lshw.xml'
 
 doc = XML::Document.file(filename)
 
-def to_megabytes(num)
+def to_mega(num)
     num.to_i / 1024 / 1024
 end
 
 def format_megabytes(num)
-    '%d megabytes' % to_megabytes(num)
+    '%d megabytes' % to_mega(num)
+end
+
+def format_megahertz(num)
+    '%d megahertz' % to_mega(num)
 end
 
 classes = {
-    'processor'=> nil,
+    # TODO: figure out if processor is using speed-stepping
+    'processor'=> {'product' => '%s', 'size' => method('format_megahertz')},
     'communication'=> nil, 
     'network'=> {'product' => '%s', 'vendor' => '%s'},
     'memory'=> {'size' => method('format_megabytes')},
