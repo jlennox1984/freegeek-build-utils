@@ -6,7 +6,9 @@ freegeek-extras (1.0.11) UNRELEASED; urgency=low
 
   * depend on debconf-utils (used by basiccheck)
 
- -- Vagrant Cascadian <vagrant@freegeek.org>  Thu, 25 Oct 2007 14:16:41 -0700
+  * low dependency on freegeek-pctel to a recommends 
+
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Thu, 25 Oct 2007 14:21:43 -0700
 
 freegeek-extras (1.0.10) ubuntu; urgency=low
 
