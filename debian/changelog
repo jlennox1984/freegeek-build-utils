@@ -1,14 +1,18 @@
-freegeek-extras (1.0.11) UNRELEASED; urgency=low
+freegeek-extras (1.1.0) ubuntu; urgency=low
 
+  [ Martin Chase ]
   * printme:
     - always display processor speed
     - call lshw with sudo
+  * added violent grub menu alteration
+  * added violent cup configuration
+  * removed pctel-fix from run-level 2
 
+  [ Vagrant ]
   * depend on debconf-utils (used by basiccheck)
-
   * low dependency on freegeek-pctel to a recommends 
 
- -- Vagrant Cascadian <vagrant@freegeek.org>  Thu, 25 Oct 2007 14:21:43 -0700
+ -- Martin Chase <mchase@freegeek.org>  Tue,  4 Dec 2007 18:52:40 -0800
 
 freegeek-extras (1.0.10) ubuntu; urgency=low
 
