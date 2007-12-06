@@ -3,7 +3,6 @@ basicchecks.yml /usr/share/freekbox/
 LaserJet-4.ppd /etc/cups/ppd/
 printers.conf /usr/share/freekbox/
 init.d/pctel-fix /etc/init.d/
-init.d/reset-users /etc/init.d/
 freekbox.list /etc/apt/sources.list.d
 scripts/bat_check /usr/bin
 scripts/printme /usr/bin

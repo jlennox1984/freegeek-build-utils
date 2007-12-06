@@ -1,24 +1,10 @@
 #!/bin/sh
 
-# violation of some debian policy, i'm sure
-BROKEN_GRUB="### freegeek-extras violently added the next menu entry"
-MENU=/boot/grub/menu.lst
-if ! grep --quiet "${BROKEN_GRUB}" $MENU; then
-    echo "${BROKEN_GRUB}" >> $MENU
-    echo 'title           Reset users for first boot' >> $MENU
-    echo 'root            (hd0,0)' >> $MENU
-    echo "$(egrep '^kernel' $MENU | head -n 1) 4" >> $MENU
-    echo "$(egrep '^initrd' $MENU | head -n 1)" >> $MENU
-    echo 'boot' >> $MENU
-fi
-
-#violation of some other debian policy, i'm certain
-#:TODO: find out what file ownership this and the ppd file need to be
-cat /usr/share/freekbox/printers.conf >> /etc/cups/printers.conf
 
 if [ "$1" = "configure" ]; then
-    #update-rc.d pctel-fix start 98 2 . > /dev/null
-    update-rc.d reset-users start 11 4 . > /dev/null
+    #violation of some debian policy, i'm sure
+    #:TODO: find out what file ownership this and the ppd file need to be
+    cat /usr/share/freekbox/printers.conf >> /etc/cups/printers.conf
 fi
 
 # strip the executable bit from old unpackaged cruft in /usr/local/
