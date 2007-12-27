@@ -1,85 +1,128 @@
 #!/usr/bin/ruby
 
-require 'xml/libxml'
+require 'net/http'
+require 'cgi'
+require 'uri'
 require 'rubytui'
 include RubyTUI
 
-builder = prompt('Who built the box?')
-qcer = prompt('Who is QCing the box?')
+module Multipart
+  # From: http://kfahlgren.com/code/multipart.rb
+  class Param
+    attr_accessor :k, :v
+    def initialize( k, v )
+      @k = k
+      @v = v
+    end
+
+    def to_multipart
+      #return "Content-Disposition: form-data; name=\"#{CGI::escape(k)}\"\r\n\r\n#{v}\r\n"
+      # Don't escape mine...
+      return "Content-Disposition: form-data; name=\"#{CGI::escape k}\"\r\n\r\n#{v}\r\n"
+    end
+  end
+  class FileParam
+    attr_accessor :k, :filename, :content
+    def initialize( k, filename, content )
+      @k = k
+      @filename = filename
+      @content = content
+    end
+
+    def to_multipart
+      # Don't escape mine
+      return "Content-Disposition: form-data; name=\"#{k}\"; filename=\"#{filename}\"\r\n" + "Content-Transfer-Encoding: binary\r\n" + "Content-Type: application/xml\r\n\r\n" + content + "\r\n"
+    end
+  end
+  class MultipartPost
+    BOUNDARY = 'tarsiers-rule0000'
+    HEADER = {"Content-type" => "multipart/form-data, boundary=" + BOUNDARY + " "}
+
+    def prepare_query (params)
+      fp = []
+      params.each {|k,v|
+        if v.respond_to?(:read)
+          fp.push(FileParam.new(k, v.path, v.read))
+        else
+          fp.push(Param.new(k,v))
+        end
+      }
+      query = fp.collect {|p| "--" + BOUNDARY + "\r\n" + p.to_multipart }.join("") + "--" + BOUNDARY + "--"
+      return query, HEADER
+    end
+  end  
+end
+
+TIMEOUT_SECONDS = 30
+def post_form(url, query, headers)
+  Net::HTTP.start(url.host, url.port) { |con|
+    con.read_timeout = TIMEOUT_SECONDS
+    begin
+      return con.post(url.path, query, headers)
+    rescue => e
+      puts "POSTING Failed #{ e}... #{Time.now}"
+    end
+  }
+end
+
+jobs = {
+  "Build" => 1,
+  "Quality Control" => 2,
+  "Tech Support" => 3,
+  "Instructor" => 4,
+#  "Special" => 5
+}
+types = {
+  "Low End" => 1,
+  "Freekbox" => 2,
+  "Grantbox" => 3,
+  "Laptop" => 4,
+  "High End" => 5,
+  "Infrastructure" => 6,
+  "Server" => 7,
+  "Apple" => 8,
+  "Special" => 9
+}
+
+
+job = menuWithDefault('Work Tasks', 'Which job did you perform?', "Quality Control", *jobs.keys)
+type = menuWithDefault('System Type', 'What kind of system is this intended to be?', 'Low End', *types.keys)
+uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
+old_id = prompt('If the system had an id on it already, enter that here',
+                'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
+notes = prompt('What, if anything, is notable about this system?')
 message('Please ensure the printer is connected and press enter')
 waitasec
 
-filename = '/tmp/lshw.xml'
+lshwname = '/tmp/lshw.xml'
 
-`sudo lshw -xml>#{filename}`
+`sudo lshw -xml>#{lshwname}`
 
-doc = XML::Document.file(filename)
+lshw = File.open(lshwname, "rb")
 
-def to_mega(num)
-    num.to_i / 1024 / 1024
-end
-
-def format_megabytes(num)
-    '%d megabytes' % to_mega(num)
-end
-
-def format_megahertz(num)
-    '%d megahertz' % to_mega(num)
-end
-
-classes = {
-    # TODO: figure out if processor is using speed-stepping
-    'processor'=> {'product' => '%s', 'size' => method('format_megahertz')},
-    'communication'=> nil, 
-    'network'=> {'product' => '%s', 'vendor' => '%s'},
-    'memory'=> {'size' => method('format_megabytes')},
-    'display'=> {'product' => '%s', 'vendor' => '%s', 'size' => method('format_megabytes')}, 
-    'multimedia'=> nil, 
-    'disk' => {'vendor' => '%s','capacity' => method('format_megabytes')}
+data = {
+  "technician" => uid,
+  "job" => jobs[job],
+  "system_type" => types[type],
+  "old_id" => old_id,
+  "notes" => notes,
+  "xmlfile" => lshw
 }
+url = 'http://bullwinkle.fglan/fgss/fgss.php'
+uri = URI.parse(url)
 
-ordered = %w[processor disk memory network display multimedia communication]
+mp = Multipart::MultipartPost.new
+query, headers = mp.prepare_query(data)
+lshw.close
 
-printable = <<EOF
-Built by: %s
-QCed by: %s
+response = post_form(uri, query, headers)
+printme = '/tmp/printthis.html'
 
-EOF
-
-printable %= [builder, qcer]
-
-ordered.each {|c|
-    if c == 'memory'
-        xpath = 'descendant::*[attribute::id="%s"]' % c
-    else
-        xpath = 'descendant::*[attribute::class="%s"]' % c
-    end
-    subnodes = classes[c] || {'product' => '%s'}
-    nodes = doc.root.find(xpath)
-    nodes.class.class_eval {include Enumerable}
-    printable += "#{c}: \n    " 
-    printable += nodes.map {|n|
-        subnodes.map {|sub,format|
-            n.find('child::%s' % sub).map {|prod| 
-                if prod.content and ! prod.content.empty?
-                    prod = prod.content
-                end
-                if format.respond_to?('call')
-                    format.call(prod.to_s)
-                else
-                    format % prod.to_s
-                end
-            }.join("\n    ")
-        }.join("\n    ")
-    }.join("\n\n    ")
-    printable += "\n\n"
-}
-
-#puts printable
-#exit
-
-f = open('|lpr','w')
-f.write(printable)
+#f = open('|html2ps |lpr','w') #:MC: no css styling...
+f = open(printme,'w')
+f.write(response.body)
 f.close()
 
-message 'go pick up your paper'
+echo 'print the web browser window/tab that opens...'
+system("firefox file://#{printme}")
+echo 'go pick up your paper'

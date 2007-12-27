@@ -1,10 +1,10 @@
 tests: 
   checkCdromDrive: 
-    command: "#$DMESG | egrep '^hd[b-d]'"
+    command: "#$DMESG | egrep '^hd[b-d]|^scd[0-9]|^sg[0-9]'"
     title: "Checking status of CD ROM:"
     explanation: |-
       The output should contain reference to a CD ROM and possibly a
-      DVD ROM which should each show up as one of hdb, hdc, or hdd.
+      DVD ROM which should each show up as one of hd?, scd? or sg?.
       If not, it is likely cabled or jumpered incorrectly.  Please
       note where the CD ROM is on the build sheet.
       NOTE: The CD ROM may not show up in BIOS. This is not a
@@ -16,9 +16,9 @@ tests:
       This command is showing information corresponding to the
       harddrive that has been installed in this system, and each line
       should begin with 'hda' or 'sda'.  If this is not true, the
-      harddrive is improperly jumpered.  Shut down the computer and
-      rejumper the drive.  Otherwise, make sure the size is correct
-      and recorded in the paperwork.
+      harddrive is improperly jumpered or installed.  Shut down the
+      computer and rejumper the drive.  Otherwise, make sure the size
+      is correct and recorded in the paperwork.
   checkInstallerChoices:
     title: "Checking the installer choices"
     pretest: |-
@@ -29,14 +29,13 @@ tests:
       selections = `sudo debconf-get-selections --installer`
       {
         'mirror/http/hostname' => 'us.archive.ubuntu.com',
-        'languagechooser/language-name' => 'English',
         'countrychooser/country-name' => 'United States',
         'netcfg/get_hostname' => 'freekbox'
       }.map {|key,val|
-        md = selections.match(/^d-i\s+#{key}\s+\S+\s+(.+)$/)
+        md = selections.match(/d-i\s+#{key}\s+\S+\s+(.+)$/)
         md and (md[1] == val)
-      }.inject(true) {|total, this|
-        total && this
+      }.inject(true) {|so_far, this|
+        so_far && this
       }
     explanation: |-
       This code has looked through the installer choices made during
@@ -111,10 +110,11 @@ tests:
     - grep 'cpu MHz' /proc/cpuinfo
     - grep 'bogomips' /proc/cpuinfo
     explanation: |-
-      cpu MHz should match what was written on the label on the case.
-      If it does not you must stop and figure out why.
+      cpu MHz or model number* should match what was written on the
+      label on the case. If it does not you must stop and figure out
+      why.
       
-      For various AMD chips, the model name will differ from the
+      * For various AMD chips, the model name will differ from the
       MHz.  The model number (e.g. "1800+") will be the rating off of
       which you should determine the system's inclusion into a given
       spec, and should therefore also be the number written on the
@@ -124,9 +124,9 @@ tests:
       Make sure that this info fits within the specifications of the
       box that you are building.
       
-      It is important that the bogomips rating is close to twice the
-      cpu MHz rating, so we are sure that the cpu is not slow.  If the
-      bogomips rating is low, call over your friendly build
+      It is expected that the bogomips rating is close to twice the
+      cpu MHz rating, so we are sure that the cpu is not damaged.  If
+      the bogomips rating is low, call over your friendly build
       instructor.
   checkParallel: 
     command: "#$DMESG | egrep '^parport'"

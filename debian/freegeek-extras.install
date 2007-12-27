@@ -5,5 +5,4 @@ printers.conf /usr/share/freekbox/
 freekbox.list /etc/apt/sources.list.d
 scripts/bat_check /usr/bin
 scripts/printme /usr/bin
-scripts/4reboots /usr/sbin
 scripts/magix /usr/sbin

@@ -1,3 +1,18 @@
+freegeek-extras (1.1.3) ubuntu; urgency=low
+
+  * basicchecks now closer to gutsy-compatible
+  * printme now uses fgss
+  * depend on stress for stress testing in QC
+  * removed 4reboots
+
+ -- Martin Chase <mchase@freegeek.org>  Wed, 26 Dec 2007 17:06:49 -0800
+
+freegeek-extras (1.1.2) ubuntu; urgency=low
+
+  * check before making a double entry in printers.conf
+
+ -- Martin Chase <mchase@freegeek.org>  Sat, 15 Dec 2007 11:42:25 -0800
+
 freegeek-extras (1.1.1) ubuntu; urgency=low
 
   * removed reset users and other cruft

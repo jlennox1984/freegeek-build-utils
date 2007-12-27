@@ -4,7 +4,10 @@
 if [ "$1" = "configure" ]; then
     #violation of some debian policy, i'm sure
     #:TODO: find out what file ownership this and the ppd file need to be
-    cat /usr/share/freekbox/printers.conf >> /etc/cups/printers.conf
+    grep -q LaserJet-4 /etc/cups/printers.conf || cat /usr/share/freekbox/printers.conf >> /etc/cups/printers.conf
+
+    #policy for this?  HA!
+    [ -f /etc/X11/xorg.conf ] && mv -f /etc/X11/xorg.conf /var/backups/
 fi
 
 # strip the executable bit from old unpackaged cruft in /usr/local/
