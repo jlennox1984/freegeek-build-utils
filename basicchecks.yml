@@ -1,6 +1,6 @@
 tests: 
   checkCdromDrive: 
-    command: "#$DMESG | egrep '^hd[b-d]|^scd[0-9]|^sg[0-9]'"
+    command: "#$DMESG | egrep '^hd[b-d]|(scd|sg)[0-9]'"
     title: "Checking status of CD ROM:"
     explanation: |-
       The output should contain reference to a CD ROM and possibly a
@@ -10,7 +10,7 @@ tests:
       NOTE: The CD ROM may not show up in BIOS. This is not a
       problem.
   checkHardDrive: 
-    command: "#$DMESG | egrep '^[hs]da'"
+    command: "#$DMESG | egrep '[hs]da'"
     title: "Checking status of hard drive:"
     explanation: |-
       This command is showing information corresponding to the
@@ -19,35 +19,17 @@ tests:
       harddrive is improperly jumpered or installed.  Shut down the
       computer and rejumper the drive.  Otherwise, make sure the size
       is correct and recorded in the paperwork.
-  checkInstallerChoices:
-    title: "Checking the installer choices"
-    pretest: |-
-      This test will look through the installation choices that were
-      made and verify that they are correct.  You may be required to
-      type in the sudo password.
-    test: |-
-      selections = `sudo debconf-get-selections --installer`
-      {
-        'mirror/http/hostname' => 'us.archive.ubuntu.com',
-        'countrychooser/country-name' => 'United States',
-        'netcfg/get_hostname' => 'freekbox'
-      }.map {|key,val|
-        md = selections.match(/d-i\s+#{key}\s+\S+\s+(.+)$/)
-        md and (md[1] == val)
-      }.inject(true) {|so_far, this|
-        so_far && this
-      }
+  checkHostname:
+    command: hostname
+    title: "Checking that the computer is named correctly"
     explanation: |-
-      This code has looked through the installer choices made during
-      the installation of the operating system and tries to verify
-      that they are correct.  To look at these by hand, use:
-        sudo debconf-get-selections --installer | less
-      or better (e.g.):
-        sudo debconf-get-selections --installer | grep mirror/http/hostname
-    success: "All the settings are correct."
-    failure: |-
-      Some setting is incorrect.  Please ask your build instructor to
-      look for a way to fix this.
+      Most computers installed at freegeek should be named
+     "freekbox".  If this is not the case, you can fix it in two
+      steps:
+        * echo freekbox | sudo tee /etc/hostname
+        * sudo hostname freekbox
+      This won't take effect immediately, so check again after you
+      next reboot.
   checkNetwork: 
     title: "Checking networking:"
     test: "system(\"ping -c 1 #$SERVER\")"
