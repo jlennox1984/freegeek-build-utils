@@ -1,3 +1,16 @@
+freegeek-extras (1.1.5) ubuntu; urgency=low
+
+  * fixed typo in basicchecks.yml
+  * altered serial test to understand its purpose
+
+ -- Martin Chase <mchase@freegeek.org>  Fri, 28 Dec 2007 13:36:54 -0800
+
+freegeek-extras (1.1.4) ubuntu; urgency=low
+
+  * updated basicchecks
+
+ -- Martin Chase <mchase@freegeek.org>  Fri, 28 Dec 2007 13:09:01 -0800
+
 freegeek-extras (1.1.3) ubuntu; urgency=low
 
   * basicchecks now closer to gutsy-compatible

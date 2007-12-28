@@ -24,7 +24,7 @@ tests:
     title: "Checking that the computer is named correctly"
     explanation: |-
       Most computers installed at freegeek should be named
-     "freekbox".  If this is not the case, you can fix it in two
+      "freekbox".  If this is not the case, you can fix it in two
       steps:
         * echo freekbox | sudo tee /etc/hostname
         * sudo hostname freekbox
@@ -46,9 +46,8 @@ tests:
     title: "Checking status of serial ports:"
     explanation: |-
       Serial ports (the 9-pin connectors built into most motherboards)
-      and hardware modems will show up in this list.  For ISA modems,
-      look for potential conflicts over IRQ numbers, and make sure all
-      the devices you expect to show up are present.
+      and external modems will need these to be functional.  There
+      should be at least one port listed here.
   checkFloppyDrive: 
     title: "Checking status of floppy drive:"
     pretest: "Please insert any floppy disk with data on it."
