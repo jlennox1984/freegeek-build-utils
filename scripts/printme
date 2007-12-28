@@ -16,8 +16,6 @@ module Multipart
     end
 
     def to_multipart
-      #return "Content-Disposition: form-data; name=\"#{CGI::escape(k)}\"\r\n\r\n#{v}\r\n"
-      # Don't escape mine...
       return "Content-Disposition: form-data; name=\"#{CGI::escape k}\"\r\n\r\n#{v}\r\n"
     end
   end
