@@ -15,7 +15,7 @@ tests:
     explanation: |-
       This command is showing information corresponding to the
       harddrive that has been installed in this system, and each line
-      should begin with 'hda' or 'sda'.  If this is not true, the
+      should include 'hda' or 'sda'.  If this is not true, the
       harddrive is improperly jumpered or installed.  Shut down the
       computer and rejumper the drive.  Otherwise, make sure the size
       is correct and recorded in the paperwork.

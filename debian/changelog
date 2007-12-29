@@ -1,3 +1,9 @@
+freegeek-extras (1.1.6) UNRELEASED; urgency=low
+
+  * wording change in basiccheck
+
+ -- Martin Chase <mchase@freegeek.org>  Fri, 28 Dec 2007 16:27:18 -0800
+
 freegeek-extras (1.1.5) ubuntu; urgency=low
 
   * fixed typo in basicchecks.yml
