@@ -1,8 +1,9 @@
-basiccheck /usr/bin/
-basicchecks.yml /usr/share/freekbox/
-LaserJet-4.ppd /etc/cups/ppd/
-printers.conf /usr/share/freekbox/
-freekbox.list /etc/apt/sources.list.d
-scripts/bat_check /usr/bin
-scripts/printme /usr/bin
-scripts/magix /usr/sbin
+basiccheck usr/bin/
+basicchecks.yml usr/share/freekbox/
+LaserJet-4.ppd etc/cups/ppd/
+printers.conf usr/share/freekbox/
+freekbox.list etc/apt/sources.list.d
+scripts/bat_check usr/bin
+scripts/printme usr/bin
+scripts/magix usr/sbin
+resethostname etc/rc2.d

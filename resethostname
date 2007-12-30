@@ -1,0 +1,10 @@
+#!/bin/bash
+
+HNAME=`hostname`
+if [ "$HNAME" != 'freekbox' ]; then
+    hostname freekbox
+    echo freekbox > /etc/hostname
+    sed -i "s/$HNAME/freekbox/g" /etc/hosts
+fi
+
+rm $0

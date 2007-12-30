@@ -1,8 +1,10 @@
-freegeek-extras (1.1.6) UNRELEASED; urgency=low
+freegeek-extras (1.1.6) ubuntu; urgency=low
 
   * wording change in basiccheck
+  * added self-destructing hostname fixer to rc2.d
+  * removed hostname test from basiccheck
 
- -- Martin Chase <mchase@freegeek.org>  Fri, 28 Dec 2007 16:27:18 -0800
+ -- Martin Chase <mchase@freegeek.org>  Sat, 29 Dec 2007 19:05:24 -0800
 
 freegeek-extras (1.1.5) ubuntu; urgency=low
 

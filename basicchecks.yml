@@ -19,17 +19,6 @@ tests:
       harddrive is improperly jumpered or installed.  Shut down the
       computer and rejumper the drive.  Otherwise, make sure the size
       is correct and recorded in the paperwork.
-  checkHostname:
-    command: hostname
-    title: "Checking that the computer is named correctly"
-    explanation: |-
-      Most computers installed at freegeek should be named
-      "freekbox".  If this is not the case, you can fix it in two
-      steps:
-        * echo freekbox | sudo tee /etc/hostname
-        * sudo hostname freekbox
-      This won't take effect immediately, so check again after you
-      next reboot.
   checkNetwork: 
     title: "Checking networking:"
     test: "system(\"ping -c 1 #$SERVER\")"
