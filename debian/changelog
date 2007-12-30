@@ -1,3 +1,9 @@
+freegeek-extras (1.1.7) ubuntu; urgency=low
+
+  * name the rc script appropriately...
+
+ -- Martin Chase <mchase@freegeek.org>  Sat, 29 Dec 2007 19:11:37 -0800
+
 freegeek-extras (1.1.6) ubuntu; urgency=low
 
   * wording change in basiccheck
