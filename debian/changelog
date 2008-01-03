@@ -1,8 +1,12 @@
 freegeek-extras (1.1.9) ubuntu; urgency=low
 
+  [ Ryan Niebur ]
   * Fixed issue with deleting xorg.conf on dapper
 
- -- Ryan Niebur <RyanRyan52@gmail.com>  Wed,  3 Jan 2008 14:11:56 -0800
+  [ Vagrant Cascadian ]
+  * refactor xorg.conf handling slightly 
+
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Thu,  3 Jan 2008 14:48:47 -0800
 
 freegeek-extras (1.1.8) ubuntu; urgency=low
 
