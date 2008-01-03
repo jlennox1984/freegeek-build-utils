@@ -4,9 +4,10 @@ freegeek-extras (1.1.9) ubuntu; urgency=low
   * Fixed issue with deleting xorg.conf on dapper
 
   [ Vagrant Cascadian ]
-  * refactor xorg.conf handling slightly 
+  * refactor xorg.conf handling slightly
+  * fix handling of resethostname script 
 
- -- Vagrant Cascadian <vagrant@freegeek.org>  Thu,  3 Jan 2008 14:48:47 -0800
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Thu,  3 Jan 2008 15:19:52 -0800
 
 freegeek-extras (1.1.8) ubuntu; urgency=low
 
