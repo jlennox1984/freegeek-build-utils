@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# implement required options as no-op's
+case $1 in
+    start|stop|restart|force-reload) true ;;
+esac
+
+# set hostname to freekbox on first run
+if [ ! -f /etc/hostname_freekbox ]; then
+    HNAME=`hostname`
+    if [ "$HNAME" != 'freekbox' ]; then
+        hostname freekbox
+        echo freekbox > /etc/hostname
+        sed -i "s/$HNAME/freekbox/g" /etc/hosts
+        touch /etc/hostname_freekbox
+    fi
+fi
