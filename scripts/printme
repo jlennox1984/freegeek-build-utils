@@ -98,13 +98,16 @@ lshwname = '/tmp/lshw.xml'
 
 lshw = File.open(lshwname, "rb")
 
+codename = `lsb_release -cs`
+
 data = {
   "technician" => uid,
   "job" => jobs[job],
   "system_type" => types[type],
   "old_id" => old_id,
   "notes" => notes,
-  "xmlfile" => lshw
+  "xmlfile" => lshw,
+  "os" => codename
 }
 url = 'http://bullwinkle.fglan/fgss/fgss.php'
 uri = URI.parse(url)
