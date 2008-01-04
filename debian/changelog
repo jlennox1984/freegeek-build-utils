@@ -3,7 +3,7 @@ freegeek-extras (1.1.10) ubuntu; urgency=low
   * added an initial version of stress-test
   * made printme submit OS to fgss 
 
- -- Ryan Niebur <ryan52@frederick.home>  Thu, 03 Jan 2008 21:29:00 -0800
+ -- Ryan Niebur <ryanryan52@gmail.com>  Thu, 03 Jan 2008 21:29:00 -0800
 
 freegeek-extras (1.1.9) ubuntu; urgency=low
 
