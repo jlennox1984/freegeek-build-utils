@@ -2,7 +2,7 @@
 
 
 echo "Running stress test..."
-echo "This will take 2 minutes"
+echo "This will take 3 minutes"
 echo
 
 stress --cpu 10 --io 4 --vm 10 --vm-bytes 10M --hdd 2 --timeout 180 --quiet
