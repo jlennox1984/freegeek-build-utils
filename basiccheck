@@ -153,7 +153,6 @@ def finishup( failures = [] )
     goodbye = <<-"EOM"
         NOTE: 
         Not all things that could go wrong have been checked. 
-        For instance, you should be sure that the modem works.
     EOM
     message goodbye.gsub(/^\s+/, '')
 end

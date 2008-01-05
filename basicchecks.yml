@@ -50,7 +50,7 @@ tests:
       messages show up, or i errors are listed, the floppy drive is not
       working.  You can remove the floppy disk now.
   checkSound: 
-    command: aplay /usr/share/sounds/login.wav
+    command: aplay /usr/share/sounds/alsa/Front_Left.wav /usr/share/sounds/alsa/Front_Right.wav
     title: "Checking sound:"
     pretest: |-
       A sound is about to play.  Please make sure the speakers are

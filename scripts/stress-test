@@ -1,5 +1,9 @@
 #!/bin/bash
 
+## TODOs:
+##  * Add the ability to --verbose and --quiet, -v -q (default to quiet)
+##  * On systems that support it, monitor the temperature ("watch acpi -Vf")
+
 
 echo "Running stress test..."
 echo "This will take 3 minutes"
