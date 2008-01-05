@@ -2,11 +2,10 @@ freegeek-extras (1.1.11) ubuntu; urgency=low
 
   * changed the sound that basiccheck plays
   * made printme check if it can ping the server
-  * added todos to stress-test
-  * changed basiccheck to not remind the user to check the modem since
-we no longer use modems
+  * made stress-test have --help, --verbose, and --quiet options (-h, -v, and -q too)
+  * changed basiccheck to not remind the user to check the modem since we no longer use modems
 
- -- Ryan Niebur <RyanRyan52@gmail.com>  Fri,  4 Jan 2008 21:17:29 -0800
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Fri,  4 Jan 2008 21:52:40 -0800
 
 freegeek-extras (1.1.10) ubuntu; urgency=low
 

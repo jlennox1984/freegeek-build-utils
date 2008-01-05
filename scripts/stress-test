@@ -1,15 +1,44 @@
 #!/bin/bash
 
-## TODOs:
-##  * Add the ability to --verbose and --quiet, -v -q (default to quiet)
-##  * On systems that support it, monitor the temperature ("watch acpi -Vf")
+function help {
+echo -e "stress-test - runs a 3 minute stress test"
+echo -e 
+echo -e "usage:"
+echo -e "\t-h, --help    -  displays this message"
+echo -e "\t-v, --verbose -  runs stress in verbose mode"
+echo -e "\t-q, --quiet   -  runs stress in quiet mode, this is the default"
+exit 0
+}
 
+case "$1" in
+    --verbose)
+    ARG="--verbose"
+    ;;
+    -v)
+    ARG="--verbose"
+    ;;
+    --quiet)
+    ARG="--quiet"
+    ;;
+    -q)
+    ARG="--quiet"
+    ;;
+    -h)
+    help
+    ;;
+    --help)
+    help
+    ;;
+    *)
+    ARG="--quiet"
+    ;;
+esac
 
 echo "Running stress test..."
 echo "This will take 3 minutes"
 echo
 
-stress --cpu 10 --io 4 --vm 10 --vm-bytes 10M --hdd 2 --timeout 180 --quiet
+stress --cpu 10 --io 4 --vm 10 --vm-bytes 10M --hdd 2 --timeout 180 $ARG
 
 echo "Done!"
 
