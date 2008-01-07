@@ -1,3 +1,9 @@
+freegeek-extras (1.1.13) ubuntu; urgency=low
+
+  * changed printme to use rubytui correctly, changed error message
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sun,  6 Jan 2008 16:00:34 -0800
+
 freegeek-extras (1.1.12) ubuntu; urgency=low
 
   * added dependancy on pmount
