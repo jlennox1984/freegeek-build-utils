@@ -1,3 +1,9 @@
+freegeek-extras (1.1.14) ubuntu; urgency=low
+
+  * added xmlstarlet as a dependancy
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 12 Jan 2008 17:05:32 -0800
+
 freegeek-extras (1.1.13) ubuntu; urgency=low
 
   * changed printme to use rubytui correctly, changed error message
