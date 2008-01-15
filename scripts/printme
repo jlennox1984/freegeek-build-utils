@@ -4,11 +4,11 @@ require 'net/http'
 require 'cgi'
 require 'uri'
 require 'rubytui'
+require 'fileutils'
+include FileUtils
 include RubyTUI
 
-
 server="bullwinkle.fglan"
-
 
 module Multipart
   # From: http://kfahlgren.com/code/multipart.rb
@@ -88,10 +88,8 @@ types = {
 
 retval = system("ping -c 1 " + server + " 1>&2 >/dev/null")
 
-if retval == true
-else
-oops = "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
-errorMessage oops
+if retval != true
+errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
 exit retval
 end
 
@@ -107,6 +105,13 @@ waitasec
 lshwname = '/tmp/lshw.xml'
 
 `sudo lshw -xml>#{lshwname}`
+
+retval = system("xmlstarlet val " + lshwname + " >& /dev/null")
+
+if retval != true
+system("tr -d \'\\0\\377\' < " + lshwname + " > " + lshwname + ".clean")
+mv(lshwname + ".clean", lshwname)
+end
 
 lshw = File.open(lshwname, "rb")
 
