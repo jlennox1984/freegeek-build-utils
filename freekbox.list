@@ -1,4 +1,6 @@
 # debian sources for freegeek specific packages
 # install into /etc/apt/sources.list.d
 
-deb http://web.freegeek.org/ freegeek public ubuntu
+#deb http://web.freegeek.org/ freegeek public ubuntu
+
+deb http://apt.freegeek.org/ubuntu dapper main

@@ -1,3 +1,9 @@
+freegeek-extras (1.1.16) ubuntu; urgency=low
+
+  * switched to use apt.freegeek.org
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 19 Jan 2008 09:14:17 -0800
+
 freegeek-extras (1.1.15) ubuntu; urgency=low
 
   * added code to fix when lshw give's you yucky xml
