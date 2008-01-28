@@ -8,6 +8,12 @@ require 'fileutils'
 include FileUtils
 include RubyTUI
 
+trap( "SIGINT" ) {
+    `reset -Q`
+    errorMessage "\n\nUser interrupt caught.  Exiting.\n\n"
+    exit!( 1 )
+}
+
 server="bullwinkle.fglan"
 
 module Multipart
