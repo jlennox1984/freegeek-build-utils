@@ -93,10 +93,25 @@ types = {
 }
 
 retval = system("ping -c 1 " + server + " 1>&2 >/dev/null")
-
 if retval != true
-errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
-exit retval
+  errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
+  exit retval
+end
+
+lshwname = '/tmp/lshw.xml'
+
+`sudo lshw -xml>#{lshwname}`
+
+retval = system("xmlstarlet val " + lshwname + " >& /dev/null")
+if retval != true
+  system("cat " + lshwname + " | tr -dc [:print:] | xmlstarlet fo > " + lshwname + ".clean")
+  mv(lshwname + ".clean", lshwname)
+  newretval = system("xmlstarlet val " + lshwname + " >& /dev/null")
+  if newretval != true
+    errorMessage "The xml file is not valid and I could not fix it!\n"
+    errorMessage "Ask a build instructor for help.\n"
+    exit
+  end
 end
 
 job = menuWithDefault('Work Tasks', 'Which job did you perform?', "Quality Control", *jobs.keys)
@@ -107,17 +122,6 @@ old_id = prompt('If the system had an id on it already, enter that here',
 notes = prompt('What, if anything, is notable about this system?')
 message('Please ensure the printer is connected and press enter')
 waitasec
-
-lshwname = '/tmp/lshw.xml'
-
-`sudo lshw -xml>#{lshwname}`
-
-retval = system("xmlstarlet val " + lshwname + " >& /dev/null")
-
-if retval != true
-system("tr -d \'\\0\\377\' < " + lshwname + " > " + lshwname + ".clean")
-mv(lshwname + ".clean", lshwname)
-end
 
 lshw = File.open(lshwname, "rb")
 

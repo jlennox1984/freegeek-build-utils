@@ -1,3 +1,9 @@
+freegeek-extras (1.1.18) ubuntu; urgency=low
+
+  * Changed printme's "remove yucky xml" code to remove (tr -dc [:print:]) all unprintably characters (including newlines) and then "xmlstarlet fo" to add back newlines in the right places
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Tue, 12 Feb 2008 22:12:39 -0800
+
 freegeek-extras (1.1.17) ubuntu; urgency=low
 
   * Added interrupt handler in printme
