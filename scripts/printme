@@ -110,7 +110,7 @@ if retval != true
   if newretval != true
     errorMessage "The xml file is not valid and I could not fix it!\n"
     errorMessage "Ask a build instructor for help.\n"
-    exit
+    exit 1
   end
 end
 
