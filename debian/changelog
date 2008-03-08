@@ -1,3 +1,9 @@
+freegeek-extras (1.1.21) ubuntu; urgency=low
+
+  * Use the cnames I just added so we can switch servers easily
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat,  8 Mar 2008 10:14:21 -0800
+
 freegeek-extras (1.1.20) ubuntu; urgency=low
 
   * Make running magix do everything (no killall gdm, no sudo)
