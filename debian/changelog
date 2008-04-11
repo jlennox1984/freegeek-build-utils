@@ -1,3 +1,9 @@
+freegeek-extras (1.1.22) ubuntu; urgency=low
+
+  * use the rails fgss server
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Thu, 10 Apr 2008 22:57:37 -0700
+
 freegeek-extras (1.1.21) ubuntu; urgency=low
 
   * Use the cnames I just added so we can switch servers easily
