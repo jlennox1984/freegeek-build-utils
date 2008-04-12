@@ -106,16 +106,8 @@ def run_lshw_and_test_stuff
 end
 
 def do_setup
-  if ! File.exist?('/var/lib/freegeek-extras/')
-    system 'sudo mkdir /var/lib/freegeek-extras/'
-  end
-  system "sudo chown -R #{ENV['USER']}:#{ENV['USER']} /var/lib/freegeek-extras/"
-  if ! File.exist?('/var/lib/freegeek-extras/printme')
-    mkdir('/var/lib/freegeek-extras/printme/')
-  end
-  old_id = prompt('If the system had an id on it already, enter that here',
-                  'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
-  if old_id && old_id.to_i != 0  && old_id != ""
+  if @system_id
+    old_id=@system_id
     response = Net::HTTP.get_response(URI.parse("http://#{$server}/systems/xml_show?id=#{old_id}"))
     system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
     system.puts(response.body)
@@ -143,11 +135,18 @@ def do_setup
 end
 
 def get_id_and_stuff
+  if ! File.exist?('/var/lib/freegeek-extras/')
+    system 'sudo mkdir /var/lib/freegeek-extras/'
+  end
+  system "sudo chown -R #{ENV['USER']}:#{ENV['USER']} /var/lib/freegeek-extras/"
+  if ! File.exist?('/var/lib/freegeek-extras/printme')
+    mkdir('/var/lib/freegeek-extras/printme/')
+  end
+
   if File.exist?('/var/lib/freegeek-extras/printme/system.xml') #new printme has been ran
-    system "sudo chown -R #{ENV['USER']}:#{ENV['USER']} /var/lib/freegeek-extras/"
     system = File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
+    @system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
   else #the old/no printme has been ran
-    do_setup
     if File.exist?('/tmp/lshw.xml') #old printme has been ran  
       mv('/tmp/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
     end
@@ -162,7 +161,8 @@ def get_id_and_stuff
   jobs_xml[$jobs_controller].each { |x| @jobs[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
   types_xml[$types_controller].each { |x| @types[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
 
-  @system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
+  @system_id ||= prompt('If the system had an id on it already, enter that here',
+                                   'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
   system.close if system
 end
 
@@ -199,6 +199,10 @@ def ask_and_send_stuff
   f = open(printme,'w')
   f.write(response.body)
   f.close()
+
+  if !File.exist?("/var/lib/freegeek-extras/printme/system.xml")
+    do_setup
+  end
 
   response = Net::HTTP.get_response(URI.parse("http://#{$server}/systems/xml_show?id=#{@system_id}"))
   system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
