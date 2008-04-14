@@ -1,3 +1,13 @@
+freegeek-extras (1.1.26) UNRELEASED; urgency=low
+
+  * check to see if this version of printme is compatible with the
+    servers version of fgss.rb
+  * if the server returns an error message, dont blow up. enstead tell
+    the user the what the server said
+  * follow redirects (so the error messages work)
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Mon, 14 Apr 2008 11:12:02 -0700
+
 freegeek-extras (1.1.25) ubuntu; urgency=low
 
   * Make it work with new version of fgss.rb, which makes a system

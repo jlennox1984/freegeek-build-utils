@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 $COLOR = true #make things cool
+$PRINTME_VERSION=1
 
 #configuration
 $server="rocky.fglan:80"
@@ -69,14 +70,33 @@ module Multipart
   end  
 end
 
+def fetch(url, limit = 10)
+  return nil if limit == 0
+
+  response = Net::HTTP.get_response(URI.parse(url))
+  case response
+  when Net::HTTPSuccess     then response
+  when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+  else
+    nil
+  end
+end
+
 TIMEOUT_SECONDS = 30
 def post_form(url, query, headers)
+  limit=10
   Net::HTTP.start(url.host, url.port) { |con|
     con.read_timeout = TIMEOUT_SECONDS
     begin
-      return con.post(url.path, query, headers)
+      response = con.post(url.path, query, headers)
+        case response
+        when Net::HTTPSuccess     then return response
+        when Net::HTTPRedirection then return fetch(response['location'], limit - 1)
+        else
+          nil
+        end
     rescue => e
-      puts "POSTING Failed #{ e}... #{Time.now}"
+      nil
     end
   }
 end
@@ -84,11 +104,6 @@ end
 def run_lshw_and_test_stuff
   if File.exist?("/var/lib/freegeek-extras/printme/lshw.xml")
     mv('/var/lib/freegeek-extras/printme/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
-  end
-  retval = system("ping -c 1 #{$server.gsub(/:.*$/, '')} 1>&2 >/dev/null")
-  if retval != true
-    errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
-    exit retval
   end
   $lshwname =  '/var/lib/freegeek-extras/printme/lshw.xml'
   system("sudo lshw -xml>#{$lshwname}") 
@@ -98,8 +113,7 @@ def run_lshw_and_test_stuff
     mv($lshwname + ".clean", $lshwname)
     newretval = system("xmlstarlet val #{$lshwname} 1>&2 > /dev/null")
     if newretval != true
-      errorMessage "The xml file is not valid and I could not fix it!\n"
-      errorMessage "Ask a build instructor for help.\n"
+      errorMessage "The xml file is not valid and I could not fix it!\nAsk a build instructor for help.\n\n"
       exit 1
     end
   end
@@ -192,7 +206,15 @@ def ask_and_send_stuff
   lshw.close
 
   response = post_form(uri, query, headers)
+  if response == nil
+    errorMessage "Problem posting to the server\n\n"
+    exit 1
+  end
   response_xml = XmlSimple.xml_in(response.body)
+  if response_xml["error"]
+    errorMessage "The server return this error: " + response_xml["error"][0] + "\n\n"
+    exit 1
+  end
   @report_id=response_xml["id"][0]["content"]
   @system_id=response_xml["system-id"][0]["content"]
   printme = "/var/lib/freegeek-extras/printme/report.#{@report_id}.xml"
@@ -210,7 +232,31 @@ def ask_and_send_stuff
   system.close
 end
 
+class String
+  def to_bool
+    return true if self == "true"
+    return false if self.nil? || self == "false"
+    return nil
+  end
+end
+
+def check_version
+  retval = system("ping -c 1 #{$server.gsub(/:.*$/, '')} 1>&2 >/dev/null")
+  if retval != true
+    errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
+    exit retval
+  end
+  response = Net::HTTP.get_response(URI.parse("http://#{$server}/reports/check_compat?version=#{$PRINTME_VERSION}"))
+  xml = XmlSimple.xml_in(response.body)
+  compat = xml["compat"][0]["content"].to_bool
+  if !compat
+    errorMessage xml["message"][0] + "\n\n"
+    exit 1
+  end
+end
+
 def main
+  check_version
   get_id_and_stuff
   run_lshw_and_test_stuff
   ask_and_send_stuff
