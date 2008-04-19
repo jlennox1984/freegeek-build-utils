@@ -5,10 +5,10 @@ $PRINTME_VERSION=1
 
 #configuration
 $server="rocky.fglan:80"
-#make these singular
-$types_controller = "type"
-$jobs_controller = "role"
+#make this singular
 $reports_controller = "report"
+$types_model = "type"
+$jobs_model = "role"
 
 require '/usr/local/lib/site_ruby/1.8/xmlsimple.rb'
 require 'net/http'
@@ -122,13 +122,19 @@ end
 def do_setup
   if @system_id
     old_id=@system_id
-    response = Net::HTTP.get_response(URI.parse("http://#{$server}/systems/xml_show?id=#{old_id}"))
-    system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
-    system.puts(response.body)
-    system.close
-    system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
+    response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_system_show?id=#{old_id}"))
+    system_f=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
+    system_f.puts(response.body)
+    system_f.close
+    system_f=File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
     message "Downloading old information."
-    @system_id=XmlSimple.xml_in(system)["id"][0]["content"].to_i
+    response_xml = XmlSimple.xml_in(response.body)
+    if response_xml["error"]
+      system_f.close
+      system('rm /var/lib/freegeek-extras/printme/system.xml')
+      return false
+    end
+    @system_id=XmlSimple.xml_in(system_f)["id"][0]["content"].to_i
     list_of_reports = []
     XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_list_for_system?id=#{@system_id}")).body)[$reports_controller].each { |x| list_of_reports << x["id"][0]["content"] }
     for report in list_of_reports
@@ -139,13 +145,8 @@ def do_setup
     end
     message "Done!\n\n"
   else
-    response = Net::HTTP.get_response(URI.parse("http://#{$server}/systems/xml_new"))
-    system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
-    system.puts(response.body)
-    system.close
-    system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
+    return false
   end
-  @system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
 end
 
 def get_id_and_stuff
@@ -166,14 +167,14 @@ def get_id_and_stuff
     end
   end
 
-  jobs_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$jobs_controller}s/xml_index")).body)
-  types_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$types_controller}s/xml_index")).body)
+  jobs_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/roles_xml_index")).body)
+  types_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/types_xml_index")).body)
 
   @jobs={}
   @types={}
 
-  jobs_xml[$jobs_controller].each { |x| @jobs[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
-  types_xml[$types_controller].each { |x| @types[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
+  jobs_xml[$jobs_model].each { |x| @jobs[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
+  types_xml[$types_model].each { |x| @types[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
 
   @system_id ||= prompt('If the system had an id on it already, enter that here',
                                    'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
@@ -216,7 +217,11 @@ def ask_and_send_stuff
     exit 1
   end
   @report_id=response_xml["id"][0]["content"]
-  @system_id=response_xml["system-id"][0]["content"]
+  system_id=response_xml["system-id"][0]["content"]
+  if system_id != @system_id
+    @system_id = system_id
+    do_setup
+  end
   printme = "/var/lib/freegeek-extras/printme/report.#{@report_id}.xml"
   f = open(printme,'w')
   f.write(response.body)
@@ -226,8 +231,13 @@ def ask_and_send_stuff
     do_setup
   end
 
-  response = Net::HTTP.get_response(URI.parse("http://#{$server}/systems/xml_show?id=#{@system_id}"))
+  response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_system_show/#{@system_id}"))
   system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
+  response_xml = XmlSimple.xml_in(response.body)
+  if response_xml["error"]
+    errorMessage "The server return this error: " + response_xml["error"][0] + "\n\n"
+    exit 1
+  end
   system.puts(response.body)
   system.close
 end
@@ -246,7 +256,7 @@ def check_version
     errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
     exit retval
   end
-  response = Net::HTTP.get_response(URI.parse("http://#{$server}/reports/check_compat?version=#{$PRINTME_VERSION}"))
+  response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/check_compat?version=#{$PRINTME_VERSION}"))
   xml = XmlSimple.xml_in(response.body)
   compat = xml["compat"][0]["content"].to_bool
   if !compat
