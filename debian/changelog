@@ -1,4 +1,4 @@
-freegeek-extras (1.1.26) UNRELEASED; urgency=low
+freegeek-extras (1.1.26) ubuntu; urgency=low
 
   * check to see if this version of printme is compatible with the
     servers version of fgss.rb
