@@ -307,7 +307,7 @@ dDEVICEHEIGHTPOINTS=567"
 *OpenUI *Duplex/Double-Sided Printing: PickOne
 *FoomaticRIPOption Duplex: enum CmdLine A
 *OrderDependency: 120 AnySetup *Duplex
-*DefaultDuplex: None
+*DefaultDuplex: DuplexNoTumble
 *Duplex DuplexNoTumble/Long Edge (Standard): "%% FoomaticRIPOptionSetting: Duplex=DuplexNoTumble"
 *FoomaticRIPOptionSetting Duplex=DuplexNoTumble: " -dDuplex=true -dTum&&
 ble=false"

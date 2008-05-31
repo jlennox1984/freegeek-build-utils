@@ -1,3 +1,11 @@
+freegeek-extras (1.1.27) ubuntu; urgency=low
+
+  * patch from Kurt Krueger to make some of the stuff basiccheck says make more sense on hardy
+  * new printme that works with new fgss version (that will be in fgdb soon)
+  * printer configs with duplexing turned on
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 31 May 2008 14:57:16 -0700
+
 freegeek-extras (1.1.26) ubuntu; urgency=low
 
   * check to see if this version of printme is compatible with the
@@ -6,7 +14,7 @@ freegeek-extras (1.1.26) ubuntu; urgency=low
     the user the what the server said
   * follow redirects (so the error messages work)
 
- -- Ryan Niebur <RyanRyan52@gmail.com>  Mon, 14 Apr 2008 11:12:02 -0700
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 31 May 2008 14:57:09 -0700
 
 freegeek-extras (1.1.25) ubuntu; urgency=low
 

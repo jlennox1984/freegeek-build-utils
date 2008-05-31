@@ -1,14 +1,14 @@
 #!/usr/bin/ruby
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=1
+$PRINTME_VERSION=2
 
 #configuration
-$server="rocky.fglan:80"
+$server="rsn.no-ip.org:3000"
 #make this singular
-$reports_controller = "report"
+$reports_controller = "spec_sheet"
 $types_model = "type"
-$jobs_model = "role"
+$jobs_model = "action"
 
 require '/usr/local/lib/site_ruby/1.8/xmlsimple.rb'
 require 'net/http'
@@ -136,7 +136,7 @@ def do_setup
     end
     @system_id=XmlSimple.xml_in(system_f)["id"][0]["content"].to_i
     list_of_reports = []
-    XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_list_for_system?id=#{@system_id}")).body)[$reports_controller].each { |x| list_of_reports << x["id"][0]["content"] }
+    XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_list_for_system?id=#{@system_id}")).body)[$reports_controller.gsub(/_/, '-')].each { |x| list_of_reports << x["id"][0]["content"] }
     for report in list_of_reports
       this_report = open("/var/lib/freegeek-extras/printme/#{$reports_controller}.#{report}.xml", 'w')
       this_report.write(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_show/#{report}")).body)
@@ -167,13 +167,13 @@ def get_id_and_stuff
     end
   end
 
-  jobs_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/roles_xml_index")).body)
-  types_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/types_xml_index")).body)
+  jobs_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$jobs_model}s_xml_index")).body)
+  types_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$types_model}s_xml_index")).body)
 
   @jobs={}
   @types={}
 
-  jobs_xml[$jobs_model].each { |x| @jobs[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
+jobs_xml[$jobs_model].each { |x| @jobs[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
   types_xml[$types_model].each { |x| @types[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
 
   @system_id ||= prompt('If the system had an id on it already, enter that here',
@@ -191,8 +191,8 @@ def ask_and_send_stuff
   codename = `lsb_release --description --short`
   data = {
     "contact_id" => uid,
-    "role_id" => @jobs[job],
-    "type_id" => @types[type],
+    "#{$jobs_model}_id" => @jobs[job],
+    "#{$types_model}_id" => @types[type],
     "system_id" => @system_id,
     "notes" => notes,
     "my_file" => lshw,

@@ -4,9 +4,8 @@ tests:
     title: "Checking status of CD ROM:"
     explanation: |-
       The output should contain reference to a CD ROM and possibly a
-      DVD ROM which should each show up as one of hd?, scd? or sg?.
-      If not, it is likely cabled or jumpered incorrectly.  Please
-      note where the CD ROM is on the build sheet.
+      DVD ROM which should each show up as one of scd? or sg?.
+      If not, it is likely cabled or jumpered incorrectly.
       NOTE: The CD ROM may not show up in BIOS. This is not a
       problem.
   checkHardDrive: 
@@ -15,10 +14,10 @@ tests:
     explanation: |-
       This command is showing information corresponding to the
       harddrive that has been installed in this system, and each line
-      should include 'hda' or 'sda'.  If this is not true, the
+      should include 'sda'.  If this is not true, the
       harddrive is improperly jumpered or installed.  Shut down the
       computer and rejumper the drive.  Otherwise, make sure the size
-      is correct and recorded in the paperwork.
+      is correct.
   checkNetwork: 
     title: "Checking networking:"
     test: "system(\"ping -c 1 #$SERVER\")"
@@ -47,7 +46,7 @@ tests:
     - pumount /media/floppy
     explanation: |-
       Floppy disk activity should generate some messages above.  If no
-      messages show up, or i errors are listed, the floppy drive is not
+      messages show up, or if errors are listed, the floppy drive is not
       working.  You can remove the floppy disk now.
   checkSound: 
     command: aplay /usr/share/sounds/alsa/Front_Left.wav /usr/share/sounds/alsa/Front_Right.wav
@@ -122,6 +121,7 @@ tests:
     command: "free -m | egrep '^Mem' | awk '{print $2}'"
     title: "Checking amount of memory:"
     explanation: |-
-      The value should be the number of megabytes of memory you have
-      installed in this system.
+      The value should be close to the number of megabytes of memory
+      you have installed in this system.  It will typically be a
+      bit smaller (e.g. 502 for a 512 megabyte system).
 server: pingme.fglan
