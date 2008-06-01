@@ -4,7 +4,7 @@ $COLOR = true #make things cool
 $PRINTME_VERSION=2
 
 #configuration
-$server="rocky:80"
+$server="printme:80"
 #make this singular
 $reports_controller = "spec_sheet"
 $types_model = "type"
