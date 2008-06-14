@@ -1,3 +1,9 @@
+freegeek-extras (1.1.28) ubuntu; urgency=low
+
+  * Trying 1.1.27's changes again
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 14 Jun 2008 01:24:26 -0700
+
 freegeek-extras (1.1.27) ubuntu; urgency=low
 
   * patch from Kurt Krueger to make some of the stuff basiccheck says make more sense on hardy
