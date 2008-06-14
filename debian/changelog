@@ -1,3 +1,9 @@
+freegeek-extras (1.1.29) UNRELEASED; urgency=low
+
+  * changed the maintainer and uploaders
+
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 14 Jun 2008 09:15:13 -0700
+
 freegeek-extras (1.1.28) ubuntu; urgency=low
 
   * Trying 1.1.27's changes again
