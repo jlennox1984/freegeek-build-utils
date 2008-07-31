@@ -67,7 +67,7 @@ module Multipart
       query = fp.collect {|p| "--" + BOUNDARY + "\r\n" + p.to_multipart }.join("") + "--" + BOUNDARY + "--"
       return query, HEADER
     end
-  end  
+  end
 end
 
 def fetch(url, limit = 10)
@@ -106,7 +106,7 @@ def run_lshw_and_test_stuff
     mv('/var/lib/freegeek-extras/printme/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
   end
   $lshwname =  '/var/lib/freegeek-extras/printme/lshw.xml'
-  system("sudo lshw -xml>#{$lshwname}") 
+  system("sudo lshw -xml>#{$lshwname}")
   retval = system("xmlstarlet val #{$lshwname} 1>&2 > /dev/null")
   if retval != true
     system("cat #{$lshwname} | tr -dc [:print:] | xmlstarlet fo > #{$lshwname}.clean")
@@ -162,7 +162,7 @@ def get_id_and_stuff
     system = File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
     @system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
   else #the old/no printme has been ran
-    if File.exist?('/tmp/lshw.xml') #old printme has been ran  
+    if File.exist?('/tmp/lshw.xml') #old printme has been ran
       mv('/tmp/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
     end
   end
