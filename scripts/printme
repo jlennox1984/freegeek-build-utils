@@ -1,16 +1,31 @@
 #!/usr/bin/ruby
 
-$COLOR = true #make things cool
-$PRINTME_VERSION=2
+require 'yaml'
+f = File.open('/etc/printme.yml')
+yaml = YAML.load(f.read)
+f.close
+if !(yaml.keys == ['server', 'port'] || yaml.keys == ['port', 'server'])
+  puts "Invalid configuration file"
+  exit 1
+end
+$server = yaml['server'] + ':' + yaml['port'].to_s
 
 #configuration
-$server="printme:80"
+# $server="printme:80"
+
 #make this singular
 $reports_controller = "spec_sheet"
 $types_model = "type"
 $jobs_model = "action"
 
-require '/usr/local/lib/site_ruby/1.8/xmlsimple.rb'
+$COLOR = true #make things cool
+$PRINTME_VERSION=2
+
+begin
+  require 'xmlsimple'
+rescue
+  require '/usr/local/lib/site_ruby/1.8/xmlsimple.rb'
+end
 require 'net/http'
 require 'cgi'
 require 'uri'

@@ -1,8 +1,11 @@
-freegeek-extras (1.1.29) UNRELEASED; urgency=low
+freegeek-extras (1.1.30) UNRELEASED; urgency=low
 
   * changed the maintainer and uploaders
+  * use a yaml config file
+  * added a new freegeek-xmlsimple package
+    only use xmlsimple.rb from FG if another one isn't available.
 
- -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 14 Jun 2008 09:15:13 -0700
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Fri, 01 Aug 2008 16:46:09 -0700
 
 freegeek-extras (1.1.28) ubuntu; urgency=low
 
