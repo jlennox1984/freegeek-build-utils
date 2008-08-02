@@ -8,9 +8,11 @@ freegeek-extras (1.1.30) UNRELEASED; urgency=low
   * Use the correct distro in freekbox.list
   * Switch to real package sections
   * fixed init script to be lsb compliant
+  * Bumbed policy version, no changes
   * NOT FINISHED OR TESTED
+  * 
 
- -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 02 Aug 2008 10:06:42 -0700
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 02 Aug 2008 10:18:11 -0700
 
 freegeek-extras (1.1.28) ubuntu; urgency=low
 
