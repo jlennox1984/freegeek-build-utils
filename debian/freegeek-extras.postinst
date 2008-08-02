@@ -7,7 +7,7 @@ if [ "$1" = "configure" ]; then
 
     RELEASE="$(lsb_release --release --short)"
     case "$RELEASE" in
-        6.06) 
+        6.06)
             if [ -f /var/backups/xorg.conf ] && [ ! -f /etc/X11/xorg.conf ] ; then
                 mv -f /var/backups/xorg.conf /etc/X11/xorg.conf
             fi
@@ -31,5 +31,8 @@ for f in basiccheck bat_check printme 4reboots magix ; do
         fi
     done
 done
+
+CODENAME="$(lsb_release --codename --short)"
+sed -i 's/dapper/$CODENAME/g' /etc/apt/sources.list.d/freekbox.list
 
 #DEBHELPER#
