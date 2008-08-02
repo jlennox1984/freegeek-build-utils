@@ -26,7 +26,7 @@ begin
                           # I'd assume that's where ubuntu puts it too
                           # Though I have no clue because packages.ubuntu.com has been timeing out for the last day
 rescue
-  require '/usr/local/lib/site_ruby/1.8/xmlsimple.rb' # installed by freegeek-xmlsimple
+  require 'xmlsimple'     # installed by freegeek-xmlsimple, and someday where the real package will install it
 end
 require 'net/http'
 require 'cgi'
