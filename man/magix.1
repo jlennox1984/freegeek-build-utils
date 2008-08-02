@@ -1,0 +1,17 @@
+.TH MAGIX "1" "2008-05-22" "Freegeek Extras" "User Commands"
+.SH NAME
+magix - Tries to fix problems with X not working properly
+.SH SYNOPSIS
+.BR magix
+.SH DESCRIPTION
+If you see colors enstead of a login screen, or if the monitor says some error about the sync range, or if you can't change the resolution to 1024x768, or if you get errors about X failing to start, then X is not configured properly.
+Magix tries to fix this.
+.SH NOTES
+Resolution problems:
+.RS 4
+If magix doesn't help, check the BIOS settings for a "Video RAM" setting. If its set to 1MB, change it to 8MB.
+.RE
+X errors:
+.RS 4
+If magix doesn't help, then get a build instructor to help you run "sudo dpkg-reconfigure xserver-xorg".
+.RE
