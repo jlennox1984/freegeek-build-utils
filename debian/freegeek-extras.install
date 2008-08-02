@@ -8,4 +8,4 @@ scripts/printme usr/bin/
 scripts/magix usr/sbin/
 %gconf.xml etc/skel/.gconf/desktop/gnome/applications/window_manager/
 scripts/stress-test usr/bin/
-
+printme.cfg etc/
