@@ -1,17 +1,33 @@
 #!/bin/bash
 
+### BEGIN INIT INFO
+# Provides:          freegeek-extras
+# Required-Start:    $local_fs
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Set the hostname to freekbox
+# Description:       Set the hostname to freekbox, if this script has not been ran
+### END INIT INFO
+
+set_hostname() {
+    # set hostname to freekbox on first run
+    if [ ! -f /etc/hostname_freekbox ]; then
+        HNAME=`hostname`
+        if [ "$HNAME" != 'freekbox' ]; then
+            hostname freekbox
+            echo freekbox > /etc/hostname
+            sed -i "s/$HNAME/freekbox/g" /etc/hosts
+            touch /etc/hostname_freekbox
+        fi
+    fi
+}
+
 # implement required options as no-op's
 case $1 in
-    start|stop|restart|force-reload) true ;;
+    start|restart)
+        set_hostname;
+        ;;
+    stop|force-reload) true ;;
 esac
 
-# set hostname to freekbox on first run
-if [ ! -f /etc/hostname_freekbox ]; then
-    HNAME=`hostname`
-    if [ "$HNAME" != 'freekbox' ]; then
-        hostname freekbox
-        echo freekbox > /etc/hostname
-        sed -i "s/$HNAME/freekbox/g" /etc/hosts
-        touch /etc/hostname_freekbox
-    fi
-fi

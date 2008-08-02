@@ -1,14 +1,16 @@
 freegeek-extras (1.1.30) UNRELEASED; urgency=low
 
   * changed the maintainer and uploaders
-  * use a yaml config file
+  * use a yaml config file for the server
   * added a new freegeek-xmlsimple package
     only use xmlsimple.rb from FG if another one isn't available.
   * If no firefox, then just print out the URL
   * Use the correct distro in freekbox.list
+  * Switch to real package sections
+  * fixed init script to be lsb compliant
   * NOT FINISHED OR TESTED
 
- -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 02 Aug 2008 09:53:23 -0700
+ -- Ryan Niebur <RyanRyan52@gmail.com>  Sat, 02 Aug 2008 10:06:42 -0700
 
 freegeek-extras (1.1.28) ubuntu; urgency=low
 
