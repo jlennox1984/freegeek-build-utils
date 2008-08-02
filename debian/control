@@ -1,5 +1,5 @@
 Source: freegeek-extras
-Section: base
+Section: utils
 Priority: optional
 Maintainer: Freegeek Coders <coders@freegeek.org>
 Uploaders: Martin Chase <stillflame@freegeek.org>, Vagrant Cascadian <vagrant@freegeek.org>, Ryan Niebur <RyanRyan52@gmail.com>
@@ -17,6 +17,7 @@ Description: Tools and customizations for freegeek users
 Package: freegeek-xmlsimple
 Architecture: all
 Depends: ruby
+Section: libs
 Conflicts: libxml-simple-ruby
 Description: The XmlSimple library
  Repackaged version for use by freegeek-extras because
