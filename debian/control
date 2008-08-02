@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 5.0.0), cdbs
 Standards-Version: 3.7.2
 
 Package: freegeek-extras
-Architecture: any
+Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, freegeek-archive-keyring, libxml-ruby, lshw, debconf-utils, cupsys, stress, lsb-release, alsa-utils, pmount, xmlstarlet, libxml-simple-ruby | freegeek-xmlsimple
 Recommends: freegeek-pctel, oem-config
 Description: Tools and customizations for freegeek users
@@ -15,7 +15,7 @@ Description: Tools and customizations for freegeek users
  configuration settings.
 
 Package: freegeek-xmlsimple
-Architecture: any
+Architecture: all
 Depends: ruby
 Conflicts: libxml-simple-ruby
 Description: The XmlSimple library
