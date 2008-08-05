@@ -40,10 +40,10 @@ tests:
     title: "Checking status of floppy drive:"
     pretest: "Please insert any floppy disk with data on it."
     commands: 
-    - pmount /media/floppy
+    - pmount /dev/fd0
     - ls /media/floppy
     - "#$DMESG | grep fd"
-    - pumount /media/floppy
+    - pumount /dev/fd0
     explanation: |-
       Floppy disk activity should generate some messages above.  If no
       messages show up, or if errors are listed, the floppy drive is not
