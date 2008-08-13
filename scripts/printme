@@ -25,7 +25,7 @@ begin
   require 'lib/xmlsimple' # installed by debian package, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=491730
                           # I'd assume that's where ubuntu puts it too
                           # Though I have no clue because packages.ubuntu.com has been timeing out for the last day
-rescue
+rescue LoadError
   require 'xmlsimple'     # installed by freegeek-xmlsimple, and someday where the real package will install it
 end
 require 'net/http'

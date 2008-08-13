@@ -1,12 +1,9 @@
-freegeek-extras (1.1.30~attempt2) ubuntu; urgency=low
-
-DO NOT RELEASE THIS EVIL THING!!!
+freegeek-extras (1.1.30~attempt3) UNRELEASED; urgency=low
 
   * changed the maintainer and uploaders
   * use a yaml config file for the server
   * added a new freegeek-xmlsimple package
     only use xmlsimple.rb from FG if another one isn't available.
-    (BROKEN: if the first require fails, then it doesn't fall back like it should)
   * If no firefox, then just print out the URL
   * Switch to real package sections
   * fixed init script to be lsb compliant
