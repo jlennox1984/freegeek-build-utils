@@ -32,7 +32,4 @@ for f in basiccheck bat_check printme 4reboots magix ; do
     done
 done
 
-CODENAME="$(lsb_release --codename --short)"
-sed -i 's/dapper/$CODENAME/g' /etc/apt/sources.list.d/freekbox.list
-
 #DEBHELPER#

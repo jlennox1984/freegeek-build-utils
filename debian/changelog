@@ -1,19 +1,22 @@
-freegeek-extras (1.1.30~attempt1) ubuntu; urgency=low
+freegeek-extras (1.1.30~attempt2) ubuntu; urgency=low
+
+DO NOT RELEASE THIS EVIL THING!!!
 
   * changed the maintainer and uploaders
   * use a yaml config file for the server
   * added a new freegeek-xmlsimple package
     only use xmlsimple.rb from FG if another one isn't available.
+    (BROKEN: if the first require fails, then it doesn't fall back like it should)
   * If no firefox, then just print out the URL
-  * Use the correct distro in freekbox.list
   * Switch to real package sections
   * fixed init script to be lsb compliant
   * Bumbed policy version, no changes
   * Added man pages, hoping that somebody
     will make use of them (I've seen people try)
   * Use /dev/fd0 for pmounting, because there can be different mount points
+    (BROKEN: I think, can't tell whether it was the floppy drive or the new basiccheck)
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Tue, 05 Aug 2008 13:48:41 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Tue, 12 Aug 2008 14:20:17 -0700
 
 freegeek-extras (1.1.28) ubuntu; urgency=low
 
