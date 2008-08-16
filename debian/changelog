@@ -1,4 +1,4 @@
-freegeek-extras (1.1.30~attempt3) ubuntu; urgency=low
+freegeek-extras (1.1.30~attempt4) ubuntu; urgency=low
 
   * changed the maintainer and uploaders
   * use a yaml config file for the server

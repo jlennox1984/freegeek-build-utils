@@ -41,7 +41,7 @@ tests:
     pretest: "Please insert any floppy disk with data on it."
     commands: 
     - pmount /dev/fd0
-    - ls /media/floppy
+    - "ls `mount | awk '/^\\\/dev\\\/fd0/{print $3}'`"
     - "#$DMESG | grep fd"
     - pumount /dev/fd0
     explanation: |-
