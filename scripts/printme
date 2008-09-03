@@ -293,4 +293,12 @@ def main
   end
 end
 
+def check_for_people_who_dont_read_the_instructions
+  if ENV['USER'] == "root"
+    puts "DO NOT RUN PRINTME AS ROOT. if you are typing 'sudo printme', then that is incorrect. Just type 'printme'."
+    exit 1
+  end
+end
+
+check_for_people_who_dont_read_the_instructions
 main
