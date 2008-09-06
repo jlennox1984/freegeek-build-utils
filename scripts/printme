@@ -19,7 +19,7 @@ $types_model = "type"
 $jobs_model = "action"
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=2
+$PRINTME_VERSION=3
 
 begin
   require 'lib/xmlsimple' # installed by debian package, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=491730
@@ -190,8 +190,8 @@ def get_id_and_stuff
   @jobs={}
   @types={}
 
-jobs_xml[$jobs_model].each { |x| @jobs[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
-  types_xml[$types_model].each { |x| @types[x["name"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
+jobs_xml[$jobs_model].each { |x| @jobs[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
+  types_xml[$types_model].each { |x| @types[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
 
   @system_id ||= prompt('If the system had an id on it already, enter that here',
                                    'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}

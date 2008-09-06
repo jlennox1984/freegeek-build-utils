@@ -1,3 +1,10 @@
+freegeek-extras (1.1.32) UNRELEASED; urgency=low
+
+  * updated printme version, to force an upgrade
+  * switch to description
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Sep 2008 14:33:21 -0700
+
 freegeek-extras (1.1.31) ubuntu; urgency=low
 
   * don't allow printme to be ran as root
