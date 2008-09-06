@@ -1,3 +1,12 @@
+freegeek-extras (1.1.33) UNRELEASED; urgency=low
+
+  * keep the choice number for the actions/types menus the same as
+    the id from the database
+  * figure out the default choice using the 'code's instead of the
+    'description's"
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Sep 2008 15:35:21 -0700
+
 freegeek-extras (1.1.32) ubuntu; urgency=low
 
   * updated printme version, to force an upgrade
