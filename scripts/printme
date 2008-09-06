@@ -190,17 +190,58 @@ def get_id_and_stuff
   @jobs={}
   @types={}
 
-jobs_xml[$jobs_model].each { |x| @jobs[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
+  jobs_xml[$jobs_model].each { |x| @jobs[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
   types_xml[$types_model].each { |x| @types[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
+
+  @jobs_by_name={}
+  @types_by_name={}
+
+  jobs_xml[$jobs_model].each { |x| @jobs_by_name[x["name"][0]] = x["description"][0] if x.class == Hash }
+  types_xml[$types_model].each { |x| @types_by_name[x["name"][0]] = x["description"][0] if x.class == Hash }
+
+  @jobs_arr = []
+  @types_arr = []
+
+  jobs_xml[$jobs_model].each { |x| @jobs_arr[x["id"][0]["content"].to_i] = x["description"][0] if x.class == Hash }
+  types_xml[$types_model].each { |x| @types_arr[x["id"][0]["content"].to_i] = x["description"][0] if x.class == Hash }
 
   @system_id ||= prompt('If the system had an id on it already, enter that here',
                                    'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
   system.close if system
 end
 
+#these two are stolen and modified from rubytui
+
+def my__displayMenu( head, ques, *m_items )
+  header head
+  m_items.each_with_index {|item, i|
+    if !item.nil?
+      highlight "\t%d" % i.to_s
+      display ": %s\n" % item
+    end
+  }
+  choice = prompt( ques )
+  return choice.empty? ? nil : choice.to_i
+end
+
+def my_menuWithDefault( head, ques, default, *m_items )
+  choice = my__displayMenu( head, ques + " [#{default}]", *m_items )
+  return default unless choice
+  valid_choices = []
+  m_items.each_with_index{|x,i|
+    valid_choices << i if !x.nil?
+  }
+  until valid_choices.include?( choice )
+    errorMessage "\nPlease enter a valid choice\n\n"
+    choice = my__displayMenu( head, ques + " [#{default}]", *m_items )
+    return default unless choice
+  end
+  return m_items[choice - 1]
+end
+
 def ask_and_send_stuff
-  job = menuWithDefault('Work Tasks', 'Which job did you perform?', "quality checker", *@jobs.keys)
-  type = menuWithDefault('System Type', 'What kind of system is this intended to be?', 'regular', *@types.keys)
+  job = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @jobs_by_name["checker"], *@jobs_arr)
+  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @types_by_name['regular'], *@types_arr)
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
 
