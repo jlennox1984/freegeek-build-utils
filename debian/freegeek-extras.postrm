@@ -1,3 +1,5 @@
 #!/bin/sh
 
+sed -i '/freegeek-extras/d' /etc/cups/cupsd.conf
+
 #DEBHELPER#

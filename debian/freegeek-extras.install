@@ -1,5 +1,6 @@
 basiccheck usr/bin/
 basicchecks.yml usr/share/freekbox/
+cupsd.conf usr/share/freekbox/
 LaserJet-4.ppd etc/cups/ppd/
 printers.conf usr/share/freekbox/
 freekbox.list etc/apt/sources.list.d/

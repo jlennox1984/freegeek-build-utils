@@ -1,9 +1,9 @@
 freegeek-extras (1.1.31) UNRELEASED; urgency=low
 
-  * don't allow printme to be ran as root. shouldn't affect
-    anything.
+  * don't allow printme to be ran as root
+  * turn cups browsing on
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Tue, 02 Sep 2008 22:32:38 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Sep 2008 13:46:38 -0700
 
 freegeek-extras (1.1.30) ubuntu; urgency=low
 
