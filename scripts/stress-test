@@ -2,35 +2,29 @@
 
 function help {
 echo -e "stress-test - runs a 3 minute stress test"
-echo -e 
+echo -e
 echo -e "usage:"
 echo -e "\t-h, --help    -  displays this message"
 echo -e "\t-v, --verbose -  runs stress in verbose mode"
 echo -e "\t-q, --quiet   -  runs stress in quiet mode, this is the default"
-exit 0
 }
 
 case "$1" in
-    --verbose)
+    --verbose|-v)
     ARG="--verbose"
     ;;
-    -v)
-    ARG="--verbose"
-    ;;
-    --quiet)
+    --quiet|-q|"")
     ARG="--quiet"
     ;;
-    -q)
-    ARG="--quiet"
-    ;;
-    -h)
+    --help|-h)
     help
-    ;;
-    --help)
-    help
+    exit 0
     ;;
     *)
-    ARG="--quiet"
+    echo "Unknown option: $1"
+    echo
+    help
+    exit 1
     ;;
 esac
 
