@@ -4,8 +4,9 @@ freegeek-extras (1.1.33) UNRELEASED; urgency=low
     the id from the database
   * figure out the default choice using the 'code's instead of the
     'description's"
+  * made stress-test simpler
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Sep 2008 15:35:21 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Sep 2008 17:09:35 -0700
 
 freegeek-extras (1.1.32) ubuntu; urgency=low
 
