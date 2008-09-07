@@ -240,7 +240,7 @@ def my_menuWithDefault( head, ques, default, *m_items )
     choice = my__displayMenu( head, ques + " [#{default}]", *m_items )
     return default unless choice
   end
-  return m_items[choice - 1]
+  return m_items[choice]
 end
 
 def ask_and_send_stuff
