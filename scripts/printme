@@ -319,8 +319,13 @@ def check_version
     exit retval
   end
   response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/check_compat?version=#{$PRINTME_VERSION}"))
-  xml = XmlSimple.xml_in(response.body)
-  compat = xml["compat"][0]["content"].to_bool
+  begin
+    xml = XmlSimple.xml_in(response.body)
+    compat = xml["compat"][0]["content"].to_bool
+  rescue
+    errorMessage "The server returned an invalid response. Seek expert attention." + "\n\n"
+    exit 1
+  end
   if !compat
     errorMessage xml["message"][0] + "\n\n"
     exit 1

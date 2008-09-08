@@ -5,8 +5,10 @@ freegeek-extras (1.1.33) UNRELEASED; urgency=low
   * figure out the default choice using the 'code's instead of the
     'description's"
   * made stress-test simpler
+  * if the server returns bad xml or something that was unexpected
+    then exit nicely
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Sep 2008 17:09:35 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sun, 07 Sep 2008 20:47:01 -0700
 
 freegeek-extras (1.1.32) ubuntu; urgency=low
 
