@@ -9,8 +9,9 @@ freegeek-extras (1.1.33) UNRELEASED; urgency=low
     then exit nicely
   * add checking for if the server is incompatible
   * better cleanup on removal
+  * don't clean the XML
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Wed, 10 Sep 2008 17:53:34 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Thu, 11 Sep 2008 21:53:39 -0700
 
 freegeek-extras (1.1.32) ubuntu; urgency=low
 

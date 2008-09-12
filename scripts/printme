@@ -126,18 +126,8 @@ def run_lshw_and_test_stuff
   if File.exist?("/var/lib/freegeek-extras/printme/lshw.xml")
     mv('/var/lib/freegeek-extras/printme/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
   end
-  $lshwname =  '/var/lib/freegeek-extras/printme/lshw.xml'
+  $lshwname = '/var/lib/freegeek-extras/printme/lshw.xml'
   system("sudo lshw -xml>#{$lshwname}")
-  retval = system("xmlstarlet val #{$lshwname} 1>&2 > /dev/null")
-  if retval != true
-    system("cat #{$lshwname} | tr -dc [:print:] | xmlstarlet fo > #{$lshwname}.clean")
-    mv($lshwname + ".clean", $lshwname)
-    newretval = system("xmlstarlet val #{$lshwname} 1>&2 > /dev/null")
-    if newretval != true
-      errorMessage "The xml file is not valid and I could not fix it!\nAsk a build instructor for help.\n\n"
-      exit 1
-    end
-  end
 end
 
 def do_setup
