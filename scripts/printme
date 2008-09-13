@@ -322,8 +322,8 @@ def check_version
   begin
     who_knows = xml["who-knows"][0]["content"].to_bool
   rescue
-    errorMessage "The server may be incompatible. This could lead to unexpected things happening. Continuing anyway..." + "\n\n"
-    who_knows = true
+    errorMessage "The server is incompatible. exiting." + "\n\n"
+    exit 1
   end
   if !compat
     errorMessage xml["message"][0] + "\n\n"
