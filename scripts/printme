@@ -337,6 +337,7 @@ def check_version
 end
 
 def main
+  check_for_people_who_dont_read_the_instructions
   check_version
   get_id_and_stuff
   run_lshw_and_test_stuff
@@ -354,5 +355,4 @@ def check_for_people_who_dont_read_the_instructions
   end
 end
 
-check_for_people_who_dont_read_the_instructions
 main
