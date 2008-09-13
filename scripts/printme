@@ -4,7 +4,8 @@ require 'yaml'
 f = File.open('/etc/printme.yml')
 yaml = YAML.load(f.read)
 f.close
-if !(yaml.keys == ['server', 'port'] || yaml.keys == ['port', 'server'])
+keys = ['server', 'port']
+if !(yaml.keys - keys == [] && keys - yaml.keys == [])
   puts "Invalid configuration file"
   exit 1
 end
