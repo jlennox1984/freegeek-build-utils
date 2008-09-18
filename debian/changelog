@@ -1,3 +1,9 @@
+freegeek-extras (1.1.33) ubuntu; urgency=low
+
+  * turn off browsing
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Wed, 17 Sep 2008 22:40:02 -0700
+
 freegeek-extras (1.1.32) ubuntu; urgency=low
 
   * updated printme version, to force an upgrade
