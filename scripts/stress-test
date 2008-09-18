@@ -1,31 +1,37 @@
 #!/bin/bash
 
 function help {
-    echo -e "stress-test - runs a 3 minute stress test"
-    echo -e
-    echo -e "usage:"
-    echo -e "\t-h, --help    -  displays this message"
-    echo -e "\t-v, --verbose -  runs stress in verbose mode"
-    echo -e "\t-q, --quiet   -  runs stress in quiet mode, this is the default"
+echo -e "stress-test - runs a 3 minute stress test"
+echo -e 
+echo -e "usage:"
+echo -e "\t-h, --help    -  displays this message"
+echo -e "\t-v, --verbose -  runs stress in verbose mode"
+echo -e "\t-q, --quiet   -  runs stress in quiet mode, this is the default"
+exit 0
 }
 
 case "$1" in
-    --verbose|-v)
-        ARG="--verbose"
-        ;;
-    --quiet|-q|"")
-        ARG="--quiet"
-        ;;
-    --help|-h)
-        help
-        exit 0
-        ;;
+    --verbose)
+    ARG="--verbose"
+    ;;
+    -v)
+    ARG="--verbose"
+    ;;
+    --quiet)
+    ARG="--quiet"
+    ;;
+    -q)
+    ARG="--quiet"
+    ;;
+    -h)
+    help
+    ;;
+    --help)
+    help
+    ;;
     *)
-        echo "Unknown option: $1"
-        echo
-        help
-        exit 1
-        ;;
+    ARG="--quiet"
+    ;;
 esac
 
 echo "Running stress test..."

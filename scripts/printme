@@ -4,8 +4,7 @@ require 'yaml'
 f = File.open('/etc/printme.yml')
 yaml = YAML.load(f.read)
 f.close
-keys = ['server', 'port']
-if !(yaml.keys - keys == [] && keys - yaml.keys == [])
+if !(yaml.keys == ['server', 'port'] || yaml.keys == ['port', 'server'])
   puts "Invalid configuration file"
   exit 1
 end
@@ -20,7 +19,7 @@ $types_model = "type"
 $jobs_model = "action"
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=5
+$PRINTME_VERSION=3
 
 begin
   require 'lib/xmlsimple' # installed by debian package, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=491730
@@ -93,10 +92,8 @@ def fetch(url, limit = 10)
 
   response = Net::HTTP.get_response(URI.parse(url))
   case response
-  when Net::HTTPSuccess
-    response
-  when Net::HTTPRedirection
-    fetch(response['location'], limit - 1)
+  when Net::HTTPSuccess     then response
+  when Net::HTTPRedirection then fetch(response['location'], limit - 1)
   else
     nil
   end
@@ -109,14 +106,12 @@ def post_form(url, query, headers)
     con.read_timeout = TIMEOUT_SECONDS
     begin
       response = con.post(url.path, query, headers)
-      case response
-      when Net::HTTPSuccess
-        return response
-      when Net::HTTPRedirection
-        return fetch(response['location'], limit - 1)
-      else
-        nil
-      end
+        case response
+        when Net::HTTPSuccess     then return response
+        when Net::HTTPRedirection then return fetch(response['location'], limit - 1)
+        else
+          nil
+        end
     rescue => e
       nil
     end
@@ -127,8 +122,18 @@ def run_lshw_and_test_stuff
   if File.exist?("/var/lib/freegeek-extras/printme/lshw.xml")
     mv('/var/lib/freegeek-extras/printme/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
   end
-  $lshwname = '/var/lib/freegeek-extras/printme/lshw.xml'
+  $lshwname =  '/var/lib/freegeek-extras/printme/lshw.xml'
   system("sudo lshw -xml>#{$lshwname}")
+  retval = system("xmlstarlet val #{$lshwname} 1>&2 > /dev/null")
+  if retval != true
+    system("cat #{$lshwname} | tr -dc [:print:] | xmlstarlet fo > #{$lshwname}.clean")
+    mv($lshwname + ".clean", $lshwname)
+    newretval = system("xmlstarlet val #{$lshwname} 1>&2 > /dev/null")
+    if newretval != true
+      errorMessage "The xml file is not valid and I could not fix it!\nAsk a build instructor for help.\n\n"
+      exit 1
+    end
+  end
 end
 
 def do_setup
@@ -185,58 +190,17 @@ def get_id_and_stuff
   @jobs={}
   @types={}
 
-  jobs_xml[$jobs_model].each { |x| @jobs[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
+jobs_xml[$jobs_model].each { |x| @jobs[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
   types_xml[$types_model].each { |x| @types[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
 
-  @jobs_by_name={}
-  @types_by_name={}
-
-  jobs_xml[$jobs_model].each { |x| @jobs_by_name[x["name"][0]] = x["description"][0] if x.class == Hash }
-  types_xml[$types_model].each { |x| @types_by_name[x["name"][0]] = x["description"][0] if x.class == Hash }
-
-  @jobs_arr = []
-  @types_arr = []
-
-  jobs_xml[$jobs_model].each { |x| @jobs_arr[x["id"][0]["content"].to_i] = x["description"][0] if x.class == Hash }
-  types_xml[$types_model].each { |x| @types_arr[x["id"][0]["content"].to_i] = x["description"][0] if x.class == Hash }
-
   @system_id ||= prompt('If the system had an id on it already, enter that here',
-                        'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
+                                   'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
   system.close if system
 end
 
-#these two are stolen and modified from rubytui
-
-def my__displayMenu( head, ques, *m_items )
-  header head
-  m_items.each_with_index {|item, i|
-    if !item.nil?
-      highlight "\t%d" % i.to_s
-      display ": %s\n" % item
-    end
-  }
-  choice = prompt( ques )
-  return choice.empty? ? nil : choice.to_i
-end
-
-def my_menuWithDefault( head, ques, default, *m_items )
-  choice = my__displayMenu( head, ques + " [#{default}]", *m_items )
-  return default unless choice
-  valid_choices = []
-  m_items.each_with_index{|x,i|
-    valid_choices << i if !x.nil?
-  }
-  until valid_choices.include?( choice )
-    errorMessage "\nPlease enter a valid choice\n\n"
-    choice = my__displayMenu( head, ques + " [#{default}]", *m_items )
-    return default unless choice
-  end
-  return m_items[choice]
-end
-
 def ask_and_send_stuff
-  job = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @jobs_by_name["checker"], *@jobs_arr)
-  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @types_by_name['regular'], *@types_arr)
+  job = menuWithDefault('Work Tasks', 'Which job did you perform?', "quality checker", *@jobs.keys)
+  type = menuWithDefault('System Type', 'What kind of system is this intended to be?', 'regular', *@types.keys)
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
 
@@ -310,34 +274,15 @@ def check_version
     exit retval
   end
   response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/check_compat?version=#{$PRINTME_VERSION}"))
-  cli_compat = false
-  ser_compat = false
-  begin
-    xml = XmlSimple.xml_in(response.body)
-  rescue
-    errorMessage "The server returned an invalid response. Seek expert attention." + "\n\n"
-    exit 1
-  end
-  begin
-    cli_compat = xml["cli-compat"][0]["content"].to_bool
-  rescue
-    errorMessage "The server returned an invalid response. It may be incompatible. Seek expert attention." + "\n\n"
-    exit 1
-  end
-  begin
-    ser_compat = xml["ser-compat"][0]["content"].to_bool
-  rescue
-    errorMessage "The server is incompatible. exiting." + "\n\n"
-    exit 1
-  end
-  if !(ser_compat && cli_compat)
+  xml = XmlSimple.xml_in(response.body)
+  compat = xml["compat"][0]["content"].to_bool
+  if !compat
     errorMessage xml["message"][0] + "\n\n"
     exit 1
   end
 end
 
 def main
-  check_for_people_who_dont_read_the_instructions
   check_version
   get_id_and_stuff
   run_lshw_and_test_stuff
@@ -355,4 +300,5 @@ def check_for_people_who_dont_read_the_instructions
   end
 end
 
+check_for_people_who_dont_read_the_instructions
 main
