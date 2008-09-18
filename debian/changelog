@@ -1,3 +1,18 @@
+freegeek-extras (1.1.34) UNRELEASED; urgency=low
+
+  * keep the choice number for the actions/types menus the same as
+    the id from the database
+  * figure out the default choice using the 'code's instead of the
+    'description's"
+  * made stress-test simpler
+  * if the server returns bad xml or something that was unexpected
+    then exit nicely
+  * add checking for if the server is incompatible
+  * better cleanup on removal
+  * don't clean the XML
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Thu, 11 Sep 2008 21:53:39 -0700
+
 freegeek-extras (1.1.33) ubuntu; urgency=low
 
   * turn off browsing

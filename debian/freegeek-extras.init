@@ -16,9 +16,9 @@ set_hostname() {
         HNAME=`hostname`
         if [ "$HNAME" != 'freekbox' ]; then
             hostname freekbox
+            cp /etc/hostname /etc/hostname_freekbox
             echo freekbox > /etc/hostname
             sed -i "s/$HNAME/freekbox/g" /etc/hosts
-            touch /etc/hostname_freekbox
         fi
     fi
 }
