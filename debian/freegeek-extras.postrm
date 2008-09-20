@@ -3,7 +3,7 @@
 sed -i '/freegeek-extras/d' /etc/cups/cupsd.conf
 sed -i '/freegeek-extras/d' /etc/cups/printers.conf
 
-if [ ! -f /etc/hostname_freekbox ]; then
+if [ -f /etc/hostname_freekbox ]; then
     HNAME=`hostname`
     ORIG="$(cat /etc/hostname_freekbox)"
     if [ "$HNAME" = 'freekbox' ] && [ ! -z "$ORIG" ]; then
