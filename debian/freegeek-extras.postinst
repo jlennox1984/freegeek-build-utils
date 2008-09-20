@@ -4,7 +4,6 @@ if [ "$1" = "configure" ]; then
     #violation of some debian policy, i'm sure
     #:TODO: find out what file ownership this and the ppd file need to be
     grep -q LaserJet-4 /etc/cups/printers.conf || cat /usr/share/freekbox/printers.conf >> /etc/cups/printers.conf
-    grep -q freegeek-extras /etc/cups/cupsd.conf || echo "Include /usr/share/freekbox/cupsd.conf #freegeek-extras" >> /etc/cups/cupsd.conf
 
     RELEASE="$(lsb_release --release --short)"
     case "$RELEASE" in

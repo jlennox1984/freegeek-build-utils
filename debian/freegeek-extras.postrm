@@ -1,6 +1,7 @@
 #!/bin/sh
 
 sed -i '/freegeek-extras/d' /etc/cups/cupsd.conf
+sed -i '/freegeek-extras/d' /etc/cups/lpoptions
 sed -i '/freegeek-extras/d' /etc/cups/printers.conf
 
 if [ -f /etc/hostname_freekbox ]; then

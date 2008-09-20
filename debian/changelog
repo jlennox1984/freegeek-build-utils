@@ -1,3 +1,11 @@
+freegeek-extras (1.1.36) UNRELEASED; urgency=low
+
+  * added a printer option to printme that turns on browsing and sets
+    the default printer
+  * added better cd stuff to basic check that uses udev
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 20 Sep 2008 01:29:11 -0700
+
 freegeek-extras (1.1.35) ubuntu; urgency=low
 
   * copy and paste error. fix the set hostname back code.

@@ -336,8 +336,29 @@ def check_version
   end
 end
 
+def printer_setup
+  printer = ARGV[2]
+  system('sudo su - -c "echo \"Browsing Yes #freegeek-extras\" >> /etc/cups/cupsd.conf"')
+  system('sudo /etc/init.d/cups restart')
+  if !`lpstat -p -d | awk '/^printer /{print $2}'`.split("\n").include?(printer)
+    puts "Please specify a valid printer."
+    p_fix
+    exit 1
+  end
+  system('sudo su - -c "echo \"Default #{printer} #freegeek-extras\" >> /etc/cups/lpoptions"')
+end
+
+#TODO: add an error method that runs errorMessage, p_fix (if needed) and exit 1.
+
+def p_fix
+  system("/etc/init.d/freegeek-extras stop")
+end
+
 def main
   check_for_people_who_dont_read_the_instructions
+  if ARGV[0] == "-p"
+    printer_setup
+  end
   check_version
   get_id_and_stuff
   run_lshw_and_test_stuff
@@ -345,6 +366,9 @@ def main
   url="http://#{$server}/#{$reports_controller}s/show/#{@report_id}"
   if ! system "firefox #{url}"
     puts url
+  end
+  if ARGV[0] == "-p"
+    p_fix
   end
 end
 

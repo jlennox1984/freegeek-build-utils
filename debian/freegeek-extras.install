@@ -1,6 +1,5 @@
 basiccheck usr/bin/
 basicchecks.yml usr/share/freekbox/
-cupsd.conf usr/share/freekbox/
 LaserJet-4.ppd etc/cups/ppd/
 printers.conf usr/share/freekbox/
 freekbox.list etc/apt/sources.list.d/
@@ -11,3 +10,5 @@ scripts/magix usr/sbin/
 scripts/stress-test usr/bin/
 printme.yml etc/
 scripts/biosnofloppy usr/bin/
+libexec/freegeek_show_cd_drives usr/lib/
+libexec/freegeek_show_cd_drives.awk usr/lib/

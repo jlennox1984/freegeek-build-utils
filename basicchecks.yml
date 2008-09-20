@@ -1,6 +1,6 @@
 tests: 
   checkCdromDrive: 
-    command: "#$DMESG | egrep '^hd[b-d]|(scd|sg)[0-9]'"
+    command: /usr/lib/freegeek_show_cd_drives
     title: "Checking status of CD ROM:"
     explanation: |-
       The output should contain reference to a CD ROM and possibly a

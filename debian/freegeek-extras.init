@@ -23,11 +23,19 @@ set_hostname() {
     fi
 }
 
+cleanup_cups() {
+    sed -i '/freegeek-extras/d' /etc/cups/cupsd.conf
+    sed -i '/freegeek-extras/d' /etc/cups/lpoptions
+}
+
 # implement required options as no-op's
 case $1 in
     start|restart)
         set_hostname;
         ;;
-    stop|force-reload) true ;;
+    force-reload) true ;;
+    stop)
+        cleanup_cups;
+        ;;
 esac
 
