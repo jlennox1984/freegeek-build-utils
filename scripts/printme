@@ -336,11 +336,41 @@ def check_version
   end
 end
 
+def printer_there?(printer)
+  `lpstat -p`.split("\n").map{|x| x.split(" ")[1]}.include?(printer)
+end
+
 def printer_setup
   printer = ARGV[1]
   system('sudo su - -c "echo \"Browsing Yes #freegeek-extras\" >> /etc/cups/cupsd.conf"')
   system('sudo /etc/init.d/cups restart >/dev/null')
-  if !`lpstat -p`.split("\n").map{|x| x.split(" ")[1]}.include?(printer)
+  num = 0
+  found=false
+  if printer.nil? || printer.empty?
+    errorMessage "the #{ARGV[0]} option required an option (the printer's name)" + "\n"
+    exit 1
+  end
+  # in my tests it took about 27 seconds for cups to figure it out
+  while num < 10
+    num += 1
+    printf "looking for printer #{printer}..."
+    if printer_there?(printer)
+      found=true
+      puts "found it"
+      break
+    else
+      found=false
+      printf "not found "
+      if num < 10
+        sleep 5
+        puts "(will try again in a few seconds)"
+      else
+        puts "(giving up)"
+      end
+    end
+  end
+  puts
+  if !found
     errorMessage "Please specify a valid printer." + "\n\n"
     exit 1
   end
