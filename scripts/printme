@@ -349,8 +349,12 @@ end
 
 def main
   check_for_people_who_dont_read_the_instructions
-  if ARGV[0] == "-p"
+  if ARGV[0] == "-p" || ARGV[0] == "--printer"
     printer_setup
+  end
+  if ARGV[0] == "-h" || ARGV[0] == "--help"
+    system("man 1 printme | cat -")
+    exit 0
   end
   check_version
   get_id_and_stuff
