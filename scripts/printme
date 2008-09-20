@@ -340,7 +340,7 @@ def printer_setup
   printer = ARGV[1]
   system('sudo su - -c "echo \"Browsing Yes #freegeek-extras\" >> /etc/cups/cupsd.conf"')
   system('sudo /etc/init.d/cups restart >/dev/null')
-  if !`lpstat -p -d | awk '/^printer /{print $2}'`.split("\n").include?(printer)
+  if !`lpstat -p`.split("\n").map{|x| x.split(" ")[1]}.include?(printer)
     errorMessage "Please specify a valid printer." + "\n\n"
     exit 1
   end
