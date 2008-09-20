@@ -31,6 +31,7 @@ cleanup_cups() {
 # implement required options as no-op's
 case $1 in
     start|restart)
+        cleanup_cups;
         set_hostname;
         ;;
     force-reload) true ;;

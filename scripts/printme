@@ -337,21 +337,14 @@ def check_version
 end
 
 def printer_setup
-  printer = ARGV[2]
+  printer = ARGV[1]
   system('sudo su - -c "echo \"Browsing Yes #freegeek-extras\" >> /etc/cups/cupsd.conf"')
-  system('sudo /etc/init.d/cups restart')
+  system('sudo /etc/init.d/cups restart >/dev/null')
   if !`lpstat -p -d | awk '/^printer /{print $2}'`.split("\n").include?(printer)
-    puts "Please specify a valid printer."
-    p_fix
+    errorMessage "Please specify a valid printer." + "\n\n"
     exit 1
   end
-  system('sudo su - -c "echo \"Default #{printer} #freegeek-extras\" >> /etc/cups/lpoptions"')
-end
-
-#TODO: add an error method that runs errorMessage, p_fix (if needed) and exit 1.
-
-def p_fix
-  system("/etc/init.d/freegeek-extras stop")
+  system("sudo su - -c \"echo \\\"Default #{printer} #freegeek-extras\\\" >> /etc/cups/lpoptions\"")
 end
 
 def main
@@ -366,9 +359,6 @@ def main
   url="http://#{$server}/#{$reports_controller}s/show/#{@report_id}"
   if ! system "firefox #{url}"
     puts url
-  end
-  if ARGV[0] == "-p"
-    p_fix
   end
 end
 
