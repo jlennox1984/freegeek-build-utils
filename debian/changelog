@@ -1,8 +1,8 @@
-freegeek-extras (1.1.38) UNRELEASED; urgency=low
+freegeek-extras (1.1.38) ubuntu; urgency=low
 
   * work on ubuntu too (cupsys in /etc/init.d)
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 27 Sep 2008 11:47:32 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 27 Sep 2008 11:48:00 -0700
 
 freegeek-extras (1.1.37) ubuntu; urgency=low
 
