@@ -1,8 +1,8 @@
-freegeek-extras (1.1.37) UNRELEASED; urgency=low
+freegeek-extras (1.1.37) ubuntu; urgency=low
 
   * added man page for biosnofloppy
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sun, 21 Sep 2008 21:47:38 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 27 Sep 2008 11:21:43 -0700
 
 freegeek-extras (1.1.36) ubuntu; urgency=low
 
