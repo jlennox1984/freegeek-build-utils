@@ -343,7 +343,14 @@ end
 def printer_setup
   printer = ARGV[1]
   system('sudo su - -c "echo \"Browsing Yes #freegeek-extras\" >> /etc/cups/cupsd.conf"')
-  system('sudo /etc/init.d/cups restart >/dev/null')
+  if File.exists?("/etc/init.d/cups")
+    system('sudo /etc/init.d/cups restart >/dev/null')
+  elsif File.exists?("/etc/init.d/cupsys")
+    system('sudo /etc/init.d/cupsys restart >/dev/null')
+  else
+    errorMessage "ERROR: Can't figure out how to restart cups\n\n"
+    exit 1
+  end
   num = 0
   found=false
   if printer.nil? || printer.empty?
