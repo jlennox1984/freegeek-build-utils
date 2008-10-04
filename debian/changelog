@@ -1,3 +1,9 @@
+freegeek-extras (1.1.39) UNRELEASED; urgency=low
+
+  * added bash completion
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Fri, 03 Oct 2008 22:14:53 -0700
+
 freegeek-extras (1.1.38) ubuntu; urgency=low
 
   * work on ubuntu too (cupsys in /etc/init.d)
