@@ -1,0 +1,60 @@
+# -*- Shell-Script -*-
+
+_printme(){
+    local list i found
+    if [[ "${COMP_WORDS[COMP_CWORD-1]}" == "-p" ]] || [[ "${COMP_WORDS[i]}" == "--printer" ]]; then
+        list="uptop double"
+    else
+        i=$(($COMP_CWORD - 1))
+        found=false
+        until [ $i -lt 0 ]; do
+            if [[ "${COMP_WORDS[i]}" == "-p" ]] || [[ "${COMP_WORDS[i]}" == "--printer" ]]; then
+                found=true
+                break
+            fi
+            i=$(($i - 1))
+        done
+        if [[ "$found" == "false" ]]; then
+            list="--printer"
+        else
+            list=""
+        fi
+    fi
+    COMPREPLY=($(compgen -W "${list}" -- ${COMP_WORDS[COMP_CWORD]}))
+    return 0
+}
+
+_stress-test(){
+    local list
+    list=""
+    if [ $COMP_CWORD -eq 1 ]; then
+        list="--help --verbose --quiet"
+    fi
+    COMPREPLY=($(compgen -W "${list}" -- ${COMP_WORDS[COMP_CWORD]}))
+    return 0
+}
+
+_magix(){
+    COMPREPLY=($(compgen -W "" -- ${COMP_WORDS[COMP_CWORD]}))
+    return 0
+}
+
+_bat_check(){
+    COMPREPLY=($(compgen -W "" -- ${COMP_WORDS[COMP_CWORD]}))
+    return 0
+}
+
+_biosnofloppy(){
+    if [ $COMP_CWORD -eq 1 ]; then
+        COMPREPLY=($(compgen -A file -- ${COMP_WORDS[COMP_CWORD]}))
+    else
+        COMPREPLY=($(compgen -W "" -- ${COMP_WORDS[COMP_CWORD]}))
+    fi
+    return 0
+}
+
+complete -F _magix magix
+complete -F _biosnofloppy biosnofloppy
+complete -F _bat_check bat_check
+complete -F _printme printme
+complete -F _stress-test stress-test
