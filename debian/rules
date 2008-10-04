@@ -7,4 +7,12 @@
 DEB_DH_ALWAYS_EXCLUDE=.svn
 DEB_DH_MD5SUMS_ARGS=-X/.svn
 
+# ryan52 <3 debhelper
+#%:
+#	dh "$@"
+
 include /usr/share/cdbs/1/rules/debhelper.mk
+
+binary-install/freegeek-extras::
+	dh_bash-completion -pfreegeek-extras
+
