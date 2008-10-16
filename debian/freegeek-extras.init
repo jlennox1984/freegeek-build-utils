@@ -24,8 +24,12 @@ set_hostname() {
 }
 
 cleanup_cups() {
-    sed -i '/freegeek-extras/d' /etc/cups/cupsd.conf
-    sed -i '/freegeek-extras/d' /etc/cups/lpoptions
+    if test -f /etc/cups/cupsd.conf; then
+        sed -i '/freegeek-extras/d' /etc/cups/cupsd.conf
+    fi
+    if test -f /etc/cups/lpoptions; then
+        sed -i '/freegeek-extras/d' /etc/cups/lpoptions
+    fi
 }
 
 # implement required options as no-op's
