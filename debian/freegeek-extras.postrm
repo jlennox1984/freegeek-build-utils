@@ -1,8 +1,16 @@
 #!/bin/sh
 
-sed -i '/freegeek-extras/d' /etc/cups/cupsd.conf
-sed -i '/freegeek-extras/d' /etc/cups/lpoptions
-sed -i '/freegeek-extras/d' /etc/cups/printers.conf
+if test -f /etc/cups/cupsd.conf; then
+    sed -i '/freegeek-extras/d' /etc/cups/cupsd.conf
+fi
+
+if test -f /etc/cups/lpoptions; then
+    sed -i '/freegeek-extras/d' /etc/cups/lpoptions
+fi
+
+if test -f /etc/cups/printers.conf; then
+    sed -i '/freegeek-extras/d' /etc/cups/printers.conf
+fi
 
 if [ -f /etc/hostname_freekbox ]; then
     HNAME=`hostname`
