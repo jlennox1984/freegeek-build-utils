@@ -1,3 +1,9 @@
+freegeek-extras (1.1.42) UNRELEASED; urgency=low
+
+  * in prerm too. this time it's gonna work.
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Wed, 15 Oct 2008 18:35:02 -0700
+
 freegeek-extras (1.1.41) ubuntu; urgency=low
 
   * try again. just add the file.
