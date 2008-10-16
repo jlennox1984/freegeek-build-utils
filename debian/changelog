@@ -1,3 +1,9 @@
+freegeek-extras (1.1.40) UNRELEASED; urgency=low
+
+  * actually fix the upgrades
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Wed, 15 Oct 2008 18:28:49 -0700
+
 freegeek-extras (1.1.39) ubuntu; urgency=low
 
   * added bash completion
