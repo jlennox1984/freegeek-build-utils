@@ -21,7 +21,7 @@ $jobs_model = "action"
 $contracts_model = "contract"
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=5
+$PRINTME_VERSION=6
 
 begin
   require 'lib/xmlsimple' # installed by debian package, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=491730
