@@ -1,3 +1,9 @@
+freegeek-extras (1.1.43) UNRELEASED; urgency=low
+
+  * contract support. bumped printme version to force upgrade.
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Wed, 29 Oct 2008 20:54:56 -0700
+
 freegeek-extras (1.1.42) ubuntu; urgency=low
 
   * in prerm too. this time it's gonna work.
