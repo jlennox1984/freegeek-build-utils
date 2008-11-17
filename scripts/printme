@@ -24,11 +24,11 @@ $COLOR = true #make things cool
 $PRINTME_VERSION=6
 
 begin
+  require 'xmlsimple'     # installed by freegeek-xmlsimple, and someday where the real package will install it
+rescue LoadError
   require 'lib/xmlsimple' # installed by debian package, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=491730
                           # I'd assume that's where ubuntu puts it too
                           # Though I have no clue because packages.ubuntu.com has been timeing out for the last day
-rescue LoadError
-  require 'xmlsimple'     # installed by freegeek-xmlsimple, and someday where the real package will install it
 end
 require 'net/http'
 require 'cgi'
