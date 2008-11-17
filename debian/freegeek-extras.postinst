@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ "$1" = "configure" ]; then
     #violation of some debian policy, i'm sure
     #:TODO: find out what file ownership this and the ppd file need to be
