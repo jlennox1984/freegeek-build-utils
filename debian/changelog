@@ -1,6 +1,6 @@
 freegeek-extras (1.1.44) UNRELEASED; urgency=low
 
-  * removed dependancy on libxml-ruby, debconf-utils, and xmlstarlet.
+  * removed dependency on libxml-ruby, debconf-utils, and xmlstarlet.
 
  -- Ryan Niebur <ryanryan52@gmail.com>  Mon, 03 Nov 2008 22:47:08 -0800
 
