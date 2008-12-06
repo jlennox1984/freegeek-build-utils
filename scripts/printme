@@ -21,7 +21,7 @@ $jobs_model = "action"
 $contracts_model = "contract"
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=6
+$PRINTME_VERSION=7
 
 begin
   require 'xmlsimple'     # installed by freegeek-xmlsimple, and someday where the real package will install it
@@ -366,7 +366,7 @@ def check_version
     errorMessage "The server is incompatible. exiting." + "\n\n"
     exit 1
   end
-  if !(ser_compat && cli_compat)
+  if !((ser_compat || xml["minimum-version"][0]["content"].to_i == 6) && cli_compat)
     errorMessage xml["message"][0] + "\n\n"
     exit 1
   end
