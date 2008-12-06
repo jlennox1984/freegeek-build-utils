@@ -227,12 +227,12 @@ def my__displayMenu( head, ques, *m_items )
   return choice.empty? ? nil : choice.to_i
 end
 
-def my_menuWithDefault( head, ques, default, *m_items )
+def my_menuWithDefault( head, ques, default, is_evil, *m_items )
   if (m_items - [default, nil]).length == 0
     return default
   end
   choice = my__displayMenu( head, ques + " [#{default}]", *m_items )
-  return default unless choice
+  return default unless choice or is_evil
   valid_choices = []
   m_items.each_with_index{|x,i|
     valid_choices << i if !x.nil?
@@ -240,15 +240,36 @@ def my_menuWithDefault( head, ques, default, *m_items )
   until valid_choices.include?( choice )
     errorMessage "\nPlease enter a valid choice\n\n"
     choice = my__displayMenu( head, ques + " [#{default}]", *m_items )
-    return default unless choice
+    return default unless choice or is_evil
   end
   return m_items[choice]
 end
 
+def show_message
+  puts
+  puts colored("You are either entering the contract for the first time on this system, or are changing it.", 'bold', 'green')
+  out = prompt "Are you sure that you entered it correctly (HINT: look at the sticker)?", "Please type yes or no" do |x|
+    x.match(/yes/i) || x.match(/no/i)
+  end
+  return out.match(/yes/i)
+end
+
 def ask_and_send_stuff
-  job = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @jobs_by_name["checker"], *@jobs_arr)
-  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @types_by_name['regular'], *@types_arr)
-  contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", @contracts_by_name['default'], *@contracts_arr)
+  job = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @jobs_by_name["checker"], false, *@jobs_arr)
+  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @types_by_name['regular'], false, *@types_arr)
+  default = @contracts_arr[XmlSimple.xml_in(File.read("/var/lib/freegeek-extras/printme/system.xml"))["contract-id"][0]["content"].to_i] if File.exists?("/var/lib/freegeek-extras/printme/system.xml")
+  first_time = default.nil? or default.empty?
+#  default = @contracts_by_name['default'] if first_time
+  loop do
+    contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", default, true, *@contracts_arr)
+    if first_time or contract != default
+      if show_message
+        break
+      end
+    else
+      break
+    end
+  end
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
 
