@@ -255,6 +255,7 @@ def show_message
 end
 
 def ask_and_send_stuff
+  #TODO: choose the default type based on the last report. this isn't saved on the systems table, so it's gonna be a bit messy.
   job = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @jobs_by_name["checker"], false, *@jobs_arr)
   type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @types_by_name['regular'], false, *@types_arr)
   default = @contracts_arr[XmlSimple.xml_in(File.read("/var/lib/freegeek-extras/printme/system.xml"))["contract-id"][0]["content"].to_i] if File.exists?("/var/lib/freegeek-extras/printme/system.xml")
