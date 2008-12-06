@@ -247,7 +247,7 @@ end
 
 def show_message
   puts
-  puts colored("You are either entering the contract for the first time on this system, or are changing it.", 'bold', 'green')
+  puts colored("You are are changing the contract.", 'bold', 'green')
   out = prompt "Are you sure that you entered it correctly (HINT: look at the sticker)?", "Please type yes or no" do |x|
     x.match(/yes/i) || x.match(/no/i)
   end
@@ -263,7 +263,7 @@ def ask_and_send_stuff
 #  default = @contracts_by_name['default'] if first_time
   loop do
     contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", default, true, *@contracts_arr)
-    if first_time or contract != default
+    if contract != default
       if show_message
         break
       end
