@@ -1,7 +1,8 @@
 freegeek-extras (1.1.44) ubuntu; urgency=low
 
   * removed dependency on libxml-ruby, debconf-utils, and xmlstarlet.
-  * rework how the contracts are asked to try to reduce user error (FGDB: #570, #563)
+  * rework how the contracts are asked to try to reduce user error (FGDB:
+    #570, #563)
 
  -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Dec 2008 12:46:38 -0800
 
