@@ -1,3 +1,9 @@
+freegeek-extras (1.1.45) ubuntu; urgency=low
+
+  * fix bug
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Dec 2008 16:49:58 -0800
+
 freegeek-extras (1.1.44) ubuntu; urgency=low
 
   * removed dependency on libxml-ruby, debconf-utils, and xmlstarlet.
@@ -5,7 +11,7 @@ freegeek-extras (1.1.44) ubuntu; urgency=low
     #570, #563)
     - bump printme version
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Dec 2008 12:46:38 -0800
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 06 Dec 2008 16:49:47 -0800
 
 freegeek-extras (1.1.43) ubuntu; urgency=low
 
