@@ -21,7 +21,7 @@ $jobs_model = "action"
 $contracts_model = "contract"
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=7
+$PRINTME_VERSION=8
 
 begin
   require 'xmlsimple'     # installed by freegeek-xmlsimple, and someday where the real package will install it
@@ -268,7 +268,7 @@ def ask_and_send_stuff
   contract = nil
   loop do
     contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", default, true, *@contracts_arr)
-    if contract != default
+    if contract != default && !first_time
       if show_message
         break
       end
@@ -370,7 +370,7 @@ def check_version
     errorMessage "The server is incompatible. exiting." + "\n\n"
     exit 1
   end
-  if !((ser_compat || xml["minimum-version"][0]["content"].to_i == 6) && cli_compat)
+  if !((ser_compat || xml["minimum-version"][0]["content"].to_i == 6 || xml["minimum-version"][0]["content"].to_i == 7) && cli_compat)
     errorMessage xml["message"][0] + "\n\n"
     exit 1
   end
