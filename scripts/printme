@@ -43,86 +43,6 @@ trap( "SIGINT" ) {
   exit!( 1 )
 }
 
-module Multipart
-  # From: http://kfahlgren.com/code/multipart.rb
-  class Param
-    attr_accessor :k, :v
-    def initialize( k, v )
-      @k = k
-      @v = v
-    end
-
-    def to_multipart
-      return "Content-Disposition: form-data; name=\"#{CGI::escape k}\"\r\n\r\n#{v}\r\n"
-    end
-  end
-  class FileParam
-    attr_accessor :k, :filename, :content
-    def initialize( k, filename, content )
-      @k = k
-      @filename = filename
-      @content = content
-    end
-
-    def to_multipart
-      # Don't escape mine
-      return "Content-Disposition: form-data; name=\"#{k}\"; filename=\"#{filename}\"\r\n" + "Content-Transfer-Encoding: binary\r\n" + "Content-Type: application/xml\r\n\r\n" + content + "\r\n"
-    end
-  end
-  class MultipartPost
-    BOUNDARY = 'tarsiers-rule0000'
-    HEADER = {"Content-type" => "multipart/form-data, boundary=" + BOUNDARY + " ", "User-Agent"=>"printme v" + $PRINTME_VERSION.to_s}
-
-    def prepare_query (params)
-      fp = []
-      params.each {|k,v|
-        if v.respond_to?(:read)
-          fp.push(FileParam.new(k, v.path, v.read))
-        else
-          fp.push(Param.new(k,v))
-        end
-      }
-      query = fp.collect {|p| "--" + BOUNDARY + "\r\n" + p.to_multipart }.join("") + "--" + BOUNDARY + "--"
-      return query, HEADER
-    end
-  end
-end
-
-def fetch(url, limit = 10)
-  return nil if limit == 0
-
-  response = Net::HTTP.get_response(URI.parse(url))
-  case response
-  when Net::HTTPSuccess
-    response
-  when Net::HTTPRedirection
-    fetch(response['location'], limit - 1)
-  else
-    nil
-  end
-end
-
-TIMEOUT_SECONDS = 30
-def post_form(url, query, headers)
-  limit=10
-  Net::HTTP.start(url.host, url.port) { |con|
-    con.read_timeout = TIMEOUT_SECONDS
-    begin
-      response = con.post(url.path, query, headers)
-      case response
-      when Net::HTTPSuccess
-        return response
-      when Net::HTTPRedirection
-        return fetch(response['location'], limit - 1)
-      else
-        nil
-      end
-    rescue => e
-      nil
-    end
-  }
-end
-
 def run_lshw_and_test_stuff
   if File.exist?("/var/lib/freegeek-extras/printme/lshw.xml")
     mv('/var/lib/freegeek-extras/printme/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
@@ -232,10 +152,7 @@ def ask_and_send_stuff
   job = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @jobs_by_name["checker"], false, *@jobs_arr)
   type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @types_by_name['regular'], false, *@types_arr)
   default = nil
-  if File.exists?("/var/lib/freegeek-extras/printme/system.xml")
-    xml = XmlSimple.xml_in(File.read("/var/lib/freegeek-extras/printme/system.xml"))
-    default = @contracts_arr[xml["contract-id"][0]["content"].to_i] if xml["contract-id"]
-  end
+  # TODO: get teh contract (but also get the system id based on the XML) via SOAP and set the default to that
   first_time = default.nil? or default.empty?
   default = @contracts_by_name['default'] if first_time
   contract = nil
