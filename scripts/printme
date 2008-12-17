@@ -384,14 +384,23 @@ def add_method(*args)
   @driver.add_method(*args)
 end
 
+  def add_methods
+    # Connection Testing
+    add_method("ping")
+    # Version Checking
+    add_method("version_compat", "client_version")
+    add_method("version")
+    add_method("bad_client_error")
+    add_method("bad_server_error")
+    # Lists
+    add_method("actions")
+    add_method("types")
+    add_method("contracts")
+  end
+
 def setup_soap
   @driver = SOAP::RPC::Driver.new("http://#{$server}/", "urn:printme")
-  add_method("ping")
-  # Version Checking
-  add_method("version_compat", "client_version")
-  add_method("version")
-  add_method("bad_client_error")
-  add_method("bad_server_error")
+  add_methods # copy from the api
 end
 
 def main
