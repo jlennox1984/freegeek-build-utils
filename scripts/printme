@@ -149,33 +149,39 @@ def get_id_and_stuff
     @system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
   end
 
-  jobs_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$jobs_model}s_xml_index")).body)
-  contracts_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$contracts_model}s_xml_index")).body)
-  types_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$types_model}s_xml_index")).body)
+  actions = @driver.actions
+  contracts = @driver.contracts
+  types = @driver.types
 
   @jobs={}
   @types={}
   @contracts={}
 
-  jobs_xml[$jobs_model].each { |x| @jobs[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
-  contracts_xml[$contracts_model].each { |x| @contracts[x["label"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
-  types_xml[$types_model].each { |x| @types[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
-
   @jobs_by_name={}
   @types_by_name={}
   @contracts_by_name={}
-
-  jobs_xml[$jobs_model].each { |x| @jobs_by_name[x["name"][0]] = x["description"][0] if x.class == Hash }
-  contracts_xml[$contracts_model].each { |x| @contracts_by_name[x["name"][0]] = x["label"][0] if x.class == Hash }
-  types_xml[$types_model].each { |x| @types_by_name[x["name"][0]] = x["description"][0] if x.class == Hash }
 
   @jobs_arr = []
   @types_arr = []
   @contracts_arr=[]
 
-  jobs_xml[$jobs_model].each { |x| @jobs_arr[x["id"][0]["content"].to_i] = x["description"][0] if x.class == Hash }
-  contracts_xml[$contracts_model].each { |x| @contracts_arr[x["id"][0]["content"].to_i] = x["label"][0] if x.class == Hash }
-  types_xml[$types_model].each { |x| @types_arr[x["id"][0]["content"].to_i] = x["description"][0] if x.class == Hash }
+  actions.each{|x|
+    @jobs[x.description] = x.thing_id
+    @jobs_by_name[x.name] = x.description
+    @jobs_arr[x.thing_id] = x.description
+  }
+
+  types.each{|x|
+    @types[x.description] = x.thing_id
+    @types_by_name[x.name] = x.description
+    @types_arr[x.thing_id] = x.description
+  }
+
+  contracts.each{|x|
+    @contracts[x.label] = x.thing_id
+    @contracts_by_name[x.name] = x.label
+    @contracts_arr[x.thing_id] = x.label
+  }
 
   @system_id ||= prompt('If the system had an id on it already, enter that here',
                         'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
