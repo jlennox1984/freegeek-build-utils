@@ -133,36 +133,6 @@ def run_lshw_and_test_stuff
   system("sudo lshw -xml>#{$lshwname}")
 end
 
-def do_setup
-  if @system_id
-    old_id=@system_id
-    response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_system_show?id=#{old_id}"))
-    system_f=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
-    system_f.puts(response.body)
-    system_f.close
-    system_f=File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
-    message "Downloading old information."
-    response_xml = XmlSimple.xml_in(response.body)
-    if response_xml["error"]
-      system_f.close
-      system('rm /var/lib/freegeek-extras/printme/system.xml')
-      return false
-    end
-    @system_id=XmlSimple.xml_in(system_f)["id"][0]["content"].to_i
-    list_of_reports = []
-    XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_list_for_system?id=#{@system_id}")).body)[$reports_controller.gsub(/_/, '-')].each { |x| list_of_reports << x["id"][0]["content"] }
-    for report in list_of_reports
-      this_report = open("/var/lib/freegeek-extras/printme/#{$reports_controller}.#{report}.xml", 'w')
-      this_report.write(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_show/#{report}")).body)
-      this_report.close
-      message "."
-    end
-    message "Done!\n\n"
-  else
-    return false
-  end
-end
-
 def get_id_and_stuff
   if ! File.exist?('/var/lib/freegeek-extras/')
     system 'sudo mkdir /var/lib/freegeek-extras/'
@@ -172,13 +142,11 @@ def get_id_and_stuff
     mkdir('/var/lib/freegeek-extras/printme/')
   end
 
-  if File.exist?('/var/lib/freegeek-extras/printme/system.xml') #new printme has been ran
+  if File.exist?('/var/lib/freegeek-extras/printme/system_id')
+    @system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
+  elsif File.exist?('/var/lib/freegeek-extras/printme/system.xml') # old new printme has been ran
     system = File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
     @system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
-  else #the old/no printme has been ran
-    if File.exist?('/tmp/lshw.xml') #old printme has been ran
-      mv('/tmp/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
-    end
   end
 
   jobs_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$jobs_model}s_xml_index")).body)
@@ -314,25 +282,10 @@ def ask_and_send_stuff
   system_id=response_xml["system-id"][0]["content"]
   if system_id != @system_id
     @system_id = system_id
-    do_setup
-  end
-  printme = "/var/lib/freegeek-extras/printme/report.#{@report_id}.xml"
-  f = open(printme,'w')
-  f.write(response.body)
-  f.close()
-
-  if !File.exist?("/var/lib/freegeek-extras/printme/system.xml")
-    do_setup
   end
 
-  response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_system_show/#{@system_id}"))
   system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
-  response_xml = XmlSimple.xml_in(response.body)
-  if response_xml["error"]
-    errorMessage "The server return this error: " + response_xml["error"][0] + "\n\n"
-    exit 1
-  end
-  system.puts(response.body)
+  system.puts(@system_id)
   system.close
 end
 
