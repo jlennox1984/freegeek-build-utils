@@ -237,7 +237,7 @@ def ask_and_send_stuff
     default = @contracts_arr[xml["contract-id"][0]["content"].to_i] if xml["contract-id"]
   end
   first_time = default.nil? or default.empty?
-#  default = @contracts_by_name['default'] if first_time
+  default = @contracts_by_name['default'] if first_time
   contract = nil
   loop do
     contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", default, true, *@contracts_arr)
