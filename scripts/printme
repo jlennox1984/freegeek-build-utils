@@ -365,7 +365,7 @@ def check_version
       errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
       exit false
     end
-  rescue => e
+  rescue SOAP::RPCRoutingError, SOAP::ResponseFormatError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH, Errno::ENETDOWN, Errno::ENETUNREACH, Errno::ECONNRESET, Errno::ETIMEDOUT => e
     errorMessage "I could not connect to the server (#{e.message}).\nMake sure you are connected to the network and try again.\n\n"
     exit false
   end
@@ -450,11 +450,16 @@ def main
     system("man 1 printme | cat -")
     exit 0
   end
-  setup_soap
-  check_version
-  get_id_and_stuff
-  run_lshw_and_test_stuff
-  ask_and_send_stuff
+  begin
+    setup_soap
+    check_version
+    get_id_and_stuff
+    run_lshw_and_test_stuff
+    ask_and_send_stuff
+  rescue SOAP::FaultError => e
+    errorMessage "Server returned this error: #{e.message}\n\n"
+    exit 1
+  end
   url="http://#{$server}/#{$reports_controller}s/show/#{@report_id}"
   if ! system "firefox #{url}"
     puts url
