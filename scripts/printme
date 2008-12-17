@@ -284,7 +284,7 @@ def ask_and_send_stuff
     @system_id = system_id
   end
 
-  system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
+  system=File.open('/var/lib/freegeek-extras/printme/system_id', 'w')
   system.puts(@system_id)
   system.close
 end
