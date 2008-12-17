@@ -254,23 +254,30 @@ def ask_and_send_stuff
 
   lshw = File.open($lshwname, "rb")
   codename = `lsb_release --description --short`
+
   data = {
     "contact_id" => uid,
-    "#{$jobs_model}_id" => @jobs[job],
-    "#{$types_model}_id" => @types[type],
-    "#{$contracts_model}_id" => @contracts[contract],
-    "system_id" => @system_id,
+    "action_id" => @jobs[job],
+    "type_id" => @types[type],
+    "contract_id" => @contracts[contract],
+    "old_id" => @system_id,
     "notes" => notes,
-    "my_file" => lshw,
+    "lshw_output" => lshw.read,
     "os" => codename
   }
 
-  url = "http://#{$server}/#{$reports_controller}s/xml_create"
-  uri = URI.parse(url)
+  lshw.close
+
+  data_struct = @driver.empty_struct
+  data.each{|k,v|
+    eval("data_struct.#{k} = v")
+  }
+
+  puts @driver.submit(data_struct)
+  exit 0
 
   mp = Multipart::MultipartPost.new
   query, headers = mp.prepare_query(data)
-  lshw.close
 
   response = post_form(uri, query, headers)
   if response == nil
@@ -400,6 +407,11 @@ end
     add_method("actions")
     add_method("types")
     add_method("contracts")
+    # Printme
+    add_method("empty_struct")
+    add_method("submit", "printme_struct")
+    add_method("get_system_for_report", "report_id")
+    add_method("contract_id_for_system", "system_id")
   end
 
 def setup_soap
