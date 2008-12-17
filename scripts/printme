@@ -426,7 +426,7 @@ def main
     errorMessage "Server returned this error: #{e.message}\n\n"
     exit 1
   rescue NoMethodError, NameError
-    errorMessage "There's a BUG in printme!"
+    errorMessage "There's a BUG in printme!\n\n"
     exit 1
   end
   url="http://#{$server}/#{$reports_controller}s/show/#{@report_id}"
