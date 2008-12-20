@@ -199,6 +199,7 @@ def ask_and_send_stuff
   system=File.open('/var/lib/freegeek-extras/printme/system_id', 'w')
   system.puts(@system_id)
   system.close
+  Dir.glob("/var/lib/freegeek-extras/printme/{system,report.*,spec_sheet.*}.xml").each{|x| rm x} # remove teh cruft
 end
 
 class String
