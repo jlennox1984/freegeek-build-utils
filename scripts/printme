@@ -58,7 +58,7 @@ def get_id_and_stuff
     @old_system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
   elsif File.exist?('/var/lib/freegeek-extras/printme/system.xml') # old new printme has been ran
     require 'rexml/document'
-    @old_system_id ||= REXML::XPath.match(REXML::Document.new(File.read("/var/lib/freegeek-extras/printme/system.xml")), '/system/id').first.get_text.to_i
+    @old_system_id ||= REXML::XPath.match(REXML::Document.new(File.read("/var/lib/freegeek-extras/printme/system.xml")), '/system/id').first.get_text.to_s.to_i
   end
 
   @actions = @driver.actions
