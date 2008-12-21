@@ -43,12 +43,19 @@ trap( "SIGINT" ) {
   exit!( 1 )
 }
 
-def run_lshw_and_test_stuff
-  if File.exist?("/var/lib/freegeek-extras/printme/lshw.xml")
-    mv('/var/lib/freegeek-extras/printme/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
+def runit(lshwname)
+  if File.exist?(lshwname)
+    mv(lshwname, lshwname + '.old')
   end
-  $lshwname = '/var/lib/freegeek-extras/printme/lshw.xml'
-  system("sudo lshw -xml>#{$lshwname}")
+  system("sudo lshw -xml>#{lshwname}")
+end
+
+def run_lshw_and_test_stuff
+  lshwname = '/var/lib/freegeek-extras/printme/lshw.xml'
+  runit(lshwname)
+  lshw = File.open(lshwname, "rb")
+  @lshw_output = lshw.read
+  lshw.close
 end
 
 def get_id_and_stuff
@@ -61,19 +68,34 @@ def get_id_and_stuff
   end
 
   if File.exist?('/var/lib/freegeek-extras/printme/system_id')
-    @system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
+    @old_system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
   elsif File.exist?('/var/lib/freegeek-extras/printme/system.xml') # old new printme has been ran
     system = File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
-    @system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
+    @old_system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
   end
 
   @actions = @driver.actions
   @contracts = @driver.contracts
   @types = @driver.types
 
-  @system_id ||= prompt('If the system had an id on it already, enter that here',
+  @old_system_id ||= prompt('If the system had an id on it already, enter that here',
                         'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
   system.close if system
+end
+
+def get_current_info
+  @detected_system_id = @driver.get_system_id(@lshw_output).to_s
+  if @detected_system_id
+    @default_contract = @driver.contract_label_for_system(@detected_system_id)
+  else
+    @default_contract = @driver.default_contract_label
+  end
+  if @detected_system_id
+    @default_type = @driver.type_description_for_system(@detected_system_id)
+  else
+    @default_type = @driver.default_type_description
+  end
+  @default_action = @driver.default_action_description
 end
 
 #these two are stolen and modified from rubytui
@@ -128,17 +150,13 @@ class Array
 end
 
 def ask_and_send_stuff
-  #TODO: choose the default type based on the last report. this isn't saved on the systems table, so it's gonna be a bit messy.
-  action = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @actions.select{|x| x.name == 'checker'}.first.description, false, *@actions.to_my_array("description"))
-  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @types.select{|x| x.name == 'regular'}.first.description, false, *@types.to_my_array("description"))
-  default = nil
-  # TODO: get teh contract (but also get the system id based on the XML) via SOAP and set the default to that
-  first_time = default.nil? or default.empty?
-  default = @contracts.select{|x| x.name == 'default'}.first.label if first_time
+  action = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, false, *@actions.to_my_array("description"))
+  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, false, *@types.to_my_array("description"))
+  first_time = @detected_system_id.nil?
   contract = nil
   loop do
-    contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", default, true, *@contracts.to_my_array("label"))
-    if contract != default && !first_time
+    contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", @default_contract, true, *@contracts.to_my_array("label"))
+    if contract != @default_contract && !first_time
       if show_message
         break
       end
@@ -149,7 +167,6 @@ def ask_and_send_stuff
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
 
-  lshw = File.open($lshwname, "rb")
   codename = `lsb_release --description --short`
 
   data = {
@@ -157,13 +174,11 @@ def ask_and_send_stuff
     "action_id" => @actions.select{|x| x.description == action}.first.thing_id,
     "type_id" => @types.select{|x| x.description == type}.first.thing_id,
     "contract_id" => @contracts.select{|x| x.label == contract}.first.thing_id,
-    "old_id" => @system_id,
+    "old_id" => @old_system_id,
     "notes" => notes,
-    "lshw_output" => lshw.read,
+    "lshw_output" => @lshw_output,
     "os" => codename
   }
-
-  lshw.close
 
   data_struct = @driver.empty_struct
   data.each{|k,v|
@@ -172,12 +187,12 @@ def ask_and_send_stuff
 
   @report_id = @driver.submit(data_struct)
   system_id=@driver.get_system_for_report(@report_id)
-  if system_id != @system_id
-    @system_id = system_id
+  if system_id != @old_system_id
+    @old_system_id = system_id
   end
 
   system=File.open('/var/lib/freegeek-extras/printme/system_id', 'w')
-  system.puts(@system_id)
+  system.puts(@old_system_id)
   system.close
   Dir.glob("/var/lib/freegeek-extras/printme/{system,report.*,spec_sheet.*}.xml").each{|x| rm x} # remove teh cruft
 end
@@ -289,12 +304,18 @@ end
     add_method("actions")
     add_method("types")
     add_method("contracts")
+    add_method("default_action_description")
+    add_method("default_type_description")
+    add_method("default_contract_label")
     # Printme
     add_method("empty_struct")
     add_method("submit", "printme_struct")
+    # Random Crap
     add_method("get_system_for_report", "report_id")
-    add_method("contract_id_for_system", "system_id")
+    add_method("contract_label_for_system", "system_id")
+    add_method("type_description_for_system", "system_id")
     add_method("spec_sheet_url", "report_id")
+    add_method("get_system_id", "xml")
   end
 
 def setup_soap
@@ -314,8 +335,9 @@ def main
   begin
     setup_soap
     check_version
-    get_id_and_stuff
     run_lshw_and_test_stuff
+    get_id_and_stuff
+    get_current_info
     ask_and_send_stuff
   rescue SOAP::FaultError => e
     errorMessage "Server returned this error: #{e.message}\n\n"
