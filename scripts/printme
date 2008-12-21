@@ -14,27 +14,12 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 #configuration
 # $server="printme:80"
 
-#make this singular
-$reports_controller = "spec_sheet"
-$types_model = "type"
-$jobs_model = "action"
-$contracts_model = "contract"
-
 $COLOR = true #make things cool
-$PRINTME_VERSION=8
+$PRINTME_VERSION=9
 
-begin
-  require 'xmlsimple'     # installed by freegeek-xmlsimple, and someday where the real package will install it
-rescue LoadError
-  require 'lib/xmlsimple' # installed by debian package, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=491730
-                          # I'd assume that's where ubuntu puts it too
-                          # Though I have no clue because packages.ubuntu.com has been timeing out for the last day
-end
-require 'net/http'
-require 'cgi'
-require 'uri'
 require 'rubytui'
 require 'fileutils'
+require 'soap/rpc/driver'
 include FileUtils
 include RubyTUI
 
@@ -44,122 +29,20 @@ trap( "SIGINT" ) {
   exit!( 1 )
 }
 
-module Multipart
-  # From: http://kfahlgren.com/code/multipart.rb
-  class Param
-    attr_accessor :k, :v
-    def initialize( k, v )
-      @k = k
-      @v = v
-    end
-
-    def to_multipart
-      return "Content-Disposition: form-data; name=\"#{CGI::escape k}\"\r\n\r\n#{v}\r\n"
-    end
+def runit(lshwname)
+  return if $debug
+  if File.exist?(lshwname)
+    mv(lshwname, lshwname + '.old')
   end
-  class FileParam
-    attr_accessor :k, :filename, :content
-    def initialize( k, filename, content )
-      @k = k
-      @filename = filename
-      @content = content
-    end
-
-    def to_multipart
-      # Don't escape mine
-      return "Content-Disposition: form-data; name=\"#{k}\"; filename=\"#{filename}\"\r\n" + "Content-Transfer-Encoding: binary\r\n" + "Content-Type: application/xml\r\n\r\n" + content + "\r\n"
-    end
-  end
-  class MultipartPost
-    BOUNDARY = 'tarsiers-rule0000'
-    HEADER = {"Content-type" => "multipart/form-data, boundary=" + BOUNDARY + " ", "User-Agent"=>"printme v" + $PRINTME_VERSION.to_s}
-
-    def prepare_query (params)
-      fp = []
-      params.each {|k,v|
-        if v.respond_to?(:read)
-          fp.push(FileParam.new(k, v.path, v.read))
-        else
-          fp.push(Param.new(k,v))
-        end
-      }
-      query = fp.collect {|p| "--" + BOUNDARY + "\r\n" + p.to_multipart }.join("") + "--" + BOUNDARY + "--"
-      return query, HEADER
-    end
-  end
-end
-
-def fetch(url, limit = 10)
-  return nil if limit == 0
-
-  response = Net::HTTP.get_response(URI.parse(url))
-  case response
-  when Net::HTTPSuccess
-    response
-  when Net::HTTPRedirection
-    fetch(response['location'], limit - 1)
-  else
-    nil
-  end
-end
-
-TIMEOUT_SECONDS = 30
-def post_form(url, query, headers)
-  limit=10
-  Net::HTTP.start(url.host, url.port) { |con|
-    con.read_timeout = TIMEOUT_SECONDS
-    begin
-      response = con.post(url.path, query, headers)
-      case response
-      when Net::HTTPSuccess
-        return response
-      when Net::HTTPRedirection
-        return fetch(response['location'], limit - 1)
-      else
-        nil
-      end
-    rescue => e
-      nil
-    end
-  }
+  system("sudo lshw -xml>#{lshwname}")
 end
 
 def run_lshw_and_test_stuff
-  if File.exist?("/var/lib/freegeek-extras/printme/lshw.xml")
-    mv('/var/lib/freegeek-extras/printme/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
-  end
-  $lshwname = '/var/lib/freegeek-extras/printme/lshw.xml'
-  system("sudo lshw -xml>#{$lshwname}")
-end
-
-def do_setup
-  if @system_id
-    old_id=@system_id
-    response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_system_show?id=#{old_id}"))
-    system_f=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
-    system_f.puts(response.body)
-    system_f.close
-    system_f=File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
-    message "Downloading old information."
-    response_xml = XmlSimple.xml_in(response.body)
-    if response_xml["error"]
-      system_f.close
-      system('rm /var/lib/freegeek-extras/printme/system.xml')
-      return false
-    end
-    @system_id=XmlSimple.xml_in(system_f)["id"][0]["content"].to_i
-    list_of_reports = []
-    XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_list_for_system?id=#{@system_id}")).body)[$reports_controller.gsub(/_/, '-')].each { |x| list_of_reports << x["id"][0]["content"] }
-    for report in list_of_reports
-      this_report = open("/var/lib/freegeek-extras/printme/#{$reports_controller}.#{report}.xml", 'w')
-      this_report.write(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_show/#{report}")).body)
-      this_report.close
-      message "."
-    end
-    message "Done!\n\n"
-  else
-    return false
-  end
+  lshwname = '/var/lib/freegeek-extras/printme/lshw.xml'
+  runit(lshwname)
+  lshw = File.open(lshwname, "rb")
+  @lshw_output = lshw.read
+  lshw.close
 end
 
 def get_id_and_stuff
@@ -171,46 +54,34 @@ def get_id_and_stuff
     mkdir('/var/lib/freegeek-extras/printme/')
   end
 
-  if File.exist?('/var/lib/freegeek-extras/printme/system.xml') #new printme has been ran
-    system = File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
-    @system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
-  else #the old/no printme has been ran
-    if File.exist?('/tmp/lshw.xml') #old printme has been ran
-      mv('/tmp/lshw.xml', '/var/lib/freegeek-extras/printme/lshw.xml.old')
-    end
+  if File.exist?('/var/lib/freegeek-extras/printme/system_id')
+    @old_system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
+  elsif File.exist?('/var/lib/freegeek-extras/printme/system.xml') # old new printme has been ran
+    require 'rexml/document'
+    @old_system_id ||= REXML::XPath.match(REXML::Document.new(File.read("/var/lib/freegeek-extras/printme/system.xml")), '/system/id').first.get_text.to_i
   end
 
-  jobs_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$jobs_model}s_xml_index")).body)
-  contracts_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$contracts_model}s_xml_index")).body)
-  types_xml = XmlSimple.xml_in(Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/#{$types_model}s_xml_index")).body)
+  @actions = @driver.actions
+  @contracts = @driver.contracts
+  @types = @driver.types
 
-  @jobs={}
-  @types={}
-  @contracts={}
-
-  jobs_xml[$jobs_model].each { |x| @jobs[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
-  contracts_xml[$contracts_model].each { |x| @contracts[x["label"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
-  types_xml[$types_model].each { |x| @types[x["description"][0]] = x["id"][0]["content"].to_i if x.class == Hash }
-
-  @jobs_by_name={}
-  @types_by_name={}
-  @contracts_by_name={}
-
-  jobs_xml[$jobs_model].each { |x| @jobs_by_name[x["name"][0]] = x["description"][0] if x.class == Hash }
-  contracts_xml[$contracts_model].each { |x| @contracts_by_name[x["name"][0]] = x["label"][0] if x.class == Hash }
-  types_xml[$types_model].each { |x| @types_by_name[x["name"][0]] = x["description"][0] if x.class == Hash }
-
-  @jobs_arr = []
-  @types_arr = []
-  @contracts_arr=[]
-
-  jobs_xml[$jobs_model].each { |x| @jobs_arr[x["id"][0]["content"].to_i] = x["description"][0] if x.class == Hash }
-  contracts_xml[$contracts_model].each { |x| @contracts_arr[x["id"][0]["content"].to_i] = x["label"][0] if x.class == Hash }
-  types_xml[$types_model].each { |x| @types_arr[x["id"][0]["content"].to_i] = x["description"][0] if x.class == Hash }
-
-  @system_id ||= prompt('If the system had an id on it already, enter that here',
+  @old_system_id ||= prompt('If the system had an id on it already, enter that here',
                         'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
-  system.close if system
+end
+
+def get_current_info
+  @detected_system_id = @driver.get_system_id(@lshw_output).to_s
+  if @detected_system_id
+    @default_contract = @driver.contract_label_for_system(@detected_system_id)
+  else
+    @default_contract = @driver.default_contract_label
+  end
+  if @detected_system_id
+    @default_type = @driver.type_description_for_system(@detected_system_id)
+  else
+    @default_type = @driver.default_type_description
+  end
+  @default_action = @driver.default_action_description
 end
 
 #these two are stolen and modified from rubytui
@@ -254,21 +125,24 @@ def show_message
   return out.match(/yes/i)
 end
 
-def ask_and_send_stuff
-  #TODO: choose the default type based on the last report. this isn't saved on the systems table, so it's gonna be a bit messy.
-  job = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @jobs_by_name["checker"], false, *@jobs_arr)
-  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @types_by_name['regular'], false, *@types_arr)
-  default = nil
-  if File.exists?("/var/lib/freegeek-extras/printme/system.xml")
-    xml = XmlSimple.xml_in(File.read("/var/lib/freegeek-extras/printme/system.xml"))
-    default = @contracts_arr[xml["contract-id"][0]["content"].to_i] if xml["contract-id"]
+class Array
+  def to_my_array(thing)
+    arr = []
+    self.each{|x|
+      arr[x.thing_id] = eval("x.#{thing}")
+    }
+    arr
   end
-  first_time = default.nil? or default.empty?
-#  default = @contracts_by_name['default'] if first_time
+end
+
+def ask_and_send_stuff
+  action = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, false, *@actions.to_my_array("description"))
+  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, false, *@types.to_my_array("description"))
+  first_time = @detected_system_id.nil?
   contract = nil
   loop do
-    contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", default, true, *@contracts_arr)
-    if contract != default && !first_time
+    contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", @default_contract, true, *@contracts.to_my_array("label"))
+    if contract != @default_contract && !first_time
       if show_message
         break
       end
@@ -279,100 +153,68 @@ def ask_and_send_stuff
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
 
-  lshw = File.open($lshwname, "rb")
   codename = `lsb_release --description --short`
+
   data = {
     "contact_id" => uid,
-    "#{$jobs_model}_id" => @jobs[job],
-    "#{$types_model}_id" => @types[type],
-    "#{$contracts_model}_id" => @contracts[contract],
-    "system_id" => @system_id,
+    "action_id" => @actions.select{|x| x.description == action}.first.thing_id,
+    "type_id" => @types.select{|x| x.description == type}.first.thing_id,
+    "contract_id" => @contracts.select{|x| x.label == contract}.first.thing_id,
+    "old_id" => @old_system_id,
     "notes" => notes,
-    "my_file" => lshw,
+    "lshw_output" => @lshw_output,
     "os" => codename
   }
 
-  url = "http://#{$server}/#{$reports_controller}s/xml_create"
-  uri = URI.parse(url)
+  data_struct = @driver.empty_struct
+  data.each{|k,v|
+    eval("data_struct.#{k} = v")
+  }
 
-  mp = Multipart::MultipartPost.new
-  query, headers = mp.prepare_query(data)
-  lshw.close
-
-  response = post_form(uri, query, headers)
-  if response == nil
-    errorMessage "Problem posting to the server\n\n"
-    exit 1
-  end
-  response_xml = XmlSimple.xml_in(response.body)
-  if response_xml["error"]
-    errorMessage "The server return this error: " + response_xml["error"][0] + "\n\n"
-    exit 1
-  end
-  @report_id=response_xml["id"][0]["content"]
-  system_id=response_xml["system-id"][0]["content"]
-  if system_id != @system_id
-    @system_id = system_id
-    do_setup
-  end
-  printme = "/var/lib/freegeek-extras/printme/report.#{@report_id}.xml"
-  f = open(printme,'w')
-  f.write(response.body)
-  f.close()
-
-  if !File.exist?("/var/lib/freegeek-extras/printme/system.xml")
-    do_setup
+  @report_id = @driver.submit(data_struct)
+  system_id=@driver.get_system_for_report(@report_id)
+  if system_id != @old_system_id
+    @old_system_id = system_id
   end
 
-  response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/xml_system_show/#{@system_id}"))
-  system=File.open('/var/lib/freegeek-extras/printme/system.xml', 'w')
-  response_xml = XmlSimple.xml_in(response.body)
-  if response_xml["error"]
-    errorMessage "The server return this error: " + response_xml["error"][0] + "\n\n"
-    exit 1
-  end
-  system.puts(response.body)
+  system=File.open('/var/lib/freegeek-extras/printme/system_id', 'w')
+  system.puts(@old_system_id)
   system.close
+  Dir.glob("/var/lib/freegeek-extras/printme/{system,report.*,spec_sheet.*}.xml").each{|x| rm x} # remove teh cruft
 end
 
-class String
-  def to_bool
-    return true if self == "true"
-    return false if self.nil? || self == "false"
-    return nil
-  end
+def client_hash
+  client_versions = Hash.new([])
+  client_versions[1] = [1]      # dunno
+  client_versions[2] = [2,3]    # first one that makes it here. forced upgrade.
+  client_versions[3] = [3]      # forced upgrade
+  client_versions[4] = [3,4]    # forced upgrade
+  client_versions[5] = [5]      # forced. the server needs to clean the xml now since printme isn't.
+  client_versions[6] = [6,7]      # forced. add contracts support.
+  client_versions[7] = [6,7,8]      # forced. fix contracts support. (bad builder problem)
+  client_versions[8] = [6,7,8]      # forced. fix contracts support. (my bugs)
+  client_versions[9] = [9] # soap
+  client_versions
 end
 
 def check_version
-  retval = system("ping -c 1 #{$server.gsub(/:.*$/, '')} 1>&2 >/dev/null")
-  if retval != true
-    errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
-    exit retval
-  end
-  response = Net::HTTP.get_response(URI.parse("http://#{$server}/#{$reports_controller}s/check_compat?version=#{$PRINTME_VERSION}"))
-  cli_compat = false
-  ser_compat = false
   begin
-    xml = XmlSimple.xml_in(response.body)
-  rescue
-    errorMessage "The server returned an invalid response. Seek expert attention." + "\n\n"
-    exit 1
+    retval = @driver.ping
+    if retval != "pong"
+      errorMessage "I could not connect to the server.\nMake sure you are connected to the network and try again.\n\n"
+      exit false
+    end
+  rescue SOAP::RPCRoutingError, SOAP::ResponseFormatError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH, Errno::ENETDOWN, Errno::ENETUNREACH, Errno::ECONNRESET, Errno::ETIMEDOUT, NoMethodError, NameError => e
+    errorMessage "I could not connect to the server (#{e.message}).\nMake sure you are connected to the network and try again.\n\n"
+    exit false
   end
-  begin
-    cli_compat = xml["cli-compat"][0]["content"].to_bool
-  rescue
-    errorMessage "The server returned an invalid response. It may be incompatible. Seek expert attention." + "\n\n"
-    exit 1
+  if !@driver.version_compat($PRINTME_VERSION)
+    errorMessage @driver.bad_client_error
+    exit false
   end
-  begin
-    ser_compat = xml["ser-compat"][0]["content"].to_bool
-  rescue
-    errorMessage "The server is incompatible. exiting." + "\n\n"
-    exit 1
-  end
-  if !((ser_compat || xml["minimum-version"][0]["content"].to_i == 6 || xml["minimum-version"][0]["content"].to_i == 7) && cli_compat)
-    errorMessage xml["message"][0] + "\n\n"
-    exit 1
+  if !client_hash[$PRINTME_VERSION].include?(@driver.version)
+    errorMessage @driver.bad_server_error
+    exit false
   end
 end
 
@@ -424,6 +266,45 @@ def printer_setup
   system("sudo su - -c \"echo \\\"Default #{printer} #freegeek-extras\\\" >> /etc/cups/lpoptions\"")
 end
 
+def add_method(*args)
+  @driver.add_method(*args)
+end
+
+  def add_methods
+    # Connection Testing
+    add_method("ping")
+    # Version Checking
+    add_method("version_compat", "client_version")
+    add_method("version")
+    add_method("bad_client_error")
+    add_method("bad_server_error")
+    # Lists
+    add_method("actions")
+    add_method("types")
+    add_method("contracts")
+    add_method("default_action_description")
+    add_method("default_type_description")
+    add_method("default_contract_label")
+    # Printme
+    add_method("empty_struct")
+    add_method("submit", "printme_struct")
+    # Random Crap
+    add_method("get_system_for_report", "report_id")
+    add_method("contract_label_for_system", "system_id")
+    add_method("type_description_for_system", "system_id")
+    add_method("spec_sheet_url", "report_id")
+    add_method("get_system_id", "xml")
+  end
+
+def setup_soap
+  @driver = SOAP::RPC::Driver.new("http://#{$server}/", "urn:printme")
+  add_methods # copy from the api
+end
+
+def color(blah)
+  puts colored(blah) if $debug
+end
+
 def main
   check_for_people_who_dont_read_the_instructions
   if ARGV[0] == "-p" || ARGV[0] == "--printer"
@@ -433,11 +314,25 @@ def main
     system("man 1 printme | cat -")
     exit 0
   end
-  check_version
-  get_id_and_stuff
-  run_lshw_and_test_stuff
-  ask_and_send_stuff
-  url="http://#{$server}/#{$reports_controller}s/show/#{@report_id}"
+  begin
+    color "Setting up connection to the server..."
+    setup_soap
+    check_version
+    color "Running lshw..."
+    run_lshw_and_test_stuff
+    color "Getting information about this system's past..."
+    get_current_info
+    color "Asking questions and submitting to server..."
+    get_id_and_stuff
+    ask_and_send_stuff
+  rescue SOAP::FaultError => e
+    errorMessage "Server returned this error: #{e.message}\n\n"
+    exit 1
+  rescue NoMethodError, NameError
+    errorMessage "There's a BUG in printme!\n\n"
+    exit 1
+  end
+  url="http://#{$server}#{@driver.spec_sheet_url(@report_id)}"
   if ! system "firefox #{url}"
     puts url
   end
