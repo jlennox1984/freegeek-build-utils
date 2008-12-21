@@ -8,17 +8,8 @@ Standards-Version: 3.8.0
 
 Package: freegeek-extras
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, freegeek-archive-keyring, lshw, cups | cupsys, stress, lsb-release, alsa-utils, pmount, libxml-simple-ruby | freegeek-xmlsimple (= ${binary:Version}), mtools, syslinux
+Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, freegeek-archive-keyring, lshw, cups | cupsys, stress, lsb-release, alsa-utils, pmount, mtools, syslinux
 Recommends: freegeek-pctel, oem-config
 Description: Tools and customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
  configuration settings.
-
-Package: freegeek-xmlsimple
-Architecture: all
-Depends: ruby
-Section: libs
-Conflicts: libxml-simple-ruby
-Description: The XmlSimple library
- Repackaged version for use by freegeek-extras because
- Ubuntu Dapper doesn't have it.
