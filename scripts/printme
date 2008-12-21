@@ -17,9 +17,6 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 $COLOR = true #make things cool
 $PRINTME_VERSION=9
 
-require 'net/http'
-require 'cgi'
-require 'uri'
 require 'rubytui'
 require 'fileutils'
 require 'soap/rpc/driver'
@@ -184,14 +181,6 @@ def ask_and_send_stuff
   system.puts(@old_system_id)
   system.close
   Dir.glob("/var/lib/freegeek-extras/printme/{system,report.*,spec_sheet.*}.xml").each{|x| rm x} # remove teh cruft
-end
-
-class String
-  def to_bool
-    return true if self == "true"
-    return false if self.nil? || self == "false"
-    return nil
-  end
 end
 
 def client_hash
