@@ -44,6 +44,7 @@ trap( "SIGINT" ) {
 }
 
 def runit(lshwname)
+  return if $debug
   if File.exist?(lshwname)
     mv(lshwname, lshwname + '.old')
   end
@@ -323,6 +324,10 @@ def setup_soap
   add_methods # copy from the api
 end
 
+def color(blah)
+  puts colored(blah) if $debug
+end
+
 def main
   check_for_people_who_dont_read_the_instructions
   if ARGV[0] == "-p" || ARGV[0] == "--printer"
@@ -333,11 +338,15 @@ def main
     exit 0
   end
   begin
+    color "Setting up connection to the server..."
     setup_soap
     check_version
+    color "Running lshw..."
     run_lshw_and_test_stuff
-    get_id_and_stuff
+    color "Getting information about this system's past..."
     get_current_info
+    color "Asking questions and submitting to server..."
+    get_id_and_stuff
     ask_and_send_stuff
   rescue SOAP::FaultError => e
     errorMessage "Server returned this error: #{e.message}\n\n"
