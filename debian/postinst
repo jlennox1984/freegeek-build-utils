@@ -3,34 +3,7 @@
 set -e
 
 if [ "$1" = "configure" ]; then
-    #violation of some debian policy, i'm sure
-    #:TODO: find out what file ownership this and the ppd file need to be
     grep -q LaserJet-4 /etc/cups/printers.conf || cat /usr/share/freekbox/printers.conf >> /etc/cups/printers.conf
-
-    RELEASE="$(lsb_release --release --short)"
-    case "$RELEASE" in
-        6.06)
-            if [ -f /var/backups/xorg.conf ] && [ ! -f /etc/X11/xorg.conf ] ; then
-                mv -f /var/backups/xorg.conf /etc/X11/xorg.conf
-            fi
-            ;;
-        7.10)
-            if [ -f /etc/X11/xorg.conf ] && [ ! -f /var/backups/xorg.conf ] ; then
-                mv -f /etc/X11/xorg.conf /var/backups/
-            fi
-            ;;
-    esac
 fi
-
-# strip the executable bit from old unpackaged cruft in /usr/local/
-for f in basiccheck bat_check printme 4reboots magix ; do
-    for d in bin sbin ; do
-        script="/usr/local/$d/$f"
-        if [ -x "$script" ]; then
-            echo "WARNING: disabling obsolete script: $script"
-            chmod -x "$script"
-        fi
-    done
-done
 
 #DEBHELPER#
