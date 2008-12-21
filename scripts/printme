@@ -14,20 +14,9 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 #configuration
 # $server="printme:80"
 
-#make this singular
-$reports_controller = "spec_sheet"
-$types_model = "type"
-$jobs_model = "action"
-$contracts_model = "contract"
-
 $COLOR = true #make things cool
 $PRINTME_VERSION=9
 
-begin
-  require 'xmlsimple'     # installed by freegeek-xmlsimple, and where the real package installs it now
-rescue LoadError
-  require 'lib/xmlsimple' # installed by old debian package, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=491730
-end
 require 'net/http'
 require 'cgi'
 require 'uri'
@@ -71,8 +60,8 @@ def get_id_and_stuff
   if File.exist?('/var/lib/freegeek-extras/printme/system_id')
     @old_system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
   elsif File.exist?('/var/lib/freegeek-extras/printme/system.xml') # old new printme has been ran
-    system = File.open('/var/lib/freegeek-extras/printme/system.xml', 'r')
-    @old_system_id ||= XmlSimple.xml_in(system)["id"][0]["content"]
+    require 'rexml/document'
+    @old_system_id ||= REXML::XPath.match(REXML::Document.new(File.read("/var/lib/freegeek-extras/printme/system.xml")), '/system/id').first.get_text.to_i
   end
 
   @actions = @driver.actions
@@ -81,7 +70,6 @@ def get_id_and_stuff
 
   @old_system_id ||= prompt('If the system had an id on it already, enter that here',
                         'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
-  system.close if system
 end
 
 def get_current_info
