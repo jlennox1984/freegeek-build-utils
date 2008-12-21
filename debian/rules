@@ -1,12 +1,6 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-
-DEB_DH_ALWAYS_EXCLUDE=.svn
-DEB_DH_MD5SUMS_ARGS=-X/.svn
-
 # ryan52 <3 debhelper
 #%:
 #	dh "$@"
