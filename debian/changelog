@@ -3,8 +3,9 @@ freegeek-extras (1.2.0) UNRELEASED; urgency=low
   * version bump, because I'm bored
   * printme and fgss now talk via soap (tons of changes)
   * drop xmlsimple because it is no longer needed
+  * split out some of the modified tui stuff into tui
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sun, 21 Dec 2008 01:30:46 -0800
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sun, 21 Dec 2008 16:33:17 -0800
 
 freegeek-extras (1.1.46) ubuntu; urgency=low
 
