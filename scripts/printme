@@ -70,7 +70,7 @@ def get_id_and_stuff
 end
 
 def get_current_info
-  @detected_system_id = @driver.get_system_id(@lshw_output).to_s
+  @detected_system_id = @driver.get_system_id(@lshw_output)
   if @detected_system_id
     @default_contract = @driver.contract_label_for_system(@detected_system_id)
   else
