@@ -104,12 +104,12 @@ class Array
 end
 
 def ask_and_send_stuff
-  action = orderedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
-  type = orderedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
+  action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
+  type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
   first_time = @detected_system_id.nil?
   contract = nil
   loop do
-    contract = orderedMenuWithDefault('Contract Type', "What does the \"keeper\" label say?", @default_contract, @contracts.to_my_array("label"), true)
+    contract = numberedMenu('Contract Type', "What does the \"keeper\" label say? [#{@default_contract}]", @contracts.to_my_array("label"))
     if contract != @default_contract && !first_time
       if show_message
         break
