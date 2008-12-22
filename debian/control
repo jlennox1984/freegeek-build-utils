@@ -8,7 +8,7 @@ Standards-Version: 3.8.0
 
 Package: freegeek-extras
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby, freegeek-archive-keyring, lshw, cups | cupsys, stress, alsa-utils, pmount, mtools, syslinux
+Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby (>= 1.4), freegeek-archive-keyring, lshw, cups | cupsys, stress, alsa-utils, pmount, mtools, syslinux
 Recommends: freegeek-pctel, oem-config
 Description: Tools and customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
