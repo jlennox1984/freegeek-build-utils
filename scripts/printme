@@ -84,38 +84,6 @@ def get_current_info
   @default_action = @driver.default_action_description
 end
 
-#these two are stolen and modified from rubytui
-
-def my__displayMenu( head, ques, m_items )
-  header head
-  m_items.each_with_index {|item, i|
-    if !item.nil?
-      highlight "\t%d" % i.to_s
-      display ": %s\n" % item
-    end
-  }
-  choice = prompt( ques )
-  return choice.empty? ? nil : choice.to_i
-end
-
-def my_menuWithDefault( head, ques, default, is_evil, m_items )
-  if (m_items - [default, nil]).length == 0
-    return default
-  end
-  choice = my__displayMenu( head, ques + " [#{default}]", m_items )
-  return default unless choice or is_evil
-  valid_choices = []
-  m_items.each_with_index{|x,i|
-    valid_choices << i if !x.nil?
-  }
-  until valid_choices.include?( choice )
-    errorMessage "\nPlease enter a valid choice\n\n"
-    choice = my__displayMenu( head, ques + " [#{default}]", m_items )
-    return default unless choice or is_evil
-  end
-  return m_items[choice]
-end
-
 def show_message
   puts
   puts colored("You are are changing the contract.", 'bold', 'green')
@@ -136,12 +104,12 @@ class Array
 end
 
 def ask_and_send_stuff
-  action = my_menuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, false, @actions.to_my_array("description"))
-  type = my_menuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, false, @types.to_my_array("description"))
+  action = orderedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
+  type = orderedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
   first_time = @detected_system_id.nil?
   contract = nil
   loop do
-    contract = my_menuWithDefault('Contract Type', "What does the \"keeper\" label say?", @default_contract, true, *@contracts.to_my_array("label"))
+    contract = orderedMenuWithDefault('Contract Type', "What does the \"keeper\" label say?", @default_contract, @contracts.to_my_array("label"), true)
     if contract != @default_contract && !first_time
       if show_message
         break
