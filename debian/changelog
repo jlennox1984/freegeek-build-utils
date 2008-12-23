@@ -1,3 +1,9 @@
+freegeek-extras (1.2.1) ubuntu; urgency=low
+
+  * fix on boxes that printme has never ran on
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Tue, 23 Dec 2008 13:35:25 -0800
+
 freegeek-extras (1.2.0) ubuntu; urgency=low
 
   * version bump, because I'm bored
