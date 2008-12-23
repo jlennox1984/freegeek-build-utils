@@ -45,7 +45,7 @@ def run_lshw_and_test_stuff
   lshw.close
 end
 
-def get_id_and_stuff
+def make_dirs
   if ! File.exist?('/var/lib/freegeek-extras/')
     system 'sudo mkdir /var/lib/freegeek-extras/'
   end
@@ -53,7 +53,9 @@ def get_id_and_stuff
   if ! File.exist?('/var/lib/freegeek-extras/printme')
     mkdir('/var/lib/freegeek-extras/printme/')
   end
+end
 
+def get_id_and_stuff
   if File.exist?('/var/lib/freegeek-extras/printme/system_id')
     @old_system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
   elsif File.exist?('/var/lib/freegeek-extras/printme/system.xml') # old new printme has been ran
@@ -286,6 +288,8 @@ def main
     color "Setting up connection to the server..."
     setup_soap
     check_version
+    color "Making directories"
+    make_dirs
     color "Running lshw..."
     run_lshw_and_test_stuff
     color "Getting information about this system's past..."
