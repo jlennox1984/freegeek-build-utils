@@ -14,7 +14,6 @@ def mymain
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   text = prompt('What do you want to say?') # todo: have nano edit this
   data = {
-    "system_id" => @detected_system_id,
     "contact_id" => uid,
     "body" => text,
     "lshw_output" => @lshw_output
