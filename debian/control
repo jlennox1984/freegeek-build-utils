@@ -8,8 +8,24 @@ Standards-Version: 3.8.0
 
 Package: freegeek-extras
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby (>= 1.4), freegeek-archive-keyring, lshw, cups | cupsys, stress, alsa-utils, pmount, mtools, syslinux
+Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libtui-ruby (>= 1.4), freegeek-archive-keyring, lshw, cups | cupsys, stress, alsa-utils, pmount, mtools, syslinux, freegeek-extras-pdx | freegeek-extras-cmh
 Recommends: freegeek-pctel, oem-config
 Description: Tools and customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
  configuration settings.
+
+Package: freegeek-extras-pdx
+Architecture: all
+Depends: ${misc:Depends}, freegeek-extras
+Provides: freegeek-extras-freegeek
+Conflicts: freegeek-extras-cmh
+Description: Freegeek Extras configuration for PDX specific stuff
+ This contains freegeek-extras configuration files specific to Freegeek Portland's infrastructure.
+
+Package: freegeek-extras-cmh
+Architecture: all
+Depends: ${misc:Depends}, freegeek-extras
+Provides: freegeek-extras-freegeek
+Conflicts: freegeek-extras-pdx
+Description: Freegeek Extras configuration for CMH specific stuff
+ This contains freegeek-extras configuration files specific to Freegeek Columbus' infrastructure.
