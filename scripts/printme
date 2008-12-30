@@ -183,10 +183,7 @@ def mymain
   color "Asking questions and submitting to server..."
   get_id_and_stuff
   ask_and_send_stuff
-  url="http://#{$server}#{@driver.spec_sheet_url(@report_id)}"
-  if ! system "firefox #{url}"
-    puts url
-  end
+  look_at_url @driver.spec_sheet_url(@report_id)
 end
 
 main

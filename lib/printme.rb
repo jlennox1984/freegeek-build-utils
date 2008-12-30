@@ -143,3 +143,10 @@ def runit(lshwname)
   end
   system("sudo lshw -xml>#{lshwname}")
 end
+
+def look_at_url(path)
+  url="http://#{$server}#{path}"
+  if ! system "firefox #{url}"
+    puts url
+  end
+end
