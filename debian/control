@@ -16,8 +16,9 @@ Description: Tools and customizations for freegeek users
 
 Package: freegeek-extras-pdx
 Architecture: all
-Depends: ${misc:Depends}, freegeek-extras, freegeek-archive-keyring
+Depends: ${misc:Depends}, freegeek-extras (>= 1.2.2), freegeek-archive-keyring
 Provides: freegeek-extras-freegeek
+Replaces: freegeek-extras
 Conflicts: freegeek-extras-freegeek
 Description: Freegeek Extras configuration for PDX specific stuff
  This contains freegeek-extras configuration files specific to
