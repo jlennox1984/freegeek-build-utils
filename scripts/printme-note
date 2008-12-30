@@ -25,8 +25,7 @@ def mymain
   }
 
   num = @driver.submit_notes(data_struct)
-  # TODO: make a helper function to browse to this
-  puts @driver.system_url(@driver.get_system_for_note(num))
+  look_at_url(@driver.system_url(@driver.get_system_for_note(num)))
 end
 
 main
