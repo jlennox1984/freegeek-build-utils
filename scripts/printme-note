@@ -1,10 +1,32 @@
 #!/usr/bin/ruby
 
 require 'printme'
+require 'tempfile'
 
 def mymain
-    errorMessage "Not yet implemented\n\n"
-    exit 1
+  file = Tempfile.new("printme-note")
+  runit(file.path)
+  newfile = File.open(file.path)
+  @lshw_output = newfile.read
+  newfile.close
+  file.close
+  File.unlink(newfile.path)
+  @detected_system_id = @driver.get_system_id(@lshw_output)
+  uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
+  text = prompt('What do you want to say?') # todo: have nano edit this
+  data = {
+    "system_id" => @detected_system_id,
+    "contact_id" => uid,
+    "body" => text
+  }
+
+  data_struct = @driver.empty_notes_struct
+  data.each{|k,v|
+    eval("data_struct.#{k} = v")
+  }
+
+  @driver.submit_notes(data_struct)
+  puts @driver.system_url(@detected_system_id)
 end
 
 main

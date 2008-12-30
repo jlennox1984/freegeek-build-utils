@@ -52,11 +52,15 @@ end
     # Printme
     add_method("empty_struct")
     add_method("submit", "printme_struct")
+    # Notes
+    add_method("empty_notes_struct")
+    add_method("submit_notes", "notes_struct")
     # Random Crap
     add_method("get_system_for_report", "report_id")
     add_method("contract_label_for_system", "system_id")
     add_method("type_description_for_system", "system_id")
     add_method("spec_sheet_url", "report_id")
+    add_method("system_url", "system_id")
     add_method("get_system_id", "xml")
   end
 
