@@ -18,7 +18,7 @@ Package: freegeek-extras-pdx
 Architecture: all
 Depends: ${misc:Depends}, freegeek-extras
 Provides: freegeek-extras-freegeek
-Conflicts: freegeek-extras-cmh
+Conflicts: freegeek-extras-freegeek
 Description: Freegeek Extras configuration for PDX specific stuff
  This contains freegeek-extras configuration files specific to Freegeek Portland's infrastructure.
 
@@ -26,6 +26,6 @@ Package: freegeek-extras-cmh
 Architecture: all
 Depends: ${misc:Depends}, freegeek-extras
 Provides: freegeek-extras-freegeek
-Conflicts: freegeek-extras-pdx
+Conflicts: freegeek-extras-freegeek
 Description: Freegeek Extras configuration for CMH specific stuff
  This contains freegeek-extras configuration files specific to Freegeek Columbus' infrastructure.
