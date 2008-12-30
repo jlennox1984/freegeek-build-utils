@@ -3,7 +3,7 @@ Section: utils
 Priority: optional
 Maintainer: Freegeek Coders <coders@freegeek.org>
 Uploaders: Martin Chase <stillflame@freegeek.org>, Vagrant Cascadian <vagrant@freegeek.org>, Ryan Niebur <ryanryan52@gmail.com>
-Build-Depends: debhelper (>= 5.0.0), cdbs, bash-completion
+Build-Depends: debhelper (>= 7), bash-completion
 Standards-Version: 3.8.0
 
 Package: freegeek-extras

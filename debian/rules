@@ -1,12 +1,23 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-# ryan52 <3 debhelper
-#%:
-#	dh "$@"
+build: build-stamp
+build-stamp:
+	dh build
+	touch build-stamp
 
-include /usr/share/cdbs/1/rules/debhelper.mk
+clean:
+	dh clean
 
-binary-install/freegeek-extras::
-	dh_bash-completion -pfreegeek-extras
+install: build install-stamp
+install-stamp:
+	dh install
+	touch install-stamp
 
+binary-arch: install
+	dh binary-arch
+
+binary-indep: install
+	dh binary-indep
+
+binary: binary-arch binary-indep
