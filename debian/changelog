@@ -1,3 +1,9 @@
+freegeek-extras (1.2.2) UNRELEASED; urgency=low
+
+  * add printme-note
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Tue, 30 Dec 2008 05:24:56 -0800
+
 freegeek-extras (1.2.1) ubuntu; urgency=low
 
   * fix on boxes that printme has never ran on
