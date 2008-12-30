@@ -73,12 +73,24 @@ def color(blah)
   puts colored(blah) if $debug
 end
 
-def main
+def realmain
   check_for_people_who_dont_read_the_instructions
   color "Setting up connection to the server..."
   setup_soap
   check_version
   mymain
+end
+
+def main
+  begin
+    realmain
+  rescue SOAP::FaultError => e
+    errorMessage "Server returned this error: #{e.message}\n\n"
+    exit 1
+  rescue NoMethodError, NameError
+    errorMessage "There's a BUG in printme!\n\n"
+    exit 1
+  end
 end
 
 def check_for_people_who_dont_read_the_instructions

@@ -174,23 +174,15 @@ def mymain
     system("man 1 printme | cat -")
     exit 0
   end
-  begin
-    color "Making directories"
-    make_dirs
-    color "Running lshw..."
-    run_lshw_and_test_stuff
-    color "Getting information about this system's past..."
-    get_current_info
-    color "Asking questions and submitting to server..."
-    get_id_and_stuff
-    ask_and_send_stuff
-  rescue SOAP::FaultError => e
-    errorMessage "Server returned this error: #{e.message}\n\n"
-    exit 1
-  rescue NoMethodError, NameError
-    errorMessage "There's a BUG in printme!\n\n"
-    exit 1
-  end
+  color "Making directories"
+  make_dirs
+  color "Running lshw..."
+  run_lshw_and_test_stuff
+  color "Getting information about this system's past..."
+  get_current_info
+  color "Asking questions and submitting to server..."
+  get_id_and_stuff
+  ask_and_send_stuff
   url="http://#{$server}#{@driver.spec_sheet_url(@report_id)}"
   if ! system "firefox #{url}"
     puts url
