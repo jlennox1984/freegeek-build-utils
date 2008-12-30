@@ -1,8 +1,9 @@
 freegeek-extras (1.2.2) UNRELEASED; urgency=low
 
   * add printme-note
+  * added list-printmes
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Tue, 30 Dec 2008 05:24:56 -0800
+ -- Ryan Niebur <ryanryan52@gmail.com>  Tue, 30 Dec 2008 05:28:36 -0800
 
 freegeek-extras (1.2.1) ubuntu; urgency=low
 
