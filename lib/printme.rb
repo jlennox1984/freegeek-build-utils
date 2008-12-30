@@ -55,6 +55,7 @@ end
     # Notes
     add_method("empty_notes_struct")
     add_method("submit_notes", "notes_struct")
+    add_method("get_system_for_note", "note_id")
     # Random Crap
     add_method("get_system_for_report", "report_id")
     add_method("contract_label_for_system", "system_id")
@@ -87,7 +88,7 @@ def main
   rescue SOAP::FaultError => e
     errorMessage "Server returned this error: #{e.message}\n\n"
     exit 1
-  rescue NoMethodError, NameError
+#  rescue NoMethodError, NameError
     errorMessage "There's a BUG in printme!\n\n"
     exit 1
   end

@@ -11,13 +11,13 @@ def mymain
   newfile.close
   file.close
   File.unlink(newfile.path)
-  @detected_system_id = @driver.get_system_id(@lshw_output)
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   text = prompt('What do you want to say?') # todo: have nano edit this
   data = {
     "system_id" => @detected_system_id,
     "contact_id" => uid,
-    "body" => text
+    "body" => text,
+    "lshw_output" => @lshw_output
   }
 
   data_struct = @driver.empty_notes_struct
@@ -25,8 +25,9 @@ def mymain
     eval("data_struct.#{k} = v")
   }
 
-  @driver.submit_notes(data_struct)
-  puts @driver.system_url(@detected_system_id)
+  num = @driver.submit_notes(data_struct)
+  # TODO: make a helper function to browse to this
+  puts @driver.system_url(@driver.get_system_for_note(num))
 end
 
 main
