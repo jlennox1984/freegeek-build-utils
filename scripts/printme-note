@@ -1,0 +1,10 @@
+#!/usr/bin/ruby
+
+require 'printme'
+
+def mymain
+    errorMessage "Not yet implemented\n\n"
+    exit 1
+end
+
+main
