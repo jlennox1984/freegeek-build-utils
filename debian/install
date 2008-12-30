@@ -6,9 +6,12 @@ freekbox.list etc/apt/sources.list.d/
 scripts/bat_check usr/bin/
 scripts/printme usr/bin/
 scripts/magix usr/sbin/
+scripts/list-printmes usr/bin/
+scripts/printme-note usr/bin/
 %gconf.xml etc/skel/.gconf/desktop/gnome/applications/window_manager/
 scripts/stress-test usr/bin/
 printme.yml etc/
 scripts/biosnofloppy usr/bin/
 libexec/freegeek_show_cd_drives usr/lib/
 libexec/freegeek_show_cd_drives.awk usr/lib/
+lib/printme.rb usr/lib/ruby/1.8/
