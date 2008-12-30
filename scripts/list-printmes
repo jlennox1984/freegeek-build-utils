@@ -3,8 +3,15 @@
 require 'printme'
 
 def mymain
-    errorMessage "Not yet implemented\n\n"
-    exit 1
+  file = Tempfile.new("list-printmes")
+  runit(file.path)
+  newfile = File.open(file.path)
+  @lshw_output = newfile.read
+  newfile.close
+  file.close
+  File.unlink(newfile.path)
+  @detected_system_id = @driver.get_system_id(@lshw_output)
+  look_at_url(@driver.system_url(@detected_system_id))
 end
 
 main

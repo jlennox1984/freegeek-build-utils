@@ -22,6 +22,7 @@ require 'fileutils'
 require 'soap/rpc/driver'
 include FileUtils
 include RubyTUI
+require 'tempfile'
 
 trap( "SIGINT" ) {
   `reset -Q`

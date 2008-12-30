@@ -1,7 +1,6 @@
 #!/usr/bin/ruby
 
 require 'printme'
-require 'tempfile'
 
 def mymain
   file = Tempfile.new("printme-note")
