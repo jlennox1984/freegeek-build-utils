@@ -15,7 +15,7 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 # $server="printme:80"
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=9
+$PRINTME_VERSION=10
 
 require 'rubytui'
 require 'fileutils'
@@ -113,6 +113,11 @@ def client_hash
   client_versions[7] = [6,7,8]      # forced. fix contracts support. (bad builder problem)
   client_versions[8] = [6,7,8]      # forced. fix contracts support. (my bugs)
   client_versions[9] = [9] # soap
+  if File.basename($0) == "list-printmes" || File.basename($0) == "printme-note"
+    client_versions[10] = [10] # notes
+  else
+    client_versions[10] = [9,10] # soap
+  end
   client_versions
 end
 
@@ -128,11 +133,13 @@ def check_version
     exit false
   end
   if !@driver.version_compat($PRINTME_VERSION)
-    errorMessage @driver.bad_client_error
-    exit false
+    if @driver.version > $PRINTME_VERSION # bug in older versions
+      errorMessage @driver.bad_client_error + "\n"
+      exit false
+    end
   end
-  if !client_hash[$PRINTME_VERSION].include?(@driver.version)
-    errorMessage @driver.bad_server_error
+  if client_hash[$PRINTME_VERSION].class == Array && !client_hash[$PRINTME_VERSION].include?(@driver.version)
+    errorMessage @driver.bad_server_error + "\n"
     exit false
   end
 end
