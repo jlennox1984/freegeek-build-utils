@@ -1,7 +1,5 @@
 freegeek-extras (1.2.2) UNRELEASED; urgency=low
 
-  TODO: bump printme versions and test
-
   * implement notes
     - add printme-note
     - add list-printmes
