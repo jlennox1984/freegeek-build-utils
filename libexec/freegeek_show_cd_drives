@@ -1,9 +1,22 @@
 #!/bin/sh
 
+PATH=$PATH:/sbin
+
+myudevinfo() {
+    if which udevadm >/dev/null; then
+        udevadm info $@
+    elif which udevinfo >/dev/null; then
+        udevinfo $@
+    else
+        echo "Can't find udevinfo" >&2
+        exit 1
+    fi
+}
+
 TEMPDIR=`mktemp -d`
 for i in $(
-    for i in $(ls /sys/block/)
-    do udevinfo --query all --name $i > $TEMPDIR/$i
+    for i in $(ls /sys/block/); do
+        myudevinfo --query all --name $i > $TEMPDIR/$i
         if grep -q "E: ID_TYPE=cd" $TEMPDIR/$i; then
             printf "$i "
         fi

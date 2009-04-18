@@ -1,3 +1,9 @@
+freegeek-extras (1.2.3) UNRELEASED; urgency=low
+
+  * use udevadm, if it's available
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 18 Apr 2009 11:45:33 -0700
+
 freegeek-extras (1.2.2) ubuntu; urgency=low
 
   * implement notes
