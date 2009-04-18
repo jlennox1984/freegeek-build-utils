@@ -1,8 +1,8 @@
-freegeek-extras (1.2.4) UNRELEASED; urgency=low
+freegeek-extras (1.2.4) ubuntu; urgency=low
 
   * pull in freegeek-ubuntu-pocket-guide
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 18 Apr 2009 15:10:58 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 18 Apr 2009 15:11:11 -0700
 
 freegeek-extras (1.2.3) ubuntu; urgency=low
 
