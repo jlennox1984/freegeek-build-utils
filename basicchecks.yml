@@ -39,6 +39,7 @@ tests:
   checkFloppyDrive: 
     title: "Checking status of floppy drive:"
     pretest: "Please insert any floppy disk with data on it."
+    question: "Does this system have a floppy drive?"
     commands: 
     - pmount /dev/fd0
     - "ls `mount | awk '/^\\\/dev\\\/fd0/{print $3}'`"

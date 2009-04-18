@@ -173,6 +173,13 @@ def doTest( test )
     clear
     header title
     divider(50)
+
+    if instructions.has_key?('question')
+      response = promptWithDefault(instructions['question'], "yes", "Please enter 'yes' or 'no'" ) {|response|
+      response.match(/^[yn]/i)
+    }
+      return true if response.match(/^n/i)
+    end
     
     if instructions.has_key?('pretest')
         message instructions['pretest'] + "\n\n"
