@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Freegeek Coders <coders@freegeek.org>
 Uploaders: Martin Chase <stillflame@freegeek.org>, Vagrant Cascadian <vagrant@freegeek.org>, Ryan Niebur <ryanryan52@gmail.com>
 Build-Depends: debhelper (>= 7), bash-completion
-Standards-Version: 3.8.0
+Standards-Version: 3.8.1
 
 Package: freegeek-extras
 Architecture: all
