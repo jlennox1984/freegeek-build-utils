@@ -1,11 +1,11 @@
-freegeek-extras (1.2.3) UNRELEASED; urgency=low
+freegeek-extras (1.2.3) ubuntu; urgency=low
 
   * use udevadm, if it's available
   * ask a question for the floppy drive test ... at the end of the
     tests, it really should say which tests were skipped, but it doesn't
   * Debian Policy 3.8.1
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 18 Apr 2009 12:00:39 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 18 Apr 2009 14:59:21 -0700
 
 freegeek-extras (1.2.2) ubuntu; urgency=low
 
