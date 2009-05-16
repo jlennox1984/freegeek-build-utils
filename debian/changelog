@@ -1,3 +1,9 @@
+freegeek-extras (1.2.5) UNRELEASED; urgency=low
+
+  * look for more than just hda ... hdb, hdc, etc
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 16 May 2009 16:39:57 -0700
+
 freegeek-extras (1.2.4) ubuntu; urgency=low
 
   * pull in freegeek-ubuntu-pocket-guide

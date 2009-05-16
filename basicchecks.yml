@@ -9,7 +9,7 @@ tests:
       NOTE: The CD ROM may not show up in BIOS. This is not a
       problem.
   checkHardDrive: 
-    command: "#$DMESG | egrep '[hs]da'"
+    command: "#$DMESG | egrep '[hs]d[a-z]'"
     title: "Checking status of hard drive:"
     explanation: |-
       This command is showing information corresponding to the
