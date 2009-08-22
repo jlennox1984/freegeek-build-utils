@@ -1,3 +1,9 @@
+freegeek-extras (1.2.6) UNRELEASED; urgency=low
+
+  * add dependency on ndisgtk (Closes: #14923)
+
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 22 Aug 2009 12:31:05 -0700
+
 freegeek-extras (1.2.5) ubuntu; urgency=low
 
   * look for more than just hda ... hdb, hdc, etc
