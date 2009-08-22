@@ -206,6 +206,7 @@ def doTest( test )
             message "With output of:\n\n"
             display `#{command}`
             retval = eval( rubytest )
+            answer = retval ? "yes" : "no"
         else
             highlight "Test failed.\n\n"
             message instructions['failure'] + "\n\n"
