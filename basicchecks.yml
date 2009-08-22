@@ -125,4 +125,4 @@ tests:
       The value should be close to the number of megabytes of memory
       you have installed in this system.  It will typically be a
       bit smaller (e.g. 502 for a 512 megabyte system).
-server: pingme.fglan
+server: pingme.freegeek.org.
