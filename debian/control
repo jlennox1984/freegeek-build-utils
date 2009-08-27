@@ -1,5 +1,5 @@
 Source: freegeek-extras
-Section: utils
+Section: ubuntu/utils
 Priority: optional
 Maintainer: Freegeek Coders <coders@freegeek.org>
 Uploaders: Martin Chase <stillflame@freegeek.org>, Vagrant Cascadian <vagrant@freegeek.org>, Ryan Niebur <ryanryan52@gmail.com>

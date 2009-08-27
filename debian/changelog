@@ -1,14 +1,17 @@
-freegeek-extras (1.2.6) ubuntu; urgency=low
+freegeek-extras (1.2.6) UNRELEASED; urgency=low
 
-  please upload and close the tickets once the apt repo thing is fixed
-
+  [ Ryan Niebur ]
   * add dependency on ndisgtk (Closes: #14923)
   * set answer after doing the fallback and then running the test
     command again (Closes: #14944)
   * ping pingme.freegeek.org. instead of pingme.fglan (other part of
     #14944)
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 22 Aug 2009 13:05:34 -0700
+  [ Vagrant Cascadian ]
+  * set Section to ubuntu/utils in debian/control to properly register
+    that it should be in the "ubuntu" component in the apt repository.
+
+ -- Vagrant Cascadian <vagrant@freegeek.org>  Thu, 27 Aug 2009 12:50:17 -0700
 
 freegeek-extras (1.2.5) ubuntu; urgency=low
 
