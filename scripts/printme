@@ -76,7 +76,7 @@ def ask_and_send_stuff
   first_time = @detected_system_id.nil?
   contract = nil
   loop do
-    contract = numberedMenu('Contract Type', "What does the \"keeper\" label say? [#{@default_contract}]", @contracts.to_my_array("label"))
+    contract = numberedMenu('Contract Type', "Is there a sticker with one of these on it? [#{@default_contract}]", @contracts.to_my_array("label"))
     if contract != @default_contract && !first_time
       if show_message
         break
