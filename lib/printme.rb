@@ -15,7 +15,7 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 # $server="printme:80"
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=10
+$PRINTME_VERSION=11
 
 require 'rubytui'
 require 'fileutils'
@@ -118,6 +118,7 @@ def client_hash
   else
     client_versions[10] = [9,10] # soap
   end
+  client_versions[11] = [11]    # string change on both ends, that needs to go together (reworded contracts question)
   client_versions
 end
 

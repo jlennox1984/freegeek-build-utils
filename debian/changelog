@@ -9,12 +9,13 @@ freegeek-extras (1.2.6) UNRELEASED; urgency=low
   * ping pingme.freegeek.org. instead of pingme.fglan (other part of
     #14944)
   * reword question for contracts (Closes: #15011)
+  * printme compat bumped to 11
 
   [ Vagrant Cascadian ]
   * set Section to ubuntu/utils in debian/control to properly register
     that it should be in the "ubuntu" component in the apt repository.
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Thu, 27 Aug 2009 14:26:29 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Fri, 28 Aug 2009 16:06:57 -0700
 
 freegeek-extras (1.2.5) ubuntu; urgency=low
 
