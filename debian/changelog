@@ -1,6 +1,6 @@
 freegeek-extras (1.2.6) UNRELEASED; urgency=low
 
-  needs to be released alongside fgdb. also need to add the version compat checking.
+  needs to be released alongside fgdb.
   need to finish freegeek-build-utils
 
   [ Ryan Niebur ]
