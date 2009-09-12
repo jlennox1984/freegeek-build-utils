@@ -10,7 +10,7 @@ Package: freegeek-extras
 Architecture: all
 Depends: ${misc:Depends},
  cups | cupsys, syslinux, mtools, # probably unused laptops stuff, thank you Jeff
- freegeek-ubuntu-pocket-guide, freegeek-extras-pdx | freegeek-extras-freegeek, # our junk
+ freegeek-ubuntu-pocket-guide, freegeek-extras-pdx | freegeek-extras-freegeek, freegeek-build-utils, # our junk
  ndisgtk, # pulling in junk
 Recommends: freegeek-pctel, oem-config
 Description: customizations for freegeek users
