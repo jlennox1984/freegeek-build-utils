@@ -9,16 +9,25 @@ Standards-Version: 3.8.1
 Package: freegeek-extras
 Architecture: all
 Depends: ${misc:Depends},
- ruby, libtui-ruby (>= 1.4), lshw, # printme
  cups | cupsys, syslinux, mtools, # probably unused laptops stuff, thank you Jeff
  freegeek-ubuntu-pocket-guide, freegeek-extras-pdx | freegeek-extras-freegeek, # our junk
- pmount, alsa-utils, # basiccheck
  ndisgtk, # pulling in junk
- stress, # stress-test
 Recommends: freegeek-pctel, oem-config
-Description: Tools and customizations for freegeek users
+Description: customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
- configuration settings.
+ configuration settings. This package also installs some
+ extra packages that are useful to freekbox users.
+
+Package: freegeek-build-utils
+Architecture: all
+Depends: ${misc:Depends},
+ ruby, libtui-ruby (>= 1.4), lshw, # printme
+ pmount, alsa-utils, # basiccheck
+ stress, # stress-test
+Conflicts: freegeek-extras (<= 1.2.5)
+Replaces: freegeek-extras
+Description: tools used in freegeek's build process
+ Freegeek's diagnostic scripts.
 
 Package: freegeek-extras-pdx
 Architecture: all

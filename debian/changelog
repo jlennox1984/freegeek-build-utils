@@ -1,6 +1,7 @@
 freegeek-extras (1.2.6) UNRELEASED; urgency=low
 
   needs to be released alongside fgdb. also need to add the version compat checking.
+  need to finish freegeek-build-utils
 
   [ Ryan Niebur ]
   * add dependency on ndisgtk (Closes: #14923)
@@ -11,12 +12,13 @@ freegeek-extras (1.2.6) UNRELEASED; urgency=low
   * reword question for contracts (Closes: #15011)
   * printme compat bumped to 11
   * catch SocketError as well (Closes: 15049)
+  * add a freegeek-build-utils package (Closes: 15090)
 
   [ Vagrant Cascadian ]
   * set Section to ubuntu/utils in debian/control to properly register
     that it should be in the "ubuntu" component in the apt repository.
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 29 Aug 2009 15:13:48 -0700
+ -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 12 Sep 2009 12:08:55 -0700
 
 freegeek-extras (1.2.5) ubuntu; urgency=low
 
