@@ -1,4 +1,4 @@
-freegeek-extras (1.2.6) UNRELEASED; urgency=low
+freegeek-extras (1.2.6) ubuntu; urgency=low
 
   [ Ryan Niebur ]
   * add dependency on ndisgtk (Closes: #14923)
@@ -15,7 +15,7 @@ freegeek-extras (1.2.6) UNRELEASED; urgency=low
   * set Section to ubuntu/utils in debian/control to properly register
     that it should be in the "ubuntu" component in the apt repository.
 
- -- Ryan Niebur <ryanryan52@gmail.com>  Sat, 12 Sep 2009 12:08:55 -0700
+ -- Ryan Niebur <ryan@debian.org>  Fri, 02 Oct 2009 22:13:34 -0700
 
 freegeek-extras (1.2.5) ubuntu; urgency=low
 
