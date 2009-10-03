@@ -1,8 +1,5 @@
 freegeek-extras (1.2.6) UNRELEASED; urgency=low
 
-  needs to be released alongside fgdb.
-  need to finish freegeek-build-utils
-
   [ Ryan Niebur ]
   * add dependency on ndisgtk (Closes: #14923)
   * set answer after doing the fallback and then running the test
