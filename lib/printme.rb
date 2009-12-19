@@ -36,34 +36,13 @@ def add_method(*args)
 end
 
   def add_methods
-    # Connection Testing
+    # Connection Testing and Version Checking, required before automagic stuff can happen
     add_method("ping")
-    # Version Checking
     add_method("version_compat", "client_version")
     add_method("version")
     add_method("bad_client_error")
     add_method("bad_server_error")
-    # Lists
-    add_method("actions")
-    add_method("types")
-    add_method("contracts")
-    add_method("default_action_description")
-    add_method("default_type_description")
-    add_method("default_contract_label")
-    # Printme
-    add_method("empty_struct")
-    add_method("submit", "printme_struct")
-    # Notes
-    add_method("empty_notes_struct")
-    add_method("submit_notes", "notes_struct")
-    add_method("get_system_for_note", "note_id")
-    # Random Crap
-    add_method("get_system_for_report", "report_id")
-    add_method("contract_label_for_system", "system_id")
-    add_method("type_description_for_system", "system_id")
-    add_method("spec_sheet_url", "report_id")
-    add_method("system_url", "system_id")
-    add_method("get_system_id", "xml")
+    add_method("soap_methods")
   end
 
 def setup_soap
@@ -75,11 +54,18 @@ def color(blah)
   puts colored(blah) if $debug
 end
 
+def automagic
+  @driver.soap_methods.each{|x|
+    add_method(*x)
+  }
+end
+
 def realmain
   check_for_people_who_dont_read_the_instructions
   color "Setting up connection to the server..."
   setup_soap
   check_version
+  automagic
   mymain
 end
 
