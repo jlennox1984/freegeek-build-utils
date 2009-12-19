@@ -1,3 +1,9 @@
+freegeek-extras (1.2.8) UNRELEASED; urgency=low
+
+  * remove cpu family from basiccheck output (Closes: 15737)
+
+ -- Ryan Niebur <ryan@debian.org>  Sat, 19 Dec 2009 12:05:53 -0800
+
 freegeek-extras (1.2.7) freegeek-test; urgency=low
 
   * remove the floppy check (Closes: #16419)

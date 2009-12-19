@@ -63,7 +63,6 @@ tests:
     title: "Checking CPU info:"
     commands: 
     - grep 'model name' /proc/cpuinfo
-    - grep 'cpu family' /proc/cpuinfo
     - grep 'cpu MHz' /proc/cpuinfo
     - grep 'bogomips' /proc/cpuinfo
     explanation: |-
