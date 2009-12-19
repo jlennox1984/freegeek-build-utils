@@ -15,7 +15,7 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 # $server="printme:80"
 
 $COLOR = true #make things cool
-$PRINTME_VERSION=11
+$PRINTME_VERSION=12
 
 require 'rubytui'
 require 'fileutils'
