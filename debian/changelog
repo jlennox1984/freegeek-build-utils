@@ -1,6 +1,7 @@
 freegeek-extras (1.2.7) freegeek-test; urgency=low
 
   * remove the floppy check (Closes: #16419)
+  * update email address
 
  -- Ryan Niebur <ryan@debian.org>  Sat, 19 Dec 2009 08:13:56 -0800
 
