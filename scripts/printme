@@ -31,6 +31,7 @@ def get_id_and_stuff
   @actions = @driver.actions
   @contracts = @driver.contracts
   @types = @driver.types
+  @coveredness_enabled = @driver.coveredness_enabled
 
   @old_system_id ||= prompt('If the system had an id on it already, enter that here',
                         'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
@@ -85,6 +86,10 @@ def ask_and_send_stuff
       break
     end
   end
+  covered = nil
+  if @coveredness_enabled
+    covered = !yes_or_no("Does the system have an uncovered electronic device sticker?")
+  end
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
 
@@ -98,7 +103,8 @@ def ask_and_send_stuff
     "old_id" => @old_system_id,
     "notes" => notes,
     "lshw_output" => @lshw_output,
-    "os" => codename
+    "os" => codename,
+    "covered" => covered,
   }
 
   data_struct = @driver.empty_struct

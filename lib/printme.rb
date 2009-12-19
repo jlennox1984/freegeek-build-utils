@@ -119,6 +119,7 @@ def client_hash
     client_versions[10] = [9,10] # soap
   end
   client_versions[11] = [11]    # string change on both ends, that needs to go together (reworded contracts question)
+  client_versions[12] = [12]    # new info collected, forced upgrade.
   client_versions
 end
 

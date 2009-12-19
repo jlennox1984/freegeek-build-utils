@@ -25,7 +25,7 @@ Package: freegeek-build-utils
 Architecture: all
 Depends: ${misc:Depends},
 # printme
- ruby, libtui-ruby (>= 1.4), lshw,
+ ruby, libtui-ruby (>= 1.11), lshw,
 # basiccheck
  pmount, alsa-utils,
 # stress-test
