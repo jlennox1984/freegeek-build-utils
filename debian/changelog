@@ -1,8 +1,8 @@
-freegeek-extras (1.2.7) UNRELEASED; urgency=low
+freegeek-extras (1.2.7) ubuntu; urgency=low
 
   * remove the floppy check (Closes: #16419)
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 19 Dec 2009 08:12:54 -0800
+ -- Ryan Niebur <ryan@debian.org>  Sat, 19 Dec 2009 08:13:56 -0800
 
 freegeek-extras (1.2.6) ubuntu; urgency=low
 
