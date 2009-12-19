@@ -36,19 +36,6 @@ tests:
       Serial ports (the 9-pin connectors built into most motherboards)
       and external modems will need these to be functional.  There
       should be at least one port listed here.
-  checkFloppyDrive: 
-    title: "Checking status of floppy drive:"
-    pretest: "Please insert any floppy disk with data on it."
-    question: "Does this system have a floppy drive?"
-    commands: 
-    - pmount /dev/fd0
-    - "ls `mount | awk '/^\\\/dev\\\/fd0/{print $3}'`"
-    - "#$DMESG | grep fd"
-    - pumount /dev/fd0
-    explanation: |-
-      Floppy disk activity should generate some messages above.  If no
-      messages show up, or if errors are listed, the floppy drive is not
-      working.  You can remove the floppy disk now.
   checkSound: 
     command: aplay /usr/share/sounds/alsa/Front_Left.wav /usr/share/sounds/alsa/Front_Right.wav
     title: "Checking sound:"
