@@ -35,27 +35,36 @@ def add_method(*args)
   @driver.add_method(*args)
 end
 
-  def add_methods
-    # Connection Testing and Version Checking, required before automagic stuff can happen
-    add_method("ping")
-    add_method("version_compat", "client_version")
-    add_method("version")
-    add_method("bad_client_error")
-    add_method("bad_server_error")
-    add_method("soap_methods")
-  end
-
 def setup_soap
   @driver = SOAP::RPC::Driver.new("http://#{$server}/", "urn:printme")
-  add_methods # copy from the api
+  # Connection Testing and Version Checking, required before automagic stuff can happen
+  add_method("ping")
+  add_method("version_compat", "client_version")
+  add_method("version")
+  add_method("bad_client_error")
+  add_method("bad_server_error")
+  add_method("soap_methods")
 end
 
 def color(blah)
   puts colored(blah) if $debug
 end
 
+def soap_list_methods
+  @soap_methods.map{|x| x[0]}
+end
+
+def soap_has_method?(check)
+  soap_list_methods.include?(check)
+end
+
+def soap_arguments(function)
+  return @soap_methods.select{|x| x[0] == function}.map{|x| x.shift; x}.first
+end
+
 def automagic
-  @driver.soap_methods.each{|x|
+  @soap_methods = @driver.soap_methods
+  @soap_methods.each{|x|
     add_method(*x)
   }
 end
@@ -105,7 +114,7 @@ def client_hash
     client_versions[10] = [9,10] # soap
   end
   client_versions[11] = [11]    # string change on both ends, that needs to go together (reworded contracts question)
-  client_versions[12] = [12]    # new info collected, forced upgrade.
+  client_versions[12] = [12]    # new info collected (covered), forced upgrade. automagic.
   client_versions
 end
 
