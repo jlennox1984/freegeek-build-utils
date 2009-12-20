@@ -41,24 +41,38 @@ def get_current_info
   @detected_system_id = @driver.get_system_id(@lshw_output)
   if @detected_system_id
     @default_contract = @driver.contract_label_for_system(@detected_system_id)
-  else
-    @default_contract = @driver.default_contract_label
-  end
-  if @detected_system_id
     @default_type = @driver.type_description_for_system(@detected_system_id)
+    covered = @driver.covered_for_system(@detected_system_id)
+    covered = false
+    if covered.nil?
+      @default_uncovered = nil
+    else
+      @default_uncovered = !covered
+    end
   else
     @default_type = @driver.default_type_description
+    @default_contract = @driver.default_contract_label
+    @default_uncovered = nil
   end
   @default_action = @driver.default_action_description
 end
 
-def show_message
+
+def show_a_message(first, second)
   puts
-  puts colored("You are are changing the contract.", 'bold', 'green')
-  out = prompt "Are you sure that you entered it correctly (HINT: look at the sticker)?", "Please type yes or no" do |x|
+  puts colored(first, 'bold', 'green')
+  out = prompt second, "Please type yes or no" do |x|
     x.match(/yes/i) || x.match(/no/i)
   end
   return out.match(/yes/i)
+end
+
+def show_message
+  return show_a_message("You are are changing the contract.", "Are you sure that you entered it correctly (HINT: look at the sticker)?")
+end
+
+def show_covered_message
+  return show_a_message("You are are changing the uncovered electronic device value.", "Are you sure that you entered it correctly (HINT: look for the sticker)?")
 end
 
 class Array
@@ -88,7 +102,16 @@ def ask_and_send_stuff
   end
   covered = nil
   if @coveredness_enabled
-    covered = !yes_or_no("Does the system have an uncovered electronic device sticker?")
+    loop do
+      covered = !yes_or_no("Does the system have an uncovered electronic device sticker?#{(!@default_uncovered.nil?) ? " [#{@default_uncovered ? "yes" : "no"}]" : ""}")
+      if covered != (!@default_uncovered) && !@default_uncovered.nil?
+        if show_covered_message
+          break
+        end
+      else
+        break
+      end
+    end
   end
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
