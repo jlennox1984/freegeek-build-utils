@@ -4,8 +4,10 @@ freegeek-extras (1.2.8) UNRELEASED; urgency=low
   * covered tracking in printme (Closes: #15492)
   * if the contract isn't the default, then don't ask about coveredness,
     assume it's not covered (Closes: 16506)
+  * don't run lshw if STDIN isn't a tty and we already have a lshw.xml.
+    this should only affect development.
 
- -- Ryan Niebur <ryan@debian.org>  Wed, 23 Dec 2009 18:13:53 -0800
+ -- Ryan Niebur <ryan@debian.org>  Wed, 23 Dec 2009 18:14:53 -0800
 
 freegeek-extras (1.2.7) freegeek-test; urgency=low
 

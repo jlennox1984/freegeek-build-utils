@@ -142,7 +142,6 @@ def check_version
 end
 
 def runit(lshwname)
-  return if $debug
   if File.exist?(lshwname)
     mv(lshwname, lshwname + '.old')
   end
