@@ -2,8 +2,10 @@ freegeek-extras (1.2.8) UNRELEASED; urgency=low
 
   * remove cpu family from basiccheck output (Closes: 15737)
   * covered tracking in printme (Closes: #15492)
+  * if the contract isn't the default, then don't ask about coveredness,
+    assume it's not covered (Closes: 16506)
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 19 Dec 2009 14:54:59 -0800
+ -- Ryan Niebur <ryan@debian.org>  Wed, 23 Dec 2009 18:13:53 -0800
 
 freegeek-extras (1.2.7) freegeek-test; urgency=low
 

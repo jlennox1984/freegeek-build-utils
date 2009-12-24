@@ -104,6 +104,7 @@ end
 def ask_covered
   covered = nil
   if @coveredness_enabled
+    return false if @contract.to_i != 1 # FIXME: this logic needs to be elsewhere
     loop do
       covered = !yes_or_no("Does the system have an uncovered electronic device sticker?#{(!@default_uncovered.nil?) ? " [#{@default_uncovered ? "yes" : "no"}]" : ""}")
       if covered != (!@default_uncovered) && !@default_uncovered.nil?
@@ -122,6 +123,7 @@ def ask_and_send_stuff
   action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
   type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
   contract = ask_contract
+  @contract = @contracts.select{|x| x.label == contract}.first.thing_id
   covered = ask_covered
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
@@ -131,7 +133,7 @@ def ask_and_send_stuff
     "contact_id" => uid,
     "action_id" => @actions.select{|x| x.description == action}.first.thing_id,
     "type_id" => @types.select{|x| x.description == type}.first.thing_id,
-    "contract_id" => @contracts.select{|x| x.label == contract}.first.thing_id,
+    "contract_id" => @contract,
     "old_id" => @old_system_id,
     "notes" => notes,
     "lshw_output" => @lshw_output,
