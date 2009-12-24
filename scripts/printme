@@ -44,7 +44,7 @@ def get_current_info
     @default_type = @driver.type_description_for_system(@detected_system_id)
     covered = @driver.covered_for_system(@detected_system_id)
     if covered.nil?
-      @default_uncovered = nil
+      @default_uncovered = nil # TODO: should run @driver.default_uncovered_value, which should be false
     else
       @default_uncovered = !covered
     end
@@ -57,7 +57,8 @@ def get_current_info
 end
 
 
-def show_a_message(first, second)
+def show_a_message(first)
+  second = "Are you sure that you entered it correctly (HINT: look for the sticker)?"
   puts
   puts colored(first, 'bold', 'green')
   out = prompt second, "Please type yes or no" do |x|
@@ -67,11 +68,11 @@ def show_a_message(first, second)
 end
 
 def show_message
-  return show_a_message("You are are changing the contract.", "Are you sure that you entered it correctly (HINT: look at the sticker)?")
+  return show_a_message("You are are changing the contract.")
 end
 
 def show_covered_message
-  return show_a_message("You are are changing the uncovered electronic device value.", "Are you sure that you entered it correctly (HINT: look for the sticker)?")
+  return show_a_message("You are are changing the uncovered electronic device value.")
 end
 
 class Array
@@ -85,10 +86,22 @@ class Array
 end
 
 def ask_contract
+  # FIXME: all of this logic needs to be cleaned up
   first_time = @detected_system_id.nil?
   contract = nil
+  puts @contracts.to_my_array("label")
   loop do
-    contract = numberedMenu('Contract Type', "Is there a sticker with one of these on it? [#{@default_contract}]", @contracts.to_my_array("label"))
+    contract = nil
+    checkable_contracts = @contracts.to_my_array("label").select{|x| !x.nil?}.select{|x| x != "No Sticker"} # TODO: sort so that the current contract is the first asked question. or the last. not sure how we want to do it.
+    for this_contract in checkable_contracts
+      if yes_or_no("Does the system have a #{this_contract} sticker? [#{@default_contract == this_contract ? "yes" : "no"}]")
+        contract = this_contract
+        break
+      end
+    end
+    if contract.nil?
+      contract = "No Sticker"
+    end
     if contract != @default_contract && !first_time
       if show_message
         break
