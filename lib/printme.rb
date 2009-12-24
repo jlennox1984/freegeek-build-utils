@@ -142,6 +142,7 @@ def check_version
 end
 
 def runit(lshwname)
+  return if !STDIN.tty? && File.exist?("/var/lib/freegeek-extras/printme/lshw.xml")
   if File.exist?(lshwname)
     mv(lshwname, lshwname + '.old')
   end
