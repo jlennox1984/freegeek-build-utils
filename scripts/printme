@@ -89,7 +89,6 @@ def ask_contract
   # FIXME: all of this logic needs to be cleaned up
   first_time = @detected_system_id.nil?
   contract = nil
-  puts @contracts.to_my_array("label")
   loop do
     contract = nil
     checkable_contracts = @contracts.to_my_array("label").select{|x| !x.nil?}.select{|x| x != "No Sticker"} # TODO: sort so that the current contract is the first asked question. or the last. not sure how we want to do it.
