@@ -85,9 +85,7 @@ class Array
   end
 end
 
-def ask_and_send_stuff
-  action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
-  type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
+def ask_contract
   first_time = @detected_system_id.nil?
   contract = nil
   loop do
@@ -100,6 +98,10 @@ def ask_and_send_stuff
       break
     end
   end
+  return contract
+end
+
+def ask_covered
   covered = nil
   if @coveredness_enabled
     loop do
@@ -113,9 +115,16 @@ def ask_and_send_stuff
       end
     end
   end
+  return covered
+end
+
+def ask_and_send_stuff
+  action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
+  type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
+  contract = ask_contract
+  covered = ask_covered
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
-
   codename = `lsb_release --description --short`
 
   data = {
