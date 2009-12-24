@@ -43,7 +43,6 @@ def get_current_info
     @default_contract = @driver.contract_label_for_system(@detected_system_id)
     @default_type = @driver.type_description_for_system(@detected_system_id)
     covered = @driver.covered_for_system(@detected_system_id)
-    covered = false
     if covered.nil?
       @default_uncovered = nil
     else
