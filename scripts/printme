@@ -14,7 +14,9 @@ def make_dirs
   if ! File.exist?('/var/lib/freegeek-extras/')
     system 'sudo mkdir /var/lib/freegeek-extras/'
   end
-  system "sudo chown -R #{ENV['USER']}:#{ENV['USER']} /var/lib/freegeek-extras/"
+  if ! FileTest.writeable?('/var/lib/freegeek-extras/')
+    system "sudo chown -R #{ENV['USER']}:#{ENV['USER']} /var/lib/freegeek-extras/"
+  end
   if ! File.exist?('/var/lib/freegeek-extras/printme')
     mkdir('/var/lib/freegeek-extras/printme/')
   end
