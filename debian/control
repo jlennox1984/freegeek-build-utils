@@ -13,6 +13,7 @@ Depends: ${misc:Depends},
  cups | cupsys, syslinux, mtools,
 # our junk
  freegeek-ubuntu-pocket-guide, freegeek-build-utils,
+ freegeek-extras-pdx | freegeek-extras-freegeek,
 # pulling in junk
  ndisgtk,
 Recommends: freegeek-pctel, oem-config
@@ -26,11 +27,11 @@ Architecture: all
 Depends: ${misc:Depends},
 # printme
  ruby, libtui-ruby (>= 1.11), lshw,
- freegeek-extras-pdx | freegeek-extras-freegeek,
 # basiccheck
  pmount, alsa-utils,
 # stress-test
  stress,
+Recommends: freegeek-extras-pdx | freegeek-extras-freegeek
 Conflicts: freegeek-extras (<= 1.2.5)
 Replaces: freegeek-extras
 Description: tools used in freegeek's build process
