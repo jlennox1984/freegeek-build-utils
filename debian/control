@@ -12,7 +12,7 @@ Depends: ${misc:Depends},
 # probably unused laptops stuff, thank you Jeff
  cups | cupsys, syslinux, mtools,
 # our junk
- freegeek-ubuntu-pocket-guide, freegeek-extras-pdx | freegeek-extras-freegeek, freegeek-build-utils,
+ freegeek-ubuntu-pocket-guide, freegeek-build-utils,
 # pulling in junk
  ndisgtk,
 Recommends: freegeek-pctel, oem-config
@@ -26,6 +26,7 @@ Architecture: all
 Depends: ${misc:Depends},
 # printme
  ruby, libtui-ruby (>= 1.11), lshw,
+ freegeek-extras-pdx | freegeek-extras-freegeek,
 # basiccheck
  pmount, alsa-utils,
 # stress-test
@@ -37,10 +38,10 @@ Description: tools used in freegeek's build process
 
 Package: freegeek-extras-pdx
 Architecture: all
-Depends: ${misc:Depends}, freegeek-extras (>= 1.2.2), freegeek-archive-keyring
+Depends: ${misc:Depends}, freegeek-archive-keyring
 Provides: freegeek-extras-freegeek
 Replaces: freegeek-extras
-Conflicts: freegeek-extras-freegeek
+Conflicts: freegeek-extras-freegeek, freegeek-extras (< 1.2.2)
 Description: Freegeek Extras configuration for PDX specific stuff
  This contains freegeek-extras configuration files specific to
  Freegeek Portland's infrastructure.
