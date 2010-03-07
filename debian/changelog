@@ -1,10 +1,10 @@
-freegeek-extras (1.2.9) UNRELEASED; urgency=low
+freegeek-extras (1.2.9) freegeek-test; urgency=low
 
   * get rid of the circular dependency between freegeek-extras and
     freegeek-extras-pdx, and make freegeek-build-utils recommend
     freegeek-extras-freegeek (Closes: #17257)
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 06 Mar 2010 17:02:56 -0800
+ -- Ryan Niebur <ryan@debian.org>  Sat, 06 Mar 2010 17:18:41 -0800
 
 freegeek-extras (1.2.8) freegeek-test; urgency=low
 
