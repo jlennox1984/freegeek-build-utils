@@ -6,7 +6,6 @@ scripts/magix usr/sbin/
 scripts/list-printmes usr/bin/
 scripts/printme-note usr/bin/
 scripts/stress-test usr/bin/
-scripts/biosnofloppy usr/bin/
 libexec/freegeek_show_cd_drives usr/lib/
 libexec/freegeek_show_cd_drives.awk usr/lib/
 lib/printme.rb usr/lib/ruby/1.8/
