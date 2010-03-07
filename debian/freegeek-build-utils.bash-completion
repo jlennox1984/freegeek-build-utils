@@ -44,17 +44,7 @@ _bat_check(){
     return 0
 }
 
-_biosnofloppy(){
-    if [ $COMP_CWORD -eq 1 ]; then
-        COMPREPLY=($(compgen -A file -- ${COMP_WORDS[COMP_CWORD]}))
-    else
-        COMPREPLY=($(compgen -W "" -- ${COMP_WORDS[COMP_CWORD]}))
-    fi
-    return 0
-}
-
 complete -F _magix magix
-complete -F _biosnofloppy biosnofloppy
 complete -F _bat_check bat_check
 complete -F _printme printme
 complete -F _stress-test stress-test

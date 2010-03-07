@@ -9,14 +9,12 @@ Standards-Version: 3.8.1
 Package: freegeek-extras
 Architecture: all
 Depends: ${misc:Depends},
-# probably unused laptops stuff, thank you Jeff
- cups | cupsys, syslinux, mtools,
 # our junk
  freegeek-ubuntu-pocket-guide, freegeek-build-utils,
  freegeek-extras-pdx | freegeek-extras-freegeek,
 # pulling in junk
- ndisgtk,
-Recommends: freegeek-pctel, oem-config
+ ndisgtk | powerpc,
+Recommends: oem-config
 Description: customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
  configuration settings. This package also installs some
