@@ -3,8 +3,10 @@ freegeek-extras (1.2.10) UNRELEASED; urgency=low
   * remove biosnofloppy (no longer needed)
   * make dependency on ndisgtk not reqiured on powerpc
   * remove freegeek-pctel from recommends
+  * reword the displayed default on the contract/covered questions
+    (Closes: #17431)
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 06 Mar 2010 17:44:57 -0800
+ -- Ryan Niebur <ryan@debian.org>  Sat, 13 Mar 2010 16:04:12 -0800
 
 freegeek-extras (1.2.9) freegeek-test; urgency=low
 

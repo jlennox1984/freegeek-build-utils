@@ -46,13 +46,13 @@ def get_current_info
     @default_type = @driver.type_description_for_system(@detected_system_id)
     covered = @driver.covered_for_system(@detected_system_id)
     if covered.nil?
-      @default_uncovered = nil # TODO: should run @driver.default_uncovered_value, which should be false
+      @default_uncovered = nil
     else
       @default_uncovered = !covered
     end
   else
     @default_type = @driver.default_type_description
-    @default_contract = @driver.default_contract_label
+    @default_contract = nil
     @default_uncovered = nil
   end
   @default_action = @driver.default_action_description
@@ -95,7 +95,7 @@ def ask_contract
     contract = nil
     checkable_contracts = @contracts.to_my_array("label").select{|x| !x.nil?}.select{|x| x != "No Sticker"} # TODO: sort so that the current contract is the first asked question. or the last. not sure how we want to do it.
     for this_contract in checkable_contracts
-      if yes_or_no("Does the system have a #{this_contract} sticker? [#{@default_contract == this_contract ? "yes" : "no"}]")
+      if yes_or_no("Does the system have a #{this_contract} sticker?#{(!@default_contract.nil?) ? " [The previous technician said #{@default_contract == this_contract ? "yes" : "no"}, but you should check as well]" : ""}")
         contract = this_contract
         break
       end
@@ -119,7 +119,7 @@ def ask_covered
   if @coveredness_enabled
     return false if @contract.to_i != 1 # FIXME: this logic needs to be elsewhere
     loop do
-      covered = !yes_or_no("Does the system have an uncovered electronic device sticker?#{(!@default_uncovered.nil?) ? " [#{@default_uncovered ? "yes" : "no"}]" : ""}")
+      covered = !yes_or_no("Does the system have an uncovered electronic device sticker?#{(!@default_uncovered.nil?) ? " [The previous technician said #{@default_uncovered ? "yes" : "no"}, but you should check as well]" : ""}")
       if covered != (!@default_uncovered) && !@default_uncovered.nil?
         if show_covered_message
           break

@@ -1,7 +1,8 @@
 # This is a library. It does stuff.
 
 require 'yaml'
-f = File.open('/etc/printme.yml')
+conffile = ENV["PRINTME_CONFIG"] || '/etc/printme.yml'
+f = File.open(conffile)
 yaml = YAML.load(f.read)
 f.close
 keys = ['server', 'port']
