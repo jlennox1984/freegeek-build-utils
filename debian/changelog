@@ -6,8 +6,9 @@ freegeek-extras (1.2.10) UNRELEASED; urgency=low
   * reword the displayed default on the contract/covered questions
     (Closes: #17431)
   * check return values (Closes: #17587)
+  * check that the lshw file has something in it (Closes: #17588)
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 20 Mar 2010 14:23:31 -0700
+ -- Ryan Niebur <ryan@debian.org>  Sat, 20 Mar 2010 14:25:39 -0700
 
 freegeek-extras (1.2.9) freegeek-test; urgency=low
 

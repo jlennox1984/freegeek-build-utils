@@ -148,6 +148,10 @@ def runit(lshwname)
     mv(lshwname, lshwname + '.old')
   end
   system_check_ret("sudo lshw -xml>#{lshwname}")
+  if File.readlines(lshwname).length == 0
+    errorMessage "ERROR: lshw outputted nothing. This may be a bug in lshw. Aborting."
+    exit 1
+  end
 end
 
 def look_at_url(path)
