@@ -154,6 +154,14 @@ def runit(lshwname)
   end
 end
 
+def system_check_ret(str)
+  ret = system(str)
+  if ! ret
+    errorMessage "Failed to run command, aborting.\n\n"
+    exit 1
+  end
+end
+
 def look_at_url(path)
   url="http://#{$server}#{path}"
   if ! system "firefox #{url}"
