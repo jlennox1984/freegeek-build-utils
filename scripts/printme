@@ -12,10 +12,10 @@ end
 
 def make_dirs
   if ! File.exist?('/var/lib/freegeek-extras/')
-    system 'sudo mkdir /var/lib/freegeek-extras/'
+    system_check_ret 'sudo mkdir /var/lib/freegeek-extras/'
   end
   if ! File.writable?('/var/lib/freegeek-extras/')
-    system "sudo chown -R #{ENV['USER']} /var/lib/freegeek-extras/"
+    system_check_ret "sudo chown -R #{ENV['USER']} /var/lib/freegeek-extras/"
   end
   if ! File.exist?('/var/lib/freegeek-extras/printme')
     mkdir('/var/lib/freegeek-extras/printme/')
@@ -175,13 +175,20 @@ def printer_there?(printer)
   `lpstat -p`.split("\n").map{|x| x.split(" ")[1]}.include?(printer)
 end
 
+def system_check_ret(str)
+  ret = system(str)
+  if ! ret
+    errorMessage "Failed to run command, aborting."
+  end
+end
+
 def printer_setup
   printer = ARGV[1]
-  system('sudo su - -c "echo \"Browsing Yes #freegeek-extras\" >> /etc/cups/cupsd.conf"')
+  system_check_ret('sudo su - -c "echo \"Browsing Yes #freegeek-extras\" >> /etc/cups/cupsd.conf"')
   if File.exists?("/etc/init.d/cups")
-    system('sudo /etc/init.d/cups restart >/dev/null')
+    system_check_ret('sudo /etc/init.d/cups restart >/dev/null')
   elsif File.exists?("/etc/init.d/cupsys")
-    system('sudo /etc/init.d/cupsys restart >/dev/null')
+    system_check_ret('sudo /etc/init.d/cupsys restart >/dev/null')
   else
     errorMessage "ERROR: Can't figure out how to restart cups\n\n"
     exit 1
@@ -216,7 +223,7 @@ def printer_setup
     errorMessage "Please specify a valid printer." + "\n\n"
     exit 1
   end
-  system("sudo su - -c \"echo \\\"Default #{printer} #freegeek-extras\\\" >> /etc/cups/lpoptions\"")
+  system_check_ret("sudo su - -c \"echo \\\"Default #{printer} #freegeek-extras\\\" >> /etc/cups/lpoptions\"")
 end
 
 def mymain

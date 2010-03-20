@@ -147,7 +147,7 @@ def runit(lshwname)
   if File.exist?(lshwname)
     mv(lshwname, lshwname + '.old')
   end
-  system("sudo lshw -xml>#{lshwname}")
+  system_check_ret("sudo lshw -xml>#{lshwname}")
 end
 
 def look_at_url(path)
