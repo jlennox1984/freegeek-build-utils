@@ -179,6 +179,7 @@ def system_check_ret(str)
   ret = system(str)
   if ! ret
     errorMessage "Failed to run command, aborting."
+    exit 1
   end
 end
 
