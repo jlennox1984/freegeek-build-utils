@@ -178,7 +178,7 @@ end
 def system_check_ret(str)
   ret = system(str)
   if ! ret
-    errorMessage "Failed to run command, aborting."
+    errorMessage "Failed to run command, aborting.\n\n"
     exit 1
   end
 end

@@ -149,7 +149,7 @@ def runit(lshwname)
   end
   system_check_ret("sudo lshw -xml>#{lshwname}")
   if File.readlines(lshwname).length == 0
-    errorMessage "ERROR: lshw outputted nothing. This may be a bug in lshw. Aborting."
+    errorMessage "ERROR: lshw outputted nothing. This may be a bug in lshw. Aborting.\n\n"
     exit 1
   end
 end
