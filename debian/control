@@ -14,7 +14,7 @@ Depends: ${misc:Depends},
  freegeek-extras-pdx | freegeek-extras-freegeek,
 # pulling in junk
  ndisgtk | powerpc,
-Recommends: oem-config
+Recommends: oem-config-gtk | oem-config
 Description: customizations for freegeek users
  Freegeek's diagnostic scripts and some extra files and
  configuration settings. This package also installs some

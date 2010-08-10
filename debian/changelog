@@ -1,3 +1,9 @@
+freegeek-extras (1.2.12) UNRELEASED; urgency=low
+
+  * recommend oem-config-gtk (Closes: #19377)
+
+ -- Ryan Niebur <ryan@debian.org>  Tue, 10 Aug 2010 16:09:09 -0700
+
 freegeek-extras (1.2.11) freegeek-test; urgency=low
 
   * change the regexp for dmesg grepping to only match things with a [
