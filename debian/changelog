@@ -1,9 +1,9 @@
-freegeek-extras (1.2.13) UNRELEASED; urgency=low
+freegeek-extras (1.2.13) freegeek-test; urgency=low
 
   * do not set COLOR=true in printme.rb. thats the default anyway
   * set COLOR=false when the distribution is lucid
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 14 Aug 2010 13:10:38 -0700
+ -- Ryan Niebur <ryan@debian.org>  Sat, 14 Aug 2010 13:14:44 -0700
 
 freegeek-extras (1.2.12) freegeek-test; urgency=low
 
