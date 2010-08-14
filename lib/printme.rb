@@ -24,6 +24,10 @@ include FileUtils
 include RubyTUI
 require 'tempfile'
 
+if RubyTUI::DIST == "lucid"
+  $COLOR = false
+end
+
 trap( "SIGINT" ) {
   `reset -Q`
   errorMessage "\n\nUser interrupt caught.  Exiting.\n\n"
