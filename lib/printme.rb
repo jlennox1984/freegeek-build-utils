@@ -15,7 +15,6 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 #configuration
 # $server="printme:80"
 
-$COLOR = true #make things cool
 $PRINTME_VERSION=12
 
 require 'rubytui'
