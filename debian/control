@@ -12,6 +12,7 @@ Depends: ${misc:Depends},
 # our junk
  freegeek-ubuntu-pocket-guide, freegeek-build-utils,
  freegeek-extras-pdx | freegeek-extras-freegeek,
+ debconf-utils,
 # pulling in junk
  ndisgtk | powerpc,
 Recommends: oem-config-gtk | oem-config, 

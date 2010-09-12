@@ -1,8 +1,9 @@
 freegeek-extras (1.2.14) UNRELEASED; urgency=low
 
   * Add usb-modeswitch to Recommends (Closes: #19783, #18451).
+  * add debconf-utils to Depends. 
 
- -- Vagrant Cascadian <vagrant@debian.org>  Sat, 11 Sep 2010 17:56:07 -0700
+ -- Vagrant Cascadian <vagrant@debian.org>  Sat, 11 Sep 2010 19:07:09 -0700
 
 freegeek-extras (1.2.13) freegeek-test; urgency=low
 
