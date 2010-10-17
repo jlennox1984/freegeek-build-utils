@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#apm battery monitor test thingy
+
+BATFI=$HOME/bat_mon
+
+if [ -f "$BATFI" ]; then
+
+  MINZ=$(wc -l "$BATFI" | awk '{print $1}')
+  echo "battery lasted $MINZ minutes"
+else
+   
+   while sleep 60; do
+      echo "testing battery life!" 
+   done | tee -a "$BATFI"
+
+fi
