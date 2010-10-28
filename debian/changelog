@@ -1,3 +1,9 @@
+freegeek-extras (1.2.15) UNRELEASED; urgency=low
+
+  * FIXME: screen locking still broken
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Thu, 28 Oct 2010 12:06:55 -0700
+
 freegeek-extras (1.2.14) freegeek-test; urgency=low
 
   * Add usb-modeswitch to Recommends (Closes: #19783, #18451).
