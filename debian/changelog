@@ -1,8 +1,9 @@
-freegeek-extras (1.2.15) UNRELEASED; urgency=low
+freegeek-extras (1.2.15) freegeek-test; urgency=low
 
-  * FIXME: screen locking still broken
+  * really disable screen locking by default, by using lower-case true/false
+    gconf booleans. (Closes: #20285)
 
- -- Vagrant Cascadian <vagrant@debian.org>  Thu, 28 Oct 2010 12:06:55 -0700
+ -- Vagrant Cascadian <vagrant@debian.org>  Thu, 28 Oct 2010 12:37:09 -0700
 
 freegeek-extras (1.2.14) freegeek-test; urgency=low
 
