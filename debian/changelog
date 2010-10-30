@@ -1,10 +1,10 @@
-freegeek-extras (1.2.16) UNRELEASED; urgency=low
+freegeek-extras (1.2.16) freegeek-test; urgency=low
 
   * download the generated printme so that the customer/adopter can view
     the printme later
   * add a menu item for the generated printme (Closes: #20043)
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 30 Oct 2010 13:33:47 -0700
+ -- Ryan Niebur <ryan@debian.org>  Sat, 30 Oct 2010 13:45:34 -0700
 
 freegeek-extras (1.2.15) freegeek-test; urgency=low
 
