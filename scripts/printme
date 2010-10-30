@@ -236,7 +236,11 @@ def mymain
   color "Asking questions and submitting to server..."
   get_id_and_stuff
   ask_and_send_stuff
-  look_at_url @driver.spec_sheet_url(@report_id)
+  url = @driver.spec_sheet_url(@report_id)
+  download_url("/stylesheets/fgss.css", "/var/lib/freegeek-extras/printme/fgss.css")
+  download_url(url, "/var/lib/freegeek-extras/printme/index.html")
+  system(%q{sed -i -e '/link/ s/\/stylesheets\///' -e '/id="hidden"/,/<\/div>/ d' /var/lib/freegeek-extras/printme/index.html})
+  look_at_url url
 end
 
 main

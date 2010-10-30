@@ -165,6 +165,10 @@ def system_check_ret(str)
   end
 end
 
+def download_url(path, result)
+  system("wget http://#{$server}#{path} -O #{result}")
+end
+
 def look_at_url(path)
   url="http://#{$server}#{path}"
   if ! system "firefox #{url}"
