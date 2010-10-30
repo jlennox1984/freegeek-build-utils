@@ -15,6 +15,7 @@ Depends: ${misc:Depends},
  debconf-utils,
 # pulling in junk
  ndisgtk | powerpc,
+ freegeek-logo,
 Recommends: oem-config-gtk | oem-config, 
 # usb-modeswitch requested by tech support, but not available in hardy.
  usb-modeswitch,
