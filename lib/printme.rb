@@ -166,7 +166,7 @@ def system_check_ret(str)
 end
 
 def download_url(path, result)
-  system("wget http://#{$server}#{path} -O #{result}")
+  system("wget -q http://#{$server}#{path} -O #{result}")
 end
 
 def look_at_url(path)
