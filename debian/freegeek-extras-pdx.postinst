@@ -6,7 +6,7 @@ if [ "$1" = "configure" ]; then
     # configure sources.list based on release
     # map releases to current LTS release
     case "$(lsb_release --codename --short)" in
-        dapper|feisty|gutsy) RELEASE="dapper" ;;
+        dapper|edgy|feisty|gutsy) RELEASE="dapper" ;;
         hardy|intrepid|jaunty|karmic) RELEASE="hardy" ;;
         lucid|maverick|*) RELEASE="lucid" ;;
     esac
