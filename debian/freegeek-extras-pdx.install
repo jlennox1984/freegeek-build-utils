@@ -1,2 +1,2 @@
 printme.yml etc/
-freekbox.list etc/apt/sources.list.d/
+debian/*.list etc/freegeek-extras/apt/

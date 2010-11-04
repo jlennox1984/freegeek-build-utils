@@ -1,8 +1,12 @@
 freegeek-extras (1.2.17) UNRELEASED; urgency=low
 
+  [ Ryan Niebur ]
   * fix basiccheck hard drive test (Closes: #19733)
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 30 Oct 2010 17:47:11 -0700
+  [ Vagrant Cascadian ]
+  * configure sources.list based on the running distribution.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Thu, 04 Nov 2010 12:48:08 -0700
 
 freegeek-extras (1.2.16) freegeek-test; urgency=low
 
