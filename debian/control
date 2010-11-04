@@ -30,6 +30,7 @@ Depends: ${misc:Depends},
 # printme
  ruby, libtui-ruby (>= 1.11), lshw,
  libtui-ruby1.8 (>= 1.15),
+ lsb_release,
 # basiccheck
  pmount, alsa-utils,
 # stress-test
@@ -42,7 +43,7 @@ Description: tools used in freegeek's build process
 
 Package: freegeek-extras-pdx
 Architecture: all
-Depends: ${misc:Depends}, freegeek-archive-keyring
+Depends: ${misc:Depends}, freegeek-archive-keyring, lsb-release
 Provides: freegeek-extras-freegeek
 Replaces: freegeek-extras
 Conflicts: freegeek-extras-freegeek, freegeek-extras (< 1.2.2)
