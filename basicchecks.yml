@@ -96,8 +96,8 @@ tests:
     title: "Checking video resolution:"
     explanation: |-
       This is the number of pixels displayed on the screen.  For
-      usability purposes, this should be set to 1024x768.  If it is
-      smaller than this, your video display is probably
+      usability purposes, this should be set to 1024x768 or larger (i.e., 1280x1024).
+      If it is smaller than this, your video display is probably
       misconfigured. Read through the instructions at:
       http://wiki.freegeek.org/index.php/Build_tips
       under the "Video" section to fix this.
