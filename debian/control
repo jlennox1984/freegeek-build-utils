@@ -35,6 +35,7 @@ Depends: ${misc:Depends},
  pmount, alsa-utils,
 # stress-test
  stress,
+ cpufrequtils,
 Recommends: freegeek-extras-pdx | freegeek-extras-freegeek
 Conflicts: freegeek-extras (<= 1.2.5)
 Replaces: freegeek-extras
