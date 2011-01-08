@@ -1,5 +1,12 @@
 # This is a library. It does stuff.
 
+
+require 'rubytui'
+
+if RubyTUI::DIST == "mac"
+$server = "printme:80"
+else
+
 require 'yaml'
 conffile = ENV["PRINTME_CONFIG"] || '/etc/printme.yml'
 f = File.open(conffile)
@@ -14,6 +21,9 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 
 #configuration
 # $server="printme:80"
+	end
+
+  
 
 $PRINTME_VERSION=12
 
@@ -146,11 +156,15 @@ def check_version
 end
 
 def runit(lshwname)
-  return if !STDIN.tty? && File.exist?("/var/lib/freegeek-extras/printme/lshw.xml")
+  return if !STDIN.tty? && File.exist?(lshwname)
   if File.exist?(lshwname)
     mv(lshwname, lshwname + '.old')
   end
+ if DIST == "mac"
+system_check_ret("system_profiler -xml>#{lshwname}")
+else
   system_check_ret("sudo lshw -xml>#{lshwname}")
+end
   if File.readlines(lshwname).length == 0
     errorMessage "ERROR: lshw outputted nothing. This may be a bug in lshw. Aborting.\n\n"
     exit 1

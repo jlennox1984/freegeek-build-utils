@@ -3,7 +3,7 @@
 require 'printme'
 
 def run_lshw_and_test_stuff
-  lshwname = '/var/lib/freegeek-extras/printme/lshw.xml'
+  lshwname = DIST == "mac" ? '/tmp/lshw.xml' : '/var/lib/freegeek-extras/printme/lshw.xml'
   runit(lshwname)
   lshw = File.open(lshwname, "rb")
   @lshw_output = lshw.read
@@ -11,6 +11,7 @@ def run_lshw_and_test_stuff
 end
 
 def make_dirs
+return if DIST == "mac"
   if ! File.exist?('/var/lib/freegeek-extras/')
     system_check_ret 'sudo mkdir /var/lib/freegeek-extras/'
   end
@@ -23,12 +24,14 @@ def make_dirs
 end
 
 def get_id_and_stuff
+unless DIST == "mac"
   if File.exist?('/var/lib/freegeek-extras/printme/system_id')
     @old_system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
   elsif File.exist?('/var/lib/freegeek-extras/printme/system.xml') # old new printme has been ran
     require 'rexml/document'
     @old_system_id ||= REXML::XPath.match(REXML::Document.new(File.read("/var/lib/freegeek-extras/printme/system.xml")), '/system/id').first.get_text.to_s.to_i
   end
+end
 
   @actions = @driver.actions
   @contracts = @driver.contracts
@@ -140,7 +143,7 @@ def ask_and_send_stuff
   covered = ask_covered
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
-  codename = `lsb_release --description --short`
+  codename = (DIST == "mac" ? "Mac" : `lsb_release --description --short`)
 
   data = {
     "contact_id" => uid,
@@ -159,12 +162,13 @@ def ask_and_send_stuff
     eval("data_struct.#{k} = v")
   }
 
-  @report_id = @driver.submit(data_struct)
+  @report_id = @driver.submit(RubyTUI::DIST == "mac" ? data : data_struct)
   system_id=@driver.get_system_for_report(@report_id)
   if system_id != @old_system_id
     @old_system_id = system_id
   end
 
+  return if DIST == "mac"
   system=File.open('/var/lib/freegeek-extras/printme/system_id', 'w')
   system.puts(@old_system_id)
   system.close
@@ -237,9 +241,11 @@ def mymain
   get_id_and_stuff
   ask_and_send_stuff
   url = @driver.spec_sheet_url(@report_id)
+unless DIST == "mac"
   download_url("/stylesheets/fgss.css", "/var/lib/freegeek-extras/printme/fgss.css")
   download_url(url, "/var/lib/freegeek-extras/printme/index.html")
   system(%q{sed -i -e '/link/ s/\/stylesheets\///' -e '/id="hidden"/,/<\/div>/ d' /var/lib/freegeek-extras/printme/index.html})
+end
   look_at_url url
 end
 
