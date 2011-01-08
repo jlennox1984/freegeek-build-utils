@@ -23,8 +23,6 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 # $server="printme:80"
 	end
 
-  
-
 $PRINTME_VERSION=12
 
 require 'rubytui'
@@ -185,7 +183,7 @@ end
 
 def look_at_url(path)
   url="http://#{$server}#{path}"
-  if ! system "firefox #{url}"
+  if ! system "#{DIST == "mac" ? "open" : "firefox"} #{url}"
     puts url
   end
 end
