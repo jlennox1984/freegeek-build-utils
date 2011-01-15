@@ -3,8 +3,9 @@ freegeek-extras (1.2.18) UNRELEASED; urgency=low
   * change the recommended resolution from 1024x768 to 1024x768 or
     larger as requested by Meredith (see #20739)
   * report maximum cpu speed in basicheck (Closes: #20739)
+  * change the homepage (Closes: 20587)
 
- -- Ryan Niebur <ryan@debian.org>  Wed, 29 Dec 2010 19:21:11 -0800
+ -- Ryan Niebur <ryan@debian.org>  Sat, 15 Jan 2011 14:20:48 -0800
 
 freegeek-extras (1.2.17) freegeek-test; urgency=low
 

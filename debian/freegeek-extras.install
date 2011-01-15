@@ -2,3 +2,4 @@
 LaserJet-4.ppd etc/cups/ppd/
 printers.conf usr/share/freekbox/
 fgss.desktop usr/share/applications/
+js/aboutHome.js usr/share/xul-ext/ubufox/components/

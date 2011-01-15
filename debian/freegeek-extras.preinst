@@ -4,4 +4,9 @@ set -e
 
 touch /etc/cups/lpoptions
 
+if [ upgrade != "$1" ] || dpkg --compare-versions "$2" lt "1.2.18"; then
+    dpkg-divert --package freegeek-extras --add --rename \
+        --divert /usr/share/xul-ext/ubufox/components/aboutHome.js.real /usr/share/xul-ext/ubufox/components/aboutHome.js
+fi
+
 #DEBHELPER#
