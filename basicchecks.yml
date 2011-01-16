@@ -29,13 +29,6 @@ tests:
     failure: |-
       Networking is not responding.  Your network card may be broken
       or misconfigured.
-  checkSerial: 
-    command: "#$DMESG | grep ttyS | grep -v LSR"
-    title: "Checking status of serial ports:"
-    explanation: |-
-      Serial ports (the 9-pin connectors built into most motherboards)
-      and external modems will need these to be functional.  There
-      should be at least one port listed here.
   checkSound: 
     command: aplay /usr/share/sounds/alsa/Front_Left.wav /usr/share/sounds/alsa/Front_Right.wav
     title: "Checking sound:"
@@ -85,13 +78,6 @@ tests:
       cpu MHz rating, so we are sure that the cpu is not damaged.  If
       the bogomips rating is low, call over your friendly build
       instructor.
-  checkParallel: 
-    command: "#$DMESG | egrep '^parport'"
-    title: "Checking status of parallel port:"
-    explanation: |-
-      This command is showing information about the parallel port.
-      Make sure it is addressed to 0x378, and if not, correct this
-      setting in BIOS.
   checkVideoResolution: 
     command: xdpyinfo -display :0 | grep dimen
     title: "Checking video resolution:"
