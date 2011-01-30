@@ -40,7 +40,7 @@ const Ci = Components.interfaces;
 
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
-var HOMEPAGE_OFFLINE = "file:///home/ryan52/index.html";
+var HOMEPAGE_OFFLINE = "file:///usr/share/freegeek-extras/home/index.html";
 
 function AboutHome() {}
 AboutHome.prototype = {

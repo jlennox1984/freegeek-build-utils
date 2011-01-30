@@ -4,12 +4,13 @@ freegeek-extras (1.2.18) UNRELEASED; urgency=low
   * change the recommended resolution from 1024x768 to 1024x768 or
     larger as requested by Meredith (see #20739)
   * report maximum cpu speed in basicheck (Closes: #20739)
-  * change the homepage (Closes: 20587)
+  * change the homepage (Closes: #20587)
 
   [ Vagrant Cascadian ]
   * basiccheck: removed questions about hard drives, serial and parallel ports.
+  * add content to homepage (Closes: #20587). 
 
- -- Vagrant Cascadian <vagrant@debian.org>  Sat, 29 Jan 2011 16:46:42 -0800
+ -- Vagrant Cascadian <vagrant@debian.org>  Sat, 29 Jan 2011 17:47:45 -0800
 
 freegeek-extras (1.2.17) freegeek-test; urgency=low
 
