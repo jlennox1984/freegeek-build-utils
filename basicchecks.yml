@@ -8,16 +8,6 @@ tests:
       If not, it is likely cabled or jumpered incorrectly.
       NOTE: The CD ROM may not show up in BIOS. This is not a
       problem.
-  checkHardDrive: 
-    command: "#$DMESG | egrep '[hs]d[a-z]'"
-    title: "Checking status of hard drive:"
-    explanation: |-
-      This command is showing information corresponding to the
-      harddrive that has been installed in this system, and each line
-      should include 'sda'.  If this is not true, the
-      harddrive is improperly jumpered or installed.  Shut down the
-      computer and rejumper the drive.  Otherwise, make sure the size
-      is correct.
   checkNetwork: 
     title: "Checking networking:"
     test: "system(\"ping -c 1 #$SERVER\")"
