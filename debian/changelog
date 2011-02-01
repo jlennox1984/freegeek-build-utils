@@ -1,3 +1,11 @@
+freegeek-extras (1.2.19) UNRELEASED; urgency=low
+
+  * debian/copyright: refer to GPL-2 explicitly.
+  * debian/control: fix ambiguous versioned conflicts in freegeek-extras-pdx.
+  * debian/rules: remove generated apt sources.list.d files.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 01 Feb 2011 15:09:01 -0800
+
 freegeek-extras (1.2.18) freegeek-test; urgency=low
 
   [ Ryan Niebur ]
