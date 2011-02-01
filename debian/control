@@ -47,7 +47,7 @@ Architecture: all
 Depends: ${misc:Depends}, freegeek-archive-keyring, lsb-release
 Provides: freegeek-extras-freegeek
 Replaces: freegeek-extras
-Conflicts: freegeek-extras-freegeek, freegeek-extras (< 1.2.2)
+Conflicts: freegeek-extras-freegeek, freegeek-extras (<= 1.2.2)
 Description: Freegeek Extras configuration for PDX specific stuff
  This contains freegeek-extras configuration files specific to
  Freegeek Portland's infrastructure.
