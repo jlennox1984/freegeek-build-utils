@@ -9,6 +9,7 @@ build-stamp:
 
 clean:
 	dh clean
+	rm debian/*.list || true
 
 install: build install-stamp
 install-stamp:
