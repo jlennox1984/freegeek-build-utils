@@ -1,4 +1,4 @@
-freegeek-extras (1.2.18) UNRELEASED; urgency=low
+freegeek-extras (1.2.18) freegeek-test; urgency=low
 
   [ Ryan Niebur ]
   * change the recommended resolution from 1024x768 to 1024x768 or
@@ -8,9 +8,10 @@ freegeek-extras (1.2.18) UNRELEASED; urgency=low
 
   [ Vagrant Cascadian ]
   * basiccheck: removed questions about hard drives, serial and parallel ports.
+    (Closes: #21122)
   * add content to homepage (Closes: #20587). 
 
- -- Vagrant Cascadian <vagrant@debian.org>  Sat, 29 Jan 2011 17:47:45 -0800
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 01 Feb 2011 14:10:01 -0800
 
 freegeek-extras (1.2.17) freegeek-test; urgency=low
 
