@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Freegeek Coders <coders@freegeek.org>
 Uploaders: Martin Chase <stillflame@freegeek.org>, Vagrant Cascadian <vagrant@freegeek.org>, Ryan Niebur <ryan@debian.org>, Vagrant Cascadian <vagrant@debian.org>
 Build-Depends: debhelper (>= 7), bash-completion
-Standards-Version: 3.8.1
+Standards-Version: 3.9.1
 
 Package: freegeek-extras
 Architecture: all
@@ -37,7 +37,7 @@ Depends: ${misc:Depends},
  stress,
  cpufrequtils,
 Recommends: freegeek-extras-pdx | freegeek-extras-freegeek
-Conflicts: freegeek-extras (<= 1.2.5)
+Breaks: freegeek-extras (<= 1.2.5)
 Replaces: freegeek-extras
 Description: tools used in freegeek's build process
  Freegeek's diagnostic scripts.
@@ -47,7 +47,8 @@ Architecture: all
 Depends: ${misc:Depends}, freegeek-archive-keyring, lsb-release
 Provides: freegeek-extras-freegeek
 Replaces: freegeek-extras
-Conflicts: freegeek-extras-freegeek, freegeek-extras (<= 1.2.2)
+Conflicts: freegeek-extras-freegeek
+Breaks: freegeek-extras (<= 1.2.2)
 Description: Freegeek Extras configuration for PDX specific stuff
  This contains freegeek-extras configuration files specific to
  Freegeek Portland's infrastructure.
