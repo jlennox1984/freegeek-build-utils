@@ -1,0 +1,5 @@
+# we depend on it, so that ought to be just fine.
+freegeek-extras: desktop-command-not-in-package /usr/share/applications/fgss.desktop firefox
+
+# it's our custom way of repository management.
+freegeek-extras: unknown-section ubuntu/utils
