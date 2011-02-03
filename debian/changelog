@@ -4,8 +4,14 @@ freegeek-extras (1.2.19) UNRELEASED; urgency=low
   * debian/control: fix ambiguous versioned conflicts in freegeek-extras-pdx.
   * debian/rules: remove generated apt sources.list.d files.
   * basiccheck: add check for bad intel video cards.
+  * move homepage mangling into freegeek-extras-pdx.
+  * remove homepage diversion in postrm.
+  * add lintian overrides for trivial issues that aren't relevent.
+  * debian/source/format to 3.0 (native).
+  * update standards-version to 3.9.1: 
+    - switch from Conflicts to Breaks where appropriate.
 
- -- Vagrant Cascadian <vagrant@debian.org>  Tue, 01 Feb 2011 15:19:28 -0800
+ -- Vagrant Cascadian <vagrant@debian.org>  Thu, 03 Feb 2011 13:34:37 -0800
 
 freegeek-extras (1.2.18) freegeek-test; urgency=low
 
