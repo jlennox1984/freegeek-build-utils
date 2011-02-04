@@ -89,7 +89,7 @@ tests:
       you have installed in this system.  It will typically be a
       bit smaller (e.g. 502 for a 512 megabyte system).
   checkIntelVideo:
-    command: lspci | grep 82845 && echo video card BAD || echo video card OK
+    command: lspci | egrep 'VGA.*82845' && echo video card BAD || echo video card OK
     title: "Checking for incompatible video cards:"
     explanation: |-
       If the result comes up with a BAD video card, it is a video card that is
