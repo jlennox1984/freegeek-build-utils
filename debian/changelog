@@ -1,3 +1,10 @@
+freegeek-extras (1.2.20) UNRELEASED; urgency=low
+
+  * remove aboutHome.js from freegeek-extras, to complete the transition to
+    freegeek-extras-pdx (Closes: #21844).
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 15 Feb 2011 19:34:41 -0800
+
 freegeek-extras (1.2.19) freegeek-test; urgency=low
 
   * debian/copyright: refer to GPL-2 explicitly.
