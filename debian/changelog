@@ -1,3 +1,10 @@
+freegeek-extras (1.2.21) UNRELEASED; urgency=low
+
+  * freegeek-extras-pdx: preinst/postrm: assign the appropriate package name to
+    the aboutHome.js dpkg diversion.
+
+ -- Vagrant Cascadian <vagrant@debian.org>  Tue, 15 Feb 2011 20:31:17 -0800
+
 freegeek-extras (1.2.20) freegeek-test; urgency=low
 
   * remove aboutHome.js from freegeek-extras, to complete the transition to

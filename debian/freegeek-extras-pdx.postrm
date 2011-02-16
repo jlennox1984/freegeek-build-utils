@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
     remove|abort-install|disappear)
-        dpkg-divert --package freegeek-extras --remove --rename \
+        dpkg-divert --package freegeek-extras-pdx --remove --rename \
             --divert /usr/share/xul-ext/ubufox/components/aboutHome.js.real \
             /usr/share/xul-ext/ubufox/components/aboutHome.js
         ;;
