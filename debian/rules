@@ -4,12 +4,15 @@
 build: build-stamp
 build-stamp:
 	dh build
+	chmod +x po/compile.sh debian/generate_apt_lists
+	po/compile.sh
 	debian/generate_apt_lists
 	touch build-stamp
 
 clean:
 	dh clean
 	rm debian/*.list || true
+	rm -fr locale
 
 install: build install-stamp
 install-stamp:

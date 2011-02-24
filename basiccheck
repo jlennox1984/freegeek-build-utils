@@ -8,6 +8,10 @@ require 'yaml'
 require 'rubytui'
 include RubyTUI
 
+require 'gettext'
+include GetText
+bindtextdomain("basiccheck")
+
 ######################################################################
 # slight variations
 def yesNoRepeat( msg )
@@ -17,14 +21,16 @@ def yesNoRepeat( msg )
     }
 end
 
-def noYesRepeat( msg = "Does this test pass?" )
+def noYesRepeat( msg = nil )
+  msg ||= _("Does this test pass?")
     return promptWithDefault( msg, "Yes/no/repeat",
         "Please enter 'yes', 'no', or 'repeat'" ) {|response|
         response.match(/^[ynr]/i)
     }
 end
 
-def repeatNo( msg = "Would you like to repeat this test?" )
+def repeatNo( msg = nil )
+  msg ||= _("Would you like to repeat this test?")
     response = promptWithDefault( msg, "No",
         "Please enter 'yes' or 'no'" ) {|response|
         response.match(/^[yn]/i)
@@ -32,7 +38,8 @@ def repeatNo( msg = "Would you like to repeat this test?" )
     return response.match(/^y/i)
 end
 
-def repeatYes( msg = "Would you like to repeat this test?" )
+def repeatYes( msg = nil )
+  msg ||= _("Would you like to repeat this test?")
     response = promptWithDefault( msg, "Yes",
         "Please enter 'yes' or 'no'" ) {|response|
         response.match(/^[yn]/i)
@@ -74,25 +81,25 @@ def parseoptions
     ARGV.options {|oparser|
         oparser.banner = "Usage: #$0 [options] [tests ...]\n"
 
-        oparser.on( "--help", "-h", "Show this message" ) {
+        oparser.on( "--help", "-h", _("Show this message" )) {
             $stderr.puts oparser
             exit!(0)
         }
 
-        oparser.on( "--debug", "-d", "Turn debugging on" ) {
+        oparser.on( "--debug", "-d", _("Turn debugging on") ) {
             $DEBUG = true
         }
 
-        oparser.on( "--color", "-C", "Enable coloration of the output" ) {
+        oparser.on( "--color", "-C", _("Enable coloration of the output") ) {
             $COLOR = true
         }
 
-        oparser.on( "--menu", "-m", "Create a menu for test selection" ) {
+        oparser.on( "--menu", "-m", _("Create a menu for test selection") ) {
             asked_args = true
         }
 
-        oparser.on( "--show-tests", "-s", "Show a list of available tests" ) {
-            header "Possible tests:\n\n"
+        oparser.on( "--show-tests", "-s", _("Show a list of available tests") ) {
+            header _("Possible tests:\n\n")
             $TESTS.each {|name,info|
                 message "#{name} "
                 display "- For #{info['title'].downcase.gsub(/:/,'')}\n"
@@ -105,8 +112,8 @@ def parseoptions
     args = []
     if asked_args
         clear
-        args << menu( "Please choose from these available tests:",
-            "Which test would you like to run?",
+        args << menu( _("Please choose from these available tests:"),
+                      _("Which test would you like to run?"),
             *$TESTS.keys )
     end
     return args + ARGV
@@ -116,17 +123,8 @@ end
 # a welcoming message
 def startup
     clear
-    title = "This program is called #$0\n\n"
-    welcome = <<-"EOM"
-        To see help on this program, run:
-        # #$0 -h
-        
-        To view its contents, you can use these commands:
-        # less #$0
-        
-        To run it with colored output, use these commands:
-        # #$0 -C
-    EOM
+    title = _("This program is called #$0\n\n")
+    welcome = _("To see help on this program, run:") + "\n# #$0 -h\n\n" + _("To view its contents, you can use these commands:") + ("\n\n# less #$0\n\n") + _("To run it with colored output, use these commands:") + "\n # #$0 -C"
     header title
     message welcome.gsub(/^[ \t]+/, '')
     waitasec
@@ -137,23 +135,20 @@ end
 def finishup( failures = [] )
     clear
     unless failures.empty?
-        errorMessage "The following tests failed:\n\n"
+        errorMessage _("The following tests failed:\n\n")
         highlight failures.map {|name,data| name}.join("\n\n")
         display "\n\n"
-        if repeatYes( "Would you like to repeat the failed tests?" )
+        if repeatYes( _("Would you like to repeat the failed tests?") )
             failures = doTests( *failures )
             return( finishup( failures ) )
         else
-            highlight "\n\nPlease fix these problems and rerun #$0.\n\n"
+            highlight _("\n\nPlease fix these problems and rerun #$0.\n\n")
             divider(10)
             display "\n"
         end
     end
-    header "The basic check is finished.\n\n"
-    goodbye = <<-"EOM"
-        NOTE: 
-        Not all things that could go wrong have been checked. 
-    EOM
+    header _("The basic check is finished.\n\n")
+    goodbye = _("NOTE: Not all things that could go wrong have been checked.")
     message goodbye.gsub(/^\s+/, '')
 end
 
@@ -167,7 +162,12 @@ end
 ######################################################################
 # run a test
 def doTest( test )
-    instructions = $TESTS[test]
+    instructions = $TESTS[test].dup
+
+  for i in [:title, :success, :failure, :pretest, :explanation]
+    instructions[i.to_s] = _(instructions[i.to_s]) if instructions.keys.include?(i.to_s)
+  end
+
     title = instructions['title']
 
     clear
@@ -175,7 +175,7 @@ def doTest( test )
     divider(50)
 
     if instructions.has_key?('question')
-      response = promptWithDefault(instructions['question'], "yes", "Please enter 'yes' or 'no'" ) {|response|
+      response = promptWithDefault(instructions['question'], "yes", _("Please enter 'yes' or 'no'") ) {|response|
       response.match(/^[yn]/i)
     }
       return true if response.match(/^n/i)
@@ -189,35 +189,35 @@ def doTest( test )
     
     if instructions.has_key?('test')
         rubytest = instructions['test']
-        echo "The following is ruby code:\n\n"
+        echo _("The following is ruby code:\n\n")
         display rubytest + "\n\n"
         message instructions['explanation'] + "\n\n"
         retval = eval( rubytest )
         
         if retval
-            display "Test succeeded.\n\n"
+            display _("Test succeeded.\n\n")
             message instructions['success'] + "\n\n"
             answer = "yes"
         elsif instructions.has_key?('fallback_command')
             command = eval( %Q/%Q,#{instructions['fallback_command']},/ )
-            highlight "Test failed.\n\n"
-            message "Trying fallback command:\n\n"
+            highlight _("Test failed.\n\n")
+            message _("Trying fallback command:\n\n")
             display command + "\n\n"
-            message "With output of:\n\n"
+            message _("With output of:\n\n")
             display `#{command}`
             retval = eval( rubytest )
             answer = retval ? "yes" : "no"
         else
-            highlight "Test failed.\n\n"
+            highlight _("Test failed.\n\n")
             message instructions['failure'] + "\n\n"
             answer = "no"
         end
         answer = "repeat" if repeatNo
     elsif instructions.has_key?('commands')
         commands = instructions['commands'].map {|c| eval( %Q/%Q,#{c},/ )}
-        echo "The following commands:\n\n"
+        echo _("The following commands:\n\n")
         display commands.join("\n")
-        echo "\n\nhave executed with the output:\n\n"
+        echo _("\n\nhave executed with the output:\n\n")
         output = commands.inject('') {|out,command|
             out += `#{command}`
         }
@@ -227,9 +227,9 @@ def doTest( test )
         answer = noYesRepeat
     elsif instructions.has_key?('command')
         command = eval( %Q/%Q,#{instructions['command']},/ )
-        echo "The following command:\n\n"
+        echo _("The following command:\n\n")
         display command
-        echo "\n\nhas executed with the output:\n\n"
+        echo _("\n\nhas executed with the output:\n\n")
         output = `#{command}`
         display output
         echo "\n" + instructions['explanation'] + "\n\n" if

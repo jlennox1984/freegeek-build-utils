@@ -3,7 +3,7 @@ Section: ubuntu/utils
 Priority: optional
 Maintainer: Freegeek Coders <coders@freegeek.org>
 Uploaders: Martin Chase <stillflame@freegeek.org>, Vagrant Cascadian <vagrant@freegeek.org>, Ryan Niebur <ryan@debian.org>, Vagrant Cascadian <vagrant@debian.org>
-Build-Depends: debhelper (>= 7), bash-completion
+Build-Depends: debhelper (>= 7), bash-completion, libgettext-ruby1.8
 Standards-Version: 3.9.1
 
 Package: freegeek-extras
@@ -32,7 +32,7 @@ Depends: ${misc:Depends},
  libtui-ruby1.8 (>= 1.15),
  lsb-release,
 # basiccheck
- pmount, alsa-utils,
+ pmount, alsa-utils, libgettext-ruby1.8,
 # stress-test
  stress,
  cpufrequtils,
