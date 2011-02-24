@@ -4,7 +4,8 @@
 build: build-stamp
 build-stamp:
 	dh build
-	chmod +x po/compile.sh debian/generate_apt_lists
+	chmod +x po/generate.sh po/compile.sh debian/generate_apt_lists
+	po/generate.sh
 	po/compile.sh
 	debian/generate_apt_lists
 	touch build-stamp
