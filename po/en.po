@@ -7,121 +7,162 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-02-24 12:45-0800\n"
+"POT-Creation-Date: 2011-02-24 13:14-0800\n"
 "PO-Revision-Date: 2011-02-24 12:45-0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: basiccheck:25
+#: basiccheck:21
+msgid "y"
+msgstr ""
+
+#: basiccheck:22
+msgid "n"
+msgstr ""
+
+#: basiccheck:23
+msgid "r"
+msgstr ""
+
+#: basiccheck:27
 msgid "Does this test pass?"
 msgstr ""
 
-#: basiccheck:33 basiccheck:42
+#: basiccheck:28
+msgid "Yes/no/repeat"
+msgstr ""
+
+#: basiccheck:29
+msgid "Please enter 'yes', 'no', or 'repeat'"
+msgstr ""
+
+#: basiccheck:35 basiccheck:44
 msgid "Would you like to repeat this test?"
 msgstr ""
 
-#: basiccheck:84
-msgid "Show this message"
+#: basiccheck:36
+msgid "no"
 msgstr ""
 
-#: basiccheck:89
-msgid "Turn debugging on"
-msgstr ""
-
-#: basiccheck:93
-msgid "Enable coloration of the output"
-msgstr ""
-
-#: basiccheck:97
-msgid "Create a menu for test selection"
-msgstr ""
-
-#: basiccheck:101
-msgid "Show a list of available tests"
-msgstr ""
-
-#: basiccheck:102
-msgid "Possible tests:\n\n"
-msgstr ""
-
-#: basiccheck:115
-msgid "Please choose from these available tests:"
-msgstr ""
-
-#: basiccheck:116
-msgid "Which test would you like to run?"
-msgstr ""
-
-#: basiccheck:127
-msgid "To see help on this program, run:"
-msgstr ""
-
-#: basiccheck:127
-msgid "To view its contents, you can use these commands:"
-msgstr ""
-
-#: basiccheck:127
-msgid "To run it with colored output, use these commands:"
-msgstr ""
-
-#: basiccheck:138
-msgid "The following tests failed:\n\n"
-msgstr ""
-
-#: basiccheck:141
-msgid "Would you like to repeat the failed tests?"
-msgstr ""
-
-#: basiccheck:150
-msgid "The basic check is finished.\n\n"
-msgstr ""
-
-#: basiccheck:151
-msgid "NOTE: Not all things that could go wrong have been checked."
-msgstr ""
-
-#: basiccheck:178
+#: basiccheck:37 basiccheck:46 basiccheck:180
 msgid "Please enter 'yes' or 'no'"
 msgstr ""
 
-#: basiccheck:192
-msgid "The following is ruby code:\n\n"
+#: basiccheck:45 basiccheck:180
+msgid "yes"
 msgstr ""
 
-#: basiccheck:198
-msgid "Test succeeded.\n\n"
+#: basiccheck:86
+msgid "Show this message"
 msgstr ""
 
-#: basiccheck:203 basiccheck:211
-msgid "Test failed.\n\n"
+#: basiccheck:91
+msgid "Turn debugging on"
 msgstr ""
 
-#: basiccheck:204
-msgid "Trying fallback command:\n\n"
+#: basiccheck:95
+msgid "Enable coloration of the output"
+msgstr ""
+
+#: basiccheck:99
+msgid "Create a menu for test selection"
+msgstr ""
+
+#: basiccheck:103
+msgid "Show a list of available tests"
+msgstr ""
+
+#: basiccheck:104
+msgid "Possible tests:"
+msgstr ""
+
+#: basiccheck:117
+msgid "Please choose from these available tests:"
+msgstr ""
+
+#: basiccheck:118
+msgid "Which test would you like to run?"
+msgstr ""
+
+#: basiccheck:129
+msgid "To see help on this program, run:"
+msgstr ""
+
+#: basiccheck:129
+msgid "To view its contents, you can use these commands:"
+msgstr ""
+
+#: basiccheck:129
+msgid "To run it with colored output, use these commands:"
+msgstr ""
+
+#: basiccheck:140
+msgid "The following tests failed:"
+msgstr ""
+
+#: basiccheck:143
+msgid "Would you like to repeat the failed tests?"
+msgstr ""
+
+#: basiccheck:152
+msgid "The basic check is finished."
+msgstr ""
+
+#: basiccheck:153
+msgid "NOTE: Not all things that could go wrong have been checked."
+msgstr ""
+
+#: basiccheck:194
+msgid "The following is ruby code:"
+msgstr ""
+
+#: basiccheck:200
+msgid "Test succeeded."
+msgstr ""
+
+#: basiccheck:205 basiccheck:213
+msgid "Test failed."
 msgstr ""
 
 #: basiccheck:206
-msgid "With output of:\n\n"
+msgid "Trying fallback command:"
 msgstr ""
 
-#: basiccheck:218
-msgid "The following commands:\n\n"
+#: basiccheck:208
+msgid "With output of:"
 msgstr ""
 
 #: basiccheck:220
-msgid "\n\nhave executed with the output:\n\n"
+msgid "The following commands:"
 msgstr ""
 
-#: basiccheck:230
-msgid "The following command:\n\n"
+#: basiccheck:222
+msgid "have executed with the output:"
 msgstr ""
 
 #: basiccheck:232
-msgid "\n\nhas executed with the output:\n\n"
+msgid "The following command:"
+msgstr ""
+
+#: basiccheck:234
+msgid "has executed with the output:"
+msgstr ""
+
+#: basiccheck:243
+msgid "Malformed test"
+msgstr ""
+
+#: basiccheck:262
+msgid "User interrupt caught.  Exiting."
+msgstr ""
+
+#: basiccheck:273
+msgid "No tests found for the names:"
 msgstr ""
 
 #: po/tmpfile.rb:1
@@ -129,7 +170,12 @@ msgid "Checking status of CD ROM:"
 msgstr ""
 
 #: po/tmpfile.rb:2
-msgid "The output should contain reference to a CD ROM and possibly a\nDVD ROM which should each show up as one of scd? or sg?.\nIf not, it is likely cabled or jumpered incorrectly.\nNOTE: The CD ROM may not show up in BIOS. This is not a\nproblem."
+msgid ""
+"The output should contain reference to a CD ROM and possibly a\n"
+"DVD ROM which should each show up as one of scd? or sg?.\n"
+"If not, it is likely cabled or jumpered incorrectly.\n"
+"NOTE: The CD ROM may not show up in BIOS. This is not a\n"
+"problem."
 msgstr ""
 
 #: po/tmpfile.rb:3
@@ -141,11 +187,15 @@ msgid "Networking seems to work."
 msgstr ""
 
 #: po/tmpfile.rb:5
-msgid "Networking is not responding.  Your network card may be broken\nor misconfigured."
+msgid ""
+"Networking is not responding.  Your network card may be broken\n"
+"or misconfigured."
 msgstr ""
 
 #: po/tmpfile.rb:6
-msgid "This command tests communication over the network by requesting\na simple message be sent back from our build server."
+msgid ""
+"This command tests communication over the network by requesting\n"
+"a simple message be sent back from our build server."
 msgstr ""
 
 #: po/tmpfile.rb:7
@@ -153,7 +203,25 @@ msgid "Checking CPU info:"
 msgstr ""
 
 #: po/tmpfile.rb:8
-msgid "cpu MHz or model number* should match what was written on the\nlabel on the case. If it does not you must stop and figure out\nwhy.\n\n* For various AMD chips, the model name will differ from the\nMHz.  The model number (e.g. \"1800+\") will be the rating off of\nwhich you should determine the system's inclusion into a given\nspec, and should therefore also be the number written on the\ncase tag.  Ask somebody what this means if these instructions\nare not clear.\n\nMake sure that this info fits within the specifications of the\nbox that you are building.\n\nIt is expected that the bogomips rating is close to twice the\ncpu MHz rating, so we are sure that the cpu is not damaged.  If\nthe bogomips rating is low, call over your friendly build\ninstructor."
+msgid ""
+"cpu MHz or model number* should match what was written on the\n"
+"label on the case. If it does not you must stop and figure out\n"
+"why.\n"
+"\n"
+"* For various AMD chips, the model name will differ from the\n"
+"MHz.  The model number (e.g. \"1800+\") will be the rating off of\n"
+"which you should determine the system's inclusion into a given\n"
+"spec, and should therefore also be the number written on the\n"
+"case tag.  Ask somebody what this means if these instructions\n"
+"are not clear.\n"
+"\n"
+"Make sure that this info fits within the specifications of the\n"
+"box that you are building.\n"
+"\n"
+"It is expected that the bogomips rating is close to twice the\n"
+"cpu MHz rating, so we are sure that the cpu is not damaged.  If\n"
+"the bogomips rating is low, call over your friendly build\n"
+"instructor."
 msgstr ""
 
 #: po/tmpfile.rb:9
@@ -161,11 +229,29 @@ msgid "Checking sound:"
 msgstr ""
 
 #: po/tmpfile.rb:10
-msgid "A sound is about to play.  Please make sure the speakers are\nplugged in and on, with the volume set to ~50%."
+msgid ""
+"A sound is about to play.  Please make sure the speakers are\n"
+"plugged in and on, with the volume set to ~50%."
 msgstr ""
 
 #: po/tmpfile.rb:11
-msgid "A sound should have played just now at an audible level without\ndistortion.\n\nIf a sound did not play, the speakers may be plugged into the\nwrong port or may not be turned on.\n\nIf error messages were displayed, the sound card may not be\nphysically installed, properly configured or it may be bad\nhardware.\n\nIf the sound was too quiet, try using the 'alsamixer' command to\nadjust the volume levels, setting \"Master\" and \"PCM\" to ~90 each.\n\nIf the sound is distorted, turn down the volume in both\n'alsamixer' and on the speakers, or decide that the speakers are\nbad."
+msgid ""
+"A sound should have played just now at an audible level without\n"
+"distortion.\n"
+"\n"
+"If a sound did not play, the speakers may be plugged into the\n"
+"wrong port or may not be turned on.\n"
+"\n"
+"If error messages were displayed, the sound card may not be\n"
+"physically installed, properly configured or it may be bad\n"
+"hardware.\n"
+"\n"
+"If the sound was too quiet, try using the 'alsamixer' command to\n"
+"adjust the volume levels, setting \"Master\" and \"PCM\" to ~90 each.\n"
+"\n"
+"If the sound is distorted, turn down the volume in both\n"
+"'alsamixer' and on the speakers, or decide that the speakers are\n"
+"bad."
 msgstr ""
 
 #: po/tmpfile.rb:12
@@ -173,7 +259,9 @@ msgid "Checking for incompatible video cards:"
 msgstr ""
 
 #: po/tmpfile.rb:13
-msgid "If the result comes up with a BAD video card, it is a video card that is\npoorly supported on recent versions of Ubuntu."
+msgid ""
+"If the result comes up with a BAD video card, it is a video card that is\n"
+"poorly supported on recent versions of Ubuntu."
 msgstr ""
 
 #: po/tmpfile.rb:14
@@ -181,7 +269,10 @@ msgid "Checking amount of memory:"
 msgstr ""
 
 #: po/tmpfile.rb:15
-msgid "The value should be close to the number of megabytes of memory\nyou have installed in this system.  It will typically be a\nbit smaller (e.g. 502 for a 512 megabyte system)."
+msgid ""
+"The value should be close to the number of megabytes of memory\n"
+"you have installed in this system.  It will typically be a\n"
+"bit smaller (e.g. 502 for a 512 megabyte system)."
 msgstr ""
 
 #: po/tmpfile.rb:16
@@ -189,5 +280,15 @@ msgid "Checking video resolution:"
 msgstr ""
 
 #: po/tmpfile.rb:17
-msgid "This is the number of pixels displayed on the screen.  For\nusability purposes, this should be set to 1024x768 or larger (i.e., 1280x1024).\nIf it is smaller than this, your video display is probably\nmisconfigured. Read through the instructions at:\nhttp://wiki.freegeek.org/index.php/Build_tips\nunder the \"Video\" section to fix this.\n\nIf the resolution is larger, it is ok as long as you can read\nit."
+msgid ""
+"This is the number of pixels displayed on the screen.  For\n"
+"usability purposes, this should be set to 1024x768 or larger (i.e., "
+"1280x1024).\n"
+"If it is smaller than this, your video display is probably\n"
+"misconfigured. Read through the instructions at:\n"
+"http://wiki.freegeek.org/index.php/Build_tips\n"
+"under the \"Video\" section to fix this.\n"
+"\n"
+"If the resolution is larger, it is ok as long as you can read\n"
+"it."
 msgstr ""

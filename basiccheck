@@ -8,43 +8,45 @@ require 'yaml'
 require 'rubytui'
 include RubyTUI
 
-require 'gettext'
-include GetText
-bindtextdomain("basiccheck")
-
 ######################################################################
 # slight variations
-def yesNoRepeat( msg )
-    return promptWithDefault( msg, "No/yes/repeat",
-        "Please enter 'yes', 'no', or 'repeat'" ) {|response|
-        response.match(/^[ynr]/i)
-    }
+#def yesNoRepeat( msg )
+#    return promptWithDefault( msg, "No/yes/repeat",
+#        "Please enter 'yes', 'no', or 'repeat'" ) {|response|
+#        response.match(/^[ynr]/i)
+#    }
+#end
+
+if false # gettext doesn't look inside of #{} in regexps, apparently...so lets cheat.
+  _("y")
+  _("n")
+  _("r")
 end
 
 def noYesRepeat( msg = nil )
   msg ||= _("Does this test pass?")
-    return promptWithDefault( msg, "Yes/no/repeat",
-        "Please enter 'yes', 'no', or 'repeat'" ) {|response|
-        response.match(/^[ynr]/i)
+    return promptWithDefault( msg, _("Yes/no/repeat"),
+        _("Please enter 'yes', 'no', or 'repeat'") ) {|response|
+    response.match(/^[#{_("y")}#{_("n")}#{_("r")}]/i)
     }
 end
 
 def repeatNo( msg = nil )
   msg ||= _("Would you like to repeat this test?")
-    response = promptWithDefault( msg, "No",
-        "Please enter 'yes' or 'no'" ) {|response|
-        response.match(/^[yn]/i)
+    response = promptWithDefault( msg, _("no"),
+        _("Please enter 'yes' or 'no'") ) {|response|
+        response.match(/^[#{_("y")}#{_("n")}]/i)
     }
-    return response.match(/^y/i)
+    return response.match(/^#{_("y")}/i)
 end
 
 def repeatYes( msg = nil )
   msg ||= _("Would you like to repeat this test?")
-    response = promptWithDefault( msg, "Yes",
-        "Please enter 'yes' or 'no'" ) {|response|
-        response.match(/^[yn]/i)
+    response = promptWithDefault( msg, _("yes"),
+        _("Please enter 'yes' or 'no'") ) {|response|
+        response.match(/^[#{_("y")}#{_("n")}]/i)
     }
-    return response.match(/^y/i)
+    return response.match(/^#{_("y")}/i)
 end
 
 ######################################################################
@@ -99,7 +101,7 @@ def parseoptions
         }
 
         oparser.on( "--show-tests", "-s", _("Show a list of available tests") ) {
-            header _("Possible tests:\n\n")
+            header _("Possible tests:") + "\n\n"
             $TESTS.each {|name,info|
                 message "#{name} "
                 display "- For #{info['title'].downcase.gsub(/:/,'')}\n"
@@ -135,7 +137,7 @@ end
 def finishup( failures = [] )
     clear
     unless failures.empty?
-        errorMessage _("The following tests failed:\n\n")
+        errorMessage _("The following tests failed:") + "\n\n"
         highlight failures.map {|name,data| name}.join("\n\n")
         display "\n\n"
         if repeatYes( _("Would you like to repeat the failed tests?") )
@@ -147,7 +149,7 @@ def finishup( failures = [] )
             display "\n"
         end
     end
-    header _("The basic check is finished.\n\n")
+    header _("The basic check is finished.") + "\n\n"
     goodbye = _("NOTE: Not all things that could go wrong have been checked.")
     message goodbye.gsub(/^\s+/, '')
 end
@@ -164,7 +166,7 @@ end
 def doTest( test )
     instructions = $TESTS[test].dup
 
-  for i in [:title, :success, :failure, :pretest, :explanation]
+  for i in [:title, :success, :failure, :pretest, :explanation, :question]
     instructions[i.to_s] = _(instructions[i.to_s]) if instructions.keys.include?(i.to_s)
   end
 
@@ -175,10 +177,10 @@ def doTest( test )
     divider(50)
 
     if instructions.has_key?('question')
-      response = promptWithDefault(instructions['question'], "yes", _("Please enter 'yes' or 'no'") ) {|response|
-      response.match(/^[yn]/i)
+      response = promptWithDefault(instructions['question'], _("yes"), _("Please enter 'yes' or 'no'") ) {|response|
+      response.match(/^[#{_("y")}#{_("n")}]/i)
     }
-      return true if response.match(/^n/i)
+      return true if response.match(/^#{_("n")}/i)
     end
     
     if instructions.has_key?('pretest')
@@ -189,35 +191,35 @@ def doTest( test )
     
     if instructions.has_key?('test')
         rubytest = instructions['test']
-        echo _("The following is ruby code:\n\n")
+        echo _("The following is ruby code:") + "\n\n"
         display rubytest + "\n\n"
         message instructions['explanation'] + "\n\n"
         retval = eval( rubytest )
         
         if retval
-            display _("Test succeeded.\n\n")
+            display _("Test succeeded.") + "\n\n"
             message instructions['success'] + "\n\n"
             answer = "yes"
         elsif instructions.has_key?('fallback_command')
             command = eval( %Q/%Q,#{instructions['fallback_command']},/ )
-            highlight _("Test failed.\n\n")
-            message _("Trying fallback command:\n\n")
+            highlight _("Test failed.") + "\n\n"
+            message _("Trying fallback command:") + "\n\n"
             display command + "\n\n"
-            message _("With output of:\n\n")
+            message _("With output of:") + "\n\n"
             display `#{command}`
             retval = eval( rubytest )
             answer = retval ? "yes" : "no"
         else
-            highlight _("Test failed.\n\n")
+            highlight _("Test failed.") + "\n\n"
             message instructions['failure'] + "\n\n"
             answer = "no"
         end
         answer = "repeat" if repeatNo
     elsif instructions.has_key?('commands')
         commands = instructions['commands'].map {|c| eval( %Q/%Q,#{c},/ )}
-        echo _("The following commands:\n\n")
+        echo _("The following commands:") + "\n\n"
         display commands.join("\n")
-        echo _("\n\nhave executed with the output:\n\n")
+        echo "\n\n" + _("have executed with the output:") + "\n\n"
         output = commands.inject('') {|out,command|
             out += `#{command}`
         }
@@ -227,9 +229,9 @@ def doTest( test )
         answer = noYesRepeat
     elsif instructions.has_key?('command')
         command = eval( %Q/%Q,#{instructions['command']},/ )
-        echo _("The following command:\n\n")
+        echo _("The following command:") + "\n\n"
         display command
-        echo _("\n\nhas executed with the output:\n\n")
+        echo "\n\n" + _("has executed with the output:") + "\n\n"
         output = `#{command}`
         display output
         echo "\n" + instructions['explanation'] + "\n\n" if
@@ -238,22 +240,26 @@ def doTest( test )
         answer = noYesRepeat
     else
         display instructions.to_yaml
-        abort "Malformed test '#{test}'\n\n"
+        abort _("Malformed test") + " '#{test}'\n\n"
     end
     
-    if answer.match(/^r/i)
+    if answer.match(/^#{_("r")}/i)
         return doTest( test )
     else
-        return answer.match(/^y/i)
+        return answer.match(/^#{_("y")}/i)
     end
 end
 
 if __FILE__ == $0
+  require 'gettext'
+  include GetText
+  bindtextdomain("basiccheck")
+
     require 'optparse'
 
     trap( "SIGINT" ) {
         `reset -Q`
-        errorMessage "\n\nUser interrupt caught.  Exiting.\n\n"
+        errorMessage "\n\n" + _("User interrupt caught.  Exiting.") + "\n\n"
         exit!( 1 )
     }
 
@@ -264,7 +270,7 @@ if __FILE__ == $0
                 name.match(/#{arg}/i)
             }
         }
-        abort "No tests found for the names: '#{testargs.join("', '")}'" if tests.empty?
+        abort _("No tests found for the names:") + " '#{testargs.join("', '")}'" if tests.empty?
     else
         startup
         tests = $TESTS
