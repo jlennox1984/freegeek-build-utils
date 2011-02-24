@@ -2,8 +2,9 @@ freegeek-extras (1.2.21) UNRELEASED; urgency=low
 
   * freegeek-extras-pdx: preinst/postrm: assign the appropriate package name to
     the aboutHome.js dpkg diversion.
+  * Remove LaserJet-4 from default printers (Closes: #21942). 
 
- -- Vagrant Cascadian <vagrant@debian.org>  Tue, 15 Feb 2011 20:31:17 -0800
+ -- Vagrant Cascadian <vagrant@debian.org>  Thu, 24 Feb 2011 12:30:30 -0800
 
 freegeek-extras (1.2.20) freegeek-test; urgency=low
 

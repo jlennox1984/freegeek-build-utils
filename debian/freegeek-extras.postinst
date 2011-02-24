@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -e
-
-if [ "$1" = "configure" ]; then
-    grep -q LaserJet-4 /etc/cups/printers.conf || cat /usr/share/freekbox/printers.conf >> /etc/cups/printers.conf
-fi
-
-#DEBHELPER#
