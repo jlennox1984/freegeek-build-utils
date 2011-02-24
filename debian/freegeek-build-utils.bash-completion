@@ -39,12 +39,6 @@ _magix(){
     return 0
 }
 
-_bat_check(){
-    COMPREPLY=($(compgen -W "" -- ${COMP_WORDS[COMP_CWORD]}))
-    return 0
-}
-
 complete -F _magix magix
-complete -F _bat_check bat_check
 complete -F _printme printme
 complete -F _stress-test stress-test
