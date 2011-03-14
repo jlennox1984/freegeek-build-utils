@@ -23,7 +23,7 @@ $server = yaml['server'] + ':' + yaml['port'].to_s
 # $server="printme:80"
 	end
 
-$PRINTME_VERSION=12
+$PRINTME_VERSION=13
 
 require 'rubytui'
 require 'fileutils'
@@ -127,6 +127,7 @@ def client_hash
   end
   client_versions[11] = [11]    # string change on both ends, that needs to go together (reworded contracts question)
   client_versions[12] = [12]    # new info collected (covered), forced upgrade. automagic.
+  client_versions[13] = [12,13]    # all works.
   client_versions
 end
 

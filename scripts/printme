@@ -135,6 +135,22 @@ def ask_covered
   return covered
 end
 
+class Hash
+  def ryan52_to_xml(name)
+    if self.length == 0
+      return "<#{name} />"
+    else
+      s = "<#{name}>\n"
+      self.each{|k,v|
+        ks = k.to_s
+        s += "<#{ks}>#{v}</#{ks}>\n"
+      }
+      s += "</#{name}>"
+      return s
+    end
+  end
+end
+
 def ask_and_send_stuff
   action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
   type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
@@ -144,6 +160,27 @@ def ask_and_send_stuff
   uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
   notes = prompt('What, if anything, is notable about this system?')
   codename = (DIST == "mac" ? "Mac" : `lsb_release --description --short`)
+  unless (@driver.version < 13)
+    battery_results = ""
+    if File.exists?("/usr/bin/batterytest") and File.exists?("#{ENV["HOME"]}/bat_mon") and type.match(/laptop/i)
+      battmp = `batterytest`.chomp
+      if noYes("Do you want to include the results of the last battery test (#{battmp})?")
+        battery_results = battmp
+      end
+    end
+
+    fgdb_printme_hash = {}
+
+    if !battery_results.empty?
+      fgdb_printme_hash[:batterytest] = battery_results
+    end
+
+    lshw_lines = @lshw_output.split("\n")
+    first = lshw_lines.shift
+    lshw_lines.shift if lshw_lines.first.match(/DOCTYPE/)
+
+    @lshw_output = "#{first}\n<fgdb_root>\n#{fgdb_printme_hash.ryan52_to_xml("fgdb_printme")}\n<fgdb_data>#{lshw_lines.join("\n")}</fgdb_data></fgdb_root>"
+  end
 
   data = {
     "contact_id" => uid,
