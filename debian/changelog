@@ -1,4 +1,4 @@
-freegeek-extras (1.2.21) UNRELEASED; urgency=low
+freegeek-extras (1.2.22) UNRELEASED; urgency=low
 
   [ Vagrant Cascadian ]
   * freegeek-extras-pdx: preinst/postrm: assign the appropriate package name to
@@ -9,6 +9,13 @@ freegeek-extras (1.2.21) UNRELEASED; urgency=low
   [ Ryan Niebur ]
   * make basiccheck translateable (Closes: #21123)
   * pass batterytest results on to fgdb if the server supports it
+
+ -- Ryan Niebur <ryan@debian.org>  Sun, 13 Mar 2011 22:45:17 -0700
+
+freegeek-extras (1.2.21) freegeek-test; urgency=low
+
+  * release, based on 1.2.17, with a one line change.
+	doesn't include versions between 1.2.17 and 1.2.21
 
  -- Ryan Niebur <ryan@debian.org>  Sun, 13 Mar 2011 22:45:17 -0700
 
