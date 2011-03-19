@@ -1,4 +1,4 @@
-freegeek-extras (1.2.22) UNRELEASED; urgency=low
+freegeek-extras (1.2.23) UNRELEASED; urgency=low
 
   [ Vagrant Cascadian ]
   * freegeek-extras-pdx: preinst/postrm: assign the appropriate package name to
@@ -11,6 +11,12 @@ freegeek-extras (1.2.22) UNRELEASED; urgency=low
   * pass batterytest results on to fgdb if the server supports it
 
  -- Ryan Niebur <ryan@debian.org>  Sun, 13 Mar 2011 22:45:17 -0700
+
+freegeek-extras (1.2.22) freegeek-test; urgency=low
+
+  * rebuild in a correct environment
+
+ -- Ryan Niebur <ryan@debian.org>  Sat, 19 Mar 2011 14:03:57 -0700
 
 freegeek-extras (1.2.21) freegeek-test; urgency=low
 
