@@ -62,9 +62,35 @@ ul.horizontal {
 
 	
 </style>
+<script>
+function get_ubuntu_version() {
+var software = "Ubuntu";
+var arr  = navigator.userAgent.split(" ");
+var version = null;
+for(var i = 0; i < arr.length; i++) {
+var x = arr[i];
+if(x.match("^" + software + "/")) {
+version = x.split("/")[1];
+}  
+}  
+if(version && version == "dapper") {
+version = "6.06";
+}  
+return version;
+}  
+
+function help_url() {
+var ubu = get_ubuntu_version();
+if(ubu) {
+                      return "https://help.ubuntu.com/" + ubu;
+} else {
+                   return "https://help.ubuntu.com/";
+}  
+}  
+</script>
 <head>
 <title></title>
-<body>
+<body onLoad="document.getElementById('help_link').href = help_url();">
 <div class="header">
 
 <img class="header" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABhCAYAAAAgLwTnAAAX+2lDQ1BJQ0MgcHJvZmlsZQAAeNrt
@@ -484,7 +510,7 @@ AABJRU5ErkJggg==" />
 <div class="main">
 <p>It is running <a href="http://ubuntu.com">Ubuntu</a>.</p>
 <p> Get help through <a href="http://www.freegeek.org/about/techsupport/">Free Geek Tech Support</a> 
-or visit the Ubuntu help pages <a href="https://help.ubuntu.com/">help.ubuntu.com</a>.</p>
+or visit the Ubuntu help pages <a id="help_link" href="https://help.ubuntu.com/">help.ubuntu.com</a>.</p>
 <p>You can also search online. Try looking on the <a href="http://ubuntuforums.org">Ubuntu Forums</a> 
 or use this search box to search for Linux specific answers. </p>
 <p>
