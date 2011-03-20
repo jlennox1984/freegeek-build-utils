@@ -76,6 +76,9 @@ version = x.split("/")[1];
 if(version && version == "dapper") {
 version = "6.06";
 }  
+if(version != parseFloat(version).toFixed(2)) {
+version = null;
+}
 return version;
 }  
 
