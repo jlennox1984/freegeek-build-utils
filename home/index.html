@@ -64,32 +64,32 @@ ul.horizontal {
 </style>
 <script>
 function get_ubuntu_version() {
-var software = "Ubuntu";
-var arr  = navigator.userAgent.split(" ");
-var version = null;
-for(var i = 0; i < arr.length; i++) {
-var x = arr[i];
-if(x.match("^" + software + "/")) {
-version = x.split("/")[1];
-}  
-}  
-if(version && version == "dapper") {
-version = "6.06";
-}  
-if(version != parseFloat(version).toFixed(2)) {
-version = null;
+  var software = "Ubuntu";
+  var arr  = navigator.userAgent.split(" ");
+  var version = null;
+  for(var i = 0; i < arr.length; i++) {
+    var x = arr[i];
+    if(x.match("^" + software + "/")) {
+      version = x.split("/")[1];
+    }
+  }
+  if(version == "dapper") {
+    version = "6.06";
+  }
+  if(version != parseFloat(version).toFixed(2)) {
+    version = null;
+  }
+  return version;
 }
-return version;
-}  
 
 function help_url() {
-var ubu = get_ubuntu_version();
-if(ubu) {
-                      return "https://help.ubuntu.com/" + ubu;
-} else {
-                   return "https://help.ubuntu.com/";
-}  
-}  
+  var ubu = get_ubuntu_version();
+  if(ubu) {
+    return "https://help.ubuntu.com/" + ubu;
+  } else {
+    return "https://help.ubuntu.com/";
+  }
+}
 </script>
 <head>
 <title></title>
