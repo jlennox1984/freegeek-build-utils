@@ -54,12 +54,15 @@ ul.horizontal {
 	margin-top: 25px;
 	}
 	
-#navlist li {
+li.navlist {
 	display: inline;
 	list-style-type: none;
 	padding-right: 20px;
 }
 
+.search{
+	width: 60%;
+	}
 	
 </style>
 <script>
@@ -519,26 +522,31 @@ or use this search box to search for Linux specific answers. </p>
 <p>
 Search for Linux information on Google: <br />
 <form method="get" action="http://www.google.com/linux" name="linux-search">
-<input name="q" value="" id="" />
-<button>Google Linux Search</button>
+<input name="q" value="" class="search" />
+<button>Linux Search</button>
 </form>
 </p>
 <p>Search Google:  <br />
 <form method="get" action="http://www.google.com/search" name="google-search">
-<input name="q" value="" id="" />
-<button>Google</button>
+<input name="q" value="" class="search" />
+<button>Google Search</button>
 </form>
 </p>
 </div>
 <div class="footer">
 	<p class="footer">
-		<ul class="horizontal" id="navlist">
-			<li><a href="http://freegeek.org">Free Geek</a></li>
-			<li><a href="http://freegeek.org/thrift-store/"> Free Geek Thrift Store</a></li>
-			<li><a href="http://freegeek.org/news/">Free Geek News</a></li>
-			<li><a href="http://trimet.org">Trimet</a></li>
+		<ul class="horizontal">
+			<li class="navlist"><a href="http://freegeek.org">Free Geek</a></li>
+			<li class="navlist"><a href="http://freegeek.org/thrift-store/"> Free Geek Thrift Store</a></li>
+			<li class="navlist"><a href="http://freegeek.org/news/">Free Geek News</a></li>
+			<li class="navlist"><a href="http://trimet.org">Trimet</a></li>
 		</ul>	
-</p>
+		<ul class="horizontal">
+			<li class="navlist"><a href="https://mail.google.com/mail/">Gmail</a></li>
+			<li class="navlist"><a href="https://mail.yahoo.com">Yahoo Mail</a></li>
+			<li class="navlist"><a href="https://www.hotmail.com/">Hotmail</a></li>
+		</ul>	
+	</p>
 </div>
 </head>
 <body>
