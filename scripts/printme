@@ -44,7 +44,7 @@ end
 
 def get_current_info
   @detected_system_id = @driver.get_system_id(@lshw_output)
-  if @detected_system_id
+  if @detected_system_id and !@driver.is_system_gone(@detected_system_id)
     @default_contract = @driver.contract_label_for_system(@detected_system_id)
     @default_type = @driver.type_description_for_system(@detected_system_id)
     covered = @driver.covered_for_system(@detected_system_id)
@@ -57,6 +57,7 @@ def get_current_info
     @default_type = @driver.default_type_description
     @default_contract = nil
     @default_uncovered = nil
+    @detected_system_id = nil
   end
   @default_action = @driver.default_action_description
 end

@@ -1,3 +1,10 @@
+freegeek-extras (1.2.24) UNRELEASED; urgency=low
+
+  * printme compat 14, supports ignoring previous systems if they've
+    been sold
+
+ -- Ryan Niebur <ryan@debian.org>  Sun, 03 Apr 2011 11:25:17 -0700
+
 freegeek-extras (1.2.23) freegeek-test; urgency=low
 
   * fixes from 1.2.17 to 1.2.21 (Closes: #21844, #20587, #20739, #21122)
