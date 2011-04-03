@@ -54,6 +54,7 @@ def setup_soap
   add_method("version_compat", "client_version")
   add_method("version")
   add_method("bad_client_error")
+  add_method("bad_mac_client_error")
   add_method("bad_server_error")
   add_method("soap_methods")
 end
@@ -144,8 +145,9 @@ def check_version
     exit false
   end
   if !@driver.version_compat($PRINTME_VERSION)
-    if @driver.version > $PRINTME_VERSION # bug in older versions
-      errorMessage @driver.bad_client_error + "\n"
+    theirver = @driver.version
+    if theirver > $PRINTME_VERSION # bug in older versions
+      errorMessage (theirver >= 14 and DIST == "mac") ? @driver.bad_mac_client_error : @driver.bad_client_error + "\n"
       exit false
     end
   end
