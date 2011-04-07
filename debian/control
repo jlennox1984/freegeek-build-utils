@@ -44,7 +44,7 @@ Description: tools used in freegeek's build process
 
 Package: freegeek-extras-pdx
 Architecture: all
-Depends: ${misc:Depends}, freegeek-archive-keyring, lsb-release
+Depends: ${misc:Depends}, freegeek-archive-keyring, lsb-release, ubufox (>= 0.9~rc2-0ubuntu2)
 Provides: freegeek-extras-freegeek
 Replaces: freegeek-extras
 Conflicts: freegeek-extras-freegeek
