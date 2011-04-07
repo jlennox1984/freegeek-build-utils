@@ -1,4 +1,0 @@
-# debian sources for freegeek specific packages
-# install into /etc/apt/sources.list.d
-
-deb http://apt.freegeek.org/ubuntu hardy main
