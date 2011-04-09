@@ -1,11 +1,11 @@
-freegeek-extras (1.2.25) UNRELEASED; urgency=low
+freegeek-extras (1.2.25) freegeek-test; urgency=low
 
   * printme compat 14, supports ignoring previous systems if they've
     been sold
   * change the error message on macs to direct them to redownload the
     script
 
- -- Ryan Niebur <ryan@debian.org>  Sun, 03 Apr 2011 11:33:55 -0700
+ -- Ryan Niebur <ryan@debian.org>  Fri, 08 Apr 2011 20:03:54 -0700
 
 freegeek-extras (1.2.24) freegeek-test; urgency=low
 
