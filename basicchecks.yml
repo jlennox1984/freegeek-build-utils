@@ -69,7 +69,7 @@ tests:
       the bogomips rating is low, call over your friendly build
       instructor.
   checkVideoResolution: 
-    command: xdpyinfo -display :0 | grep dimen
+    command: xdpyinfo | grep dimen
     title: "Checking video resolution:"
     explanation: |-
       This is the number of pixels displayed on the screen.  For
