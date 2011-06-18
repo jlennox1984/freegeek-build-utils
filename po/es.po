@@ -1,21 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# translation for freegeek-extras/basiccheck
+# Copyright (C) Ricardo Varela <ricardovarela30@yahoo.com>, 2011
+# This file is distributed under the same license as the freegeek-extras package.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: freegeek-extras 1.2.26\n"
 "POT-Creation-Date: 2011-02-24 13:14-0800\n"
 "PO-Revision-Date: 2011-02-24 12:45-0800\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Ricardo Varela <ricardovarela30@yahoo.com>\n"
+"Language-Team: Spanish Build <spanishbuild@lists.freegeek.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: basiccheck:21
 msgid "y"
