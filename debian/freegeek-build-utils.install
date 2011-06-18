@@ -9,4 +9,4 @@ scripts/stress-test usr/bin/
 libexec/freegeek_show_cd_drives usr/lib/
 libexec/freegeek_show_cd_drives.awk usr/lib/
 lib/printme.rb usr/lib/ruby/1.8/
-locale/ usr/share/locale/
+locale/* usr/share/locale/
