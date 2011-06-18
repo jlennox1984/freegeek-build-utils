@@ -7,167 +7,167 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-03-25 20:50-0700\n"
+"POT-Creation-Date: 2011-02-24 13:14-0800\n"
 "PO-Revision-Date: 2011-02-24 12:45-0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: basiccheck:21
 msgid "y"
-msgstr ""
+msgstr "s"
 
 #: basiccheck:22
 msgid "n"
-msgstr ""
+msgstr "n"
 
 #: basiccheck:23
 msgid "r"
-msgstr ""
+msgstr "r"
 
 #: basiccheck:27
 msgid "Does this test pass?"
-msgstr ""
+msgstr "¿Es exitosa esta prueba?"
 
 #: basiccheck:28
 msgid "Yes/no/repeat"
-msgstr ""
+msgstr "Si/no/repetir"
 
 #: basiccheck:29
 msgid "Please enter 'yes', 'no', or 'repeat'"
-msgstr ""
+msgstr "Favor de ingresar 'si', 'no', or 'repetir'"
 
 #: basiccheck:35 basiccheck:44
 msgid "Would you like to repeat this test?"
-msgstr ""
+msgstr "¿Quiere repetir la prueba?"
 
 #: basiccheck:36
 msgid "no"
-msgstr ""
+msgstr "no"
 
 #: basiccheck:37 basiccheck:46 basiccheck:180
 msgid "Please enter 'yes' or 'no'"
-msgstr ""
+msgstr "Favor de ingresar 'si' or 'no'"
 
 #: basiccheck:45 basiccheck:180
 msgid "yes"
-msgstr ""
+msgstr "si"
 
 #: basiccheck:86
 msgid "Show this message"
-msgstr ""
+msgstr "Mostrar este mensaje"
 
 #: basiccheck:91
 msgid "Turn debugging on"
-msgstr ""
+msgstr "Activar debbugging"
 
 #: basiccheck:95
 msgid "Enable coloration of the output"
-msgstr ""
+msgstr "Habilitar coloracion del output"
 
 #: basiccheck:99
 msgid "Create a menu for test selection"
-msgstr ""
+msgstr "Crear un menu para la seleccion de prueba?"
 
 #: basiccheck:103
 msgid "Show a list of available tests"
-msgstr ""
+msgstr "Mostrar la lista de pruebas disponibles"
 
 #: basiccheck:104
 msgid "Possible tests:"
-msgstr ""
+msgstr "Pruebas posibles:"
 
 #: basiccheck:117
 msgid "Please choose from these available tests:"
-msgstr ""
+msgstr "Favor de escoger de estas pruebas disponibles:"
 
 #: basiccheck:118
 msgid "Which test would you like to run?"
-msgstr ""
+msgstr "¿Cual prueba le gustaria ejecutar?"
 
 #: basiccheck:129
 msgid "To see help on this program, run:"
-msgstr ""
+msgstr "Para ver la ayuda en este programa, ejecutar:"
 
 #: basiccheck:129
 msgid "To view its contents, you can use these commands:"
-msgstr ""
+msgstr "Para ver estos contenidos, usted puede usar estos comandos:"
 
 #: basiccheck:129
 msgid "To run it with colored output, use these commands:"
-msgstr ""
+msgstr "Para ejecutar esto con color output, use estos comandos:"
 
 #: basiccheck:140
 msgid "The following tests failed:"
-msgstr ""
+msgstr "La siguiente prueba fallo:"
 
 #: basiccheck:143
 msgid "Would you like to repeat the failed tests?"
-msgstr ""
+msgstr "¿Le gustaria repetir las pruebas fallidas?"
 
 #: basiccheck:152
 msgid "The basic check is finished."
-msgstr ""
+msgstr "El chequeo basico a terminado"
 
 #: basiccheck:153
 msgid "NOTE: Not all things that could go wrong have been checked."
-msgstr ""
+msgstr "NOTA: No todas las cosas que puedan salir con errores han sido probadas."
 
 #: basiccheck:194
 msgid "The following is ruby code:"
-msgstr ""
+msgstr "Lo siguiente es codigo ruby:"
 
 #: basiccheck:200
 msgid "Test succeeded."
-msgstr ""
+msgstr "Prueba exitosa."
 
 #: basiccheck:205 basiccheck:213
 msgid "Test failed."
-msgstr ""
+msgstr "Prueba fallida."
 
 #: basiccheck:206
 msgid "Trying fallback command:"
-msgstr ""
+msgstr "Pruebe comando alterno."
 
 #: basiccheck:208
 msgid "With output of:"
-msgstr ""
+msgstr "Con output de:"
 
 #: basiccheck:220
 msgid "The following commands:"
-msgstr ""
+msgstr "Los siguientes comandos:"
 
 #: basiccheck:222
 msgid "have executed with the output:"
-msgstr ""
+msgstr "a sido ejecutado con el output:"
 
 #: basiccheck:232
 msgid "The following command:"
-msgstr ""
+msgstr "El siguiente comando:"
 
 #: basiccheck:234
 msgid "has executed with the output:"
-msgstr ""
+msgstr "a sido ejecutado con el output:"
 
 #: basiccheck:243
 msgid "Malformed test"
-msgstr ""
+msgstr "Prueba defectuosa"
 
 #: basiccheck:262
 msgid "User interrupt caught.  Exiting."
-msgstr ""
+msgstr "Usuario interrumpe la colecta. Saliendo."
 
 #: basiccheck:273
 msgid "No tests found for the names:"
-msgstr ""
+msgstr "No pruebas encontradas para los nombres:"
 
 #: po/tmpfile.rb:1
 msgid "Checking status of CD ROM:"
-msgstr ""
+msgstr "Comprobando el estado del CD ROM:"
 
 #: po/tmpfile.rb:2
 msgid ""
@@ -177,30 +177,39 @@ msgid ""
 "NOTE: The CD ROM may not show up in BIOS. This is not a\n"
 "problem."
 msgstr ""
+"La output deberia contener referencia para un CD ROM y posible un\n"
+"DVD ROM ¿cual deberia mostrarse cada una arriva como de scd? o sg?.\n"
+"Si no asi, esto parece que a sido cableado o jumpered incorrectamente.\n"
+"NOTA: El CD ROM podriar no ser mostrado en BIOS. Esto no es un\n"
+"problema."
 
 #: po/tmpfile.rb:3
 msgid "Checking networking:"
-msgstr ""
+msgstr "Comprobando el networking:"
 
 #: po/tmpfile.rb:4
 msgid "Networking seems to work."
-msgstr ""
+msgstr "Al parecer el networking funciona."
 
 #: po/tmpfile.rb:5
 msgid ""
 "Networking is not responding.  Your network card may be broken\n"
 "or misconfigured."
 msgstr ""
+"No responde el networking.  Tu tarjeta de network puede esta descompuesta\n"
+"o mal configurada."
 
 #: po/tmpfile.rb:6
 msgid ""
 "This command tests communication over the network by requesting\n"
 "a simple message be sent back from our build server."
-msgstr ""
+msgstr""
+"Esta comando prueba la comunicacion sobre el networking por solicitud\n"
+"es un simple mensaje enviado y recibido desde nuestro servidor de construccion."
 
 #: po/tmpfile.rb:7
 msgid "Checking CPU info:"
-msgstr ""
+msgstr "Comprobando informacion del CPU"
 
 #: po/tmpfile.rb:8
 msgid ""
@@ -223,16 +232,36 @@ msgid ""
 "the bogomips rating is low, call over your friendly build\n"
 "instructor."
 msgstr ""
+"cpu MHz o numero de modelo* deberian ser iguales a los que estan escritos en la\n"
+"etiqueta del armazon. Si esto no asi usted necesita averiguar\n"
+"el porque.\n"
+"\n"
+"*Para varios AMD chips, el nombre del modelo puede diferir del\n"
+"MHz.  El numero de modelo (e.g. \"1800+\") puede ser fuera del rango con el\n"
+"cual tu deberias determinar los sistemas incluso en un dado de las\n"
+"spec, y por lo tanto deberia ser el numero escrito en la\n"
+"etiqueta del armazon. Pregunta a alguien si es que las intrucciones\n"
+"no son claras.\n"
+"\n"
+"Asegurate que esto esta dentro de las especificaciones de el\n"
+"sistemea que estas armando.\n"
+"\n"
+"Se expecula que el rango de los bogomips es cercano al doble del\n"
+"rango de MHz del cpu, para estar seguros que el cpu no esta dañado. Si\n"
+"el rango de los bogomips es bajo, llame a un amigable instructor\n"
+"de construccion."
 
 #: po/tmpfile.rb:9
 msgid "Checking sound:"
-msgstr ""
+msgstr "Comprobando el sonido:"
 
 #: po/tmpfile.rb:10
 msgid ""
 "A sound is about to play.  Please make sure the speakers are\n"
 "plugged in and on, with the volume set to ~50%."
 msgstr ""
+"Un sonido va a ser reproducido.  Favor de asegurarse que las bocinas estan\n"
+"conectadas y encendidas, con el volumen ajustado al ~50%."
 
 #: po/tmpfile.rb:11
 msgid ""
@@ -253,20 +282,38 @@ msgid ""
 "'alsamixer' and on the speakers, or decide that the speakers are\n"
 "bad."
 msgstr ""
+"Un sonido debe ser reproducido ahora mismo  con un nivel auditivo sin\n"
+"distorcion.\n"
+"\n"
+"Si el sonido no fue reproducido, las bocinas pueden estar conectadas dentro del\n"
+"puerto equivocado o pueden no estar encendidad.\n"
+"\n"
+"Si un mensaje de error a sido mostrado, la tarjeta de sonido puede no estar\n"
+"fisicamente instalada, correctamente configurada o puede esta dañado\n"
+"el hardware.\n"
+"\n"
+"Si el sonido fue muy bajo, prueba usando el comando 'alsamixer' para\n"
+"ajustar el nivel del volumen, ajustar\"Master\" and \"PCM\" a ~90 cada uno.\n"
+"\n"
+"Si el sonido esta distorcionado, baja el volumen en ambos\n"
+"'alsamixer' y encendidas las bocinas, o decide si las bocinas estan\n"
+"dañadas."
 
 #: po/tmpfile.rb:12
 msgid "Checking for incompatible video cards:"
-msgstr ""
+msgstr "Comprobando imcopatibilidad de las tarjetas de video:"
 
 #: po/tmpfile.rb:13
 msgid ""
 "If the result comes up with a BAD video card, it is a video card that is\n"
 "poorly supported on recent versions of Ubuntu."
 msgstr ""
+"Si el resulta viene con una tarjeta de video MALA, esto es a que la tarjeta de video es\n"
+"precariamente soportada en las versiones recientes de Ubuntu."
 
 #: po/tmpfile.rb:14
 msgid "Checking amount of memory:"
-msgstr ""
+msgstr "Comprobando el monto de memoria:"
 
 #: po/tmpfile.rb:15
 msgid ""
@@ -274,10 +321,13 @@ msgid ""
 "you have installed in this system.  It will typically be a\n"
 "bit smaller (e.g. 502 for a 512 megabyte system)."
 msgstr ""
+"El valor debe estar cercano al numero de megabytes de la memoria\n"
+"que a sido instalada en el sistema. Esto tipicamente debe ser un\n"
+"un poco menos (e.j. 502 para un sistema de 512 megabytes)."
 
 #: po/tmpfile.rb:16
 msgid "Checking video resolution:"
-msgstr ""
+msgstr "Comprobando resolucion de video:"
 
 #: po/tmpfile.rb:17
 msgid ""
@@ -292,3 +342,13 @@ msgid ""
 "If the resolution is larger, it is ok as long as you can read\n"
 "it."
 msgstr ""
+"Esto muestra el numero de pixeles en la pantalla.  Para\n"
+"objetivos de utilidad, esto debe ser ajustado a 1024x768 o mayor (e.j.,"
+"1280x1024).\n"
+"Si esto esta por debajo, tu resolucion de video esta probablemente\n"
+"mal configurada. Leer por las instrucciones en:\n"
+"http://wiki.freegeek.org/index.php/Build tips\n"
+"en la seccion \"Video\" para arreglar esto.\n"
+"\n"
+"Si la resolucion es mayor, esto esta bien mientras usted pueda leer\n"
+"esto."
