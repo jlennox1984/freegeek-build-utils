@@ -167,7 +167,7 @@ def doTest( test )
     instructions = $TESTS[test].dup
 
   for i in [:title, :success, :failure, :pretest, :explanation, :question]
-    instructions[i.to_s] = _(instructions[i.to_s]) if instructions.keys.include?(i.to_s)
+    instructions[i.to_s] = _(instructions[i.to_s]).dup if instructions.keys.include?(i.to_s)
   end
 
     title = instructions['title']
