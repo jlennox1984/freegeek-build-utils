@@ -114,8 +114,8 @@ def parseoptions
     args = []
     if asked_args
         clear
-        args << menu( _("Please choose from these available tests:"),
-                      _("Which test would you like to run?"),
+        args << menu( _("Please choose from these available tests:").dup,
+                      _("Which test would you like to run?").dup,
             *$TESTS.keys )
     end
     return args + ARGV
@@ -199,7 +199,7 @@ def doTest( test )
         if retval
             display _("Test succeeded.") + "\n\n"
             message instructions['success'] + "\n\n"
-            answer = "yes"
+            answer = _("y")
         elsif instructions.has_key?('fallback_command')
             command = eval( %Q/%Q,#{instructions['fallback_command']},/ )
             highlight _("Test failed.") + "\n\n"
@@ -208,13 +208,13 @@ def doTest( test )
             message _("With output of:") + "\n\n"
             display `#{command}`
             retval = eval( rubytest )
-            answer = retval ? "yes" : "no"
+            answer = retval ? _("y") : _("n")
         else
             highlight _("Test failed.") + "\n\n"
             message instructions['failure'] + "\n\n"
-            answer = "no"
+            answer = _("n")
         end
-        answer = "repeat" if repeatNo
+        answer = _("r") if repeatNo
     elsif instructions.has_key?('commands')
         commands = instructions['commands'].map {|c| eval( %Q/%Q,#{c},/ )}
         echo _("The following commands:") + "\n\n"
