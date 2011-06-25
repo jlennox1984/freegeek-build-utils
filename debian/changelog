@@ -1,4 +1,4 @@
-freegeek-extras (1.2.26) UNRELEASED; urgency=low
+freegeek-extras (1.2.26) freegeek-test; urgency=low
 
   [ Vagrant Cascadian ]
   * basiccheck: do not hard-code the display when checking for resolution.
@@ -8,7 +8,7 @@ freegeek-extras (1.2.26) UNRELEASED; urgency=low
   [ Ryan Niebur]
   * fix exploding translations
 
- -- Vagrant Cascadian <vagrant@debian.org>  Sat, 18 Jun 2011 17:10:05 -0700
+ -- Vagrant Cascadian <vagrant@debian.org>  Sat, 25 Jun 2011 15:33:52 -0700
 
 freegeek-extras (1.2.25) freegeek-test; urgency=low
 
