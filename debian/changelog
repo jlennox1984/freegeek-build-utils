@@ -1,3 +1,10 @@
+freegeek-extras (1.2.27) UNRELEASED; urgency=low
+
+  * Remove the Linux specific Google search box, Google doesn't have
+    that feature anymore
+
+ -- Ryan Niebur <ryan@debian.org>  Wed, 13 Jul 2011 17:29:39 -0700
+
 freegeek-extras (1.2.26) freegeek-test; urgency=low
 
   [ Vagrant Cascadian ]
