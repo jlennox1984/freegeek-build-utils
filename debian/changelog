@@ -1,4 +1,4 @@
-freegeek-extras (1.2.27) UNRELEASED; urgency=low
+freegeek-extras (1.2.27) freegeek-test; urgency=low
 
   * Remove the Linux specific Google search box, Google doesn't have
     that feature anymore
