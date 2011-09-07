@@ -1,3 +1,9 @@
+freegeek-extras (1.2.28) UNRELEASED; urgency=low
+
+  * send dmidecode Maximum Capacity for memory as :max_capacity
+
+ -- Ryan Niebur <ryan@debian.org>  Tue, 06 Sep 2011 23:50:51 -0700
+
 freegeek-extras (1.2.27) freegeek-test; urgency=low
 
   * Remove the Linux specific Google search box, Google doesn't have
