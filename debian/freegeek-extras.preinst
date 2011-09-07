@@ -2,6 +2,7 @@
 
 set -e
 
+mkdir -p /etc/cups/
 touch /etc/cups/lpoptions
 
 #DEBHELPER#
