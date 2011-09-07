@@ -1,8 +1,14 @@
-freegeek-extras (1.2.28) freegeek-test; urgency=low
+freegeek-extras (1.2.29) freegeek-test; urgency=low
 
   * send dmidecode Maximum Capacity for memory as :max_capacity
 
  -- Ryan Niebur <ryan@debian.org>  Tue, 06 Sep 2011 23:51:42 -0700
+
+freegeek-extras (1.2.28) freegeek-test; urgency=low
+
+  * Rebuild fix
+
+ -- Ryan Niebur <ryan@debian.org>  Wed, 27 Jul 2011 11:11:10 -0700
 
 freegeek-extras (1.2.27) freegeek-test; urgency=low
 
