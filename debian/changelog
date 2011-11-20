@@ -1,8 +1,10 @@
 freegeek-extras (1.2.30) UNRELEASED; urgency=low
 
   * don't fail to install if cups isn't installed
+  * printme: use default configuration settings if there is no
+    /etc/printme.yml
 
- -- Ryan Niebur <ryan@debian.org>  Wed, 07 Sep 2011 00:59:11 -0700
+ -- Ryan Niebur <ryan@debian.org>  Sat, 19 Nov 2011 16:38:05 -0800
 
 freegeek-extras (1.2.29) freegeek-test; urgency=low
 

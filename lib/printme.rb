@@ -3,25 +3,21 @@
 
 require 'rubytui'
 
-if RubyTUI::DIST == "mac"
-$server = "printme:80"
-else
-
 require 'yaml'
 conffile = ENV["PRINTME_CONFIG"] || '/etc/printme.yml'
-f = File.open(conffile)
-yaml = YAML.load(f.read)
-f.close
-keys = ['server', 'port']
-if !(yaml.keys - keys == [] && keys - yaml.keys == [])
-  puts "Invalid configuration file"
-  exit 1
+defaults = {'server' => 'printme', 'port' => 80}
+yaml = defaults
+if File.exists?(conffile)
+  f = File.open(conffile)
+  yaml = YAML.load(f.read)
+  f.close
+  keys = ['server', 'port']
+  if !(yaml.keys - keys == [] && keys - yaml.keys == [])
+    puts "Invalid configuration file"
+    yaml = defaults.merge(yaml)
+  end
 end
 $server = yaml['server'] + ':' + yaml['port'].to_s
-
-#configuration
-# $server="printme:80"
-	end
 
 $PRINTME_VERSION=14
 
