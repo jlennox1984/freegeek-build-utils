@@ -1,4 +1,4 @@
-freegeek-extras (1.2.30) UNRELEASED; urgency=low
+freegeek-extras (1.2.31) freegeek-test; urgency=low
 
   * don't fail to install if cups isn't installed
   * printme: use default configuration settings if there is no
