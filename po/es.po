@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: freegeek-extras 1.2.26\n"
-"POT-Creation-Date: 2011-02-24 13:14-0800\n"
+"POT-Creation-Date: 2011-11-30 15:55-0800\n"
 "PO-Revision-Date: 2011-02-24 12:45-0800\n"
 "Last-Translator: Ricardo Varela <ricardovarela30@yahoo.com>\n"
 "Language-Team: Spanish Build <spanishbuild@lists.freegeek.org>\n"
@@ -14,17 +14,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-#"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: basiccheck:21
+# "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#: basiccheck:21 basiccheck:202 basiccheck:211
 msgid "y"
 msgstr "s"
 
-#: basiccheck:22
+#: basiccheck:22 basiccheck:211 basiccheck:215
 msgid "n"
 msgstr "n"
 
-#: basiccheck:23
+#: basiccheck:23 basiccheck:217
 msgid "r"
 msgstr "r"
 
@@ -114,7 +114,8 @@ msgstr "El chequeo basico a terminado"
 
 #: basiccheck:153
 msgid "NOTE: Not all things that could go wrong have been checked."
-msgstr "NOTA: No todas las cosas que puedan salir con errores han sido probadas."
+msgstr ""
+"NOTA: No todas las cosas que puedan salir con errores han sido probadas."
 
 #: basiccheck:194
 msgid "The following is ruby code:"
@@ -202,9 +203,10 @@ msgstr ""
 msgid ""
 "This command tests communication over the network by requesting\n"
 "a simple message be sent back from our build server."
-msgstr""
+msgstr ""
 "Esta comando prueba la comunicacion sobre el networking por solicitud\n"
-"es un simple mensaje enviado y recibido desde nuestro servidor de construccion."
+"es un simple mensaje enviado y recibido desde nuestro servidor de "
+"construccion."
 
 #: po/tmpfile.rb:7
 msgid "Checking CPU info:"
@@ -231,7 +233,8 @@ msgid ""
 "the bogomips rating is low, call over your friendly build\n"
 "instructor."
 msgstr ""
-"cpu MHz o numero de modelo* deberian ser iguales a los que estan escritos en la\n"
+"cpu MHz o numero de modelo* deberian ser iguales a los que estan escritos en "
+"la\n"
 "etiqueta del armazon. Si esto no asi usted necesita averiguar\n"
 "el porque.\n"
 "\n"
@@ -284,7 +287,8 @@ msgstr ""
 "Un sonido debe ser reproducido ahora mismo  con un nivel auditivo sin\n"
 "distorcion.\n"
 "\n"
-"Si el sonido no fue reproducido, las bocinas pueden estar conectadas dentro del\n"
+"Si el sonido no fue reproducido, las bocinas pueden estar conectadas dentro "
+"del\n"
 "puerto equivocado o pueden no estar encendidad.\n"
 "\n"
 "Si un mensaje de error a sido mostrado, la tarjeta de sonido puede no estar\n"
@@ -307,7 +311,8 @@ msgid ""
 "If the result comes up with a BAD video card, it is a video card that is\n"
 "poorly supported on recent versions of Ubuntu."
 msgstr ""
-"Si el resulta viene con una tarjeta de video MALA, esto es a que la tarjeta de video es\n"
+"Si el resulta viene con una tarjeta de video MALA, esto es a que la tarjeta "
+"de video es\n"
 "precariamente soportada en las versiones recientes de Ubuntu."
 
 #: po/tmpfile.rb:14
@@ -342,8 +347,8 @@ msgid ""
 "it."
 msgstr ""
 "Esto muestra el numero de pixeles en la pantalla.  Para\n"
-"objetivos de utilidad, esto debe ser ajustado a 1024x768 o mayor (e.j.,"
-"1280x1024).\n"
+"objetivos de utilidad, esto debe ser ajustado a 1024x768 o mayor (e."
+"j.,1280x1024).\n"
 "Si esto esta por debajo, tu resolucion de video esta probablemente\n"
 "mal configurada. Leer por las instrucciones en:\n"
 "http://wiki.freegeek.org/index.php/Build tips\n"

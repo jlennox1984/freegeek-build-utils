@@ -1,28 +1,10 @@
-Source: freegeek-extras
-Section: ubuntu/utils
+Source: freegeek-build-utils
+Section: public/utils
 Priority: optional
 Maintainer: Freegeek Coders <coders@freegeek.org>
 Uploaders: Martin Chase <stillflame@freegeek.org>, Vagrant Cascadian <vagrant@freegeek.org>, Ryan Niebur <ryan@debian.org>, Vagrant Cascadian <vagrant@debian.org>
 Build-Depends: debhelper (>= 7), bash-completion, libgettext-ruby1.8, ruby
 Standards-Version: 3.9.1
-
-Package: freegeek-extras
-Architecture: all
-Depends: ${misc:Depends},
-# our junk
- freegeek-ubuntu-pocket-guide, freegeek-build-utils,
- freegeek-extras-pdx | freegeek-extras-freegeek,
- debconf-utils,
-# pulling in junk
- ndisgtk | powerpc,
- freegeek-logo,
-Recommends: oem-config-gtk | oem-config, 
-# usb-modeswitch requested by tech support, but not available in hardy.
- usb-modeswitch,
-Description: customizations for freegeek users
- Freegeek's diagnostic scripts and some extra files and
- configuration settings. This package also installs some
- extra packages that are useful to freekbox users.
 
 Package: freegeek-build-utils
 Architecture: all
@@ -41,14 +23,3 @@ Breaks: freegeek-extras (<= 1.2.5)
 Replaces: freegeek-extras
 Description: tools used in freegeek's build process
  Freegeek's diagnostic scripts.
-
-Package: freegeek-extras-pdx
-Architecture: all
-Depends: ${misc:Depends}, freegeek-archive-keyring, lsb-release, ubufox (>= 0.9~rc2-0ubuntu2)
-Provides: freegeek-extras-freegeek
-Replaces: freegeek-extras
-Conflicts: freegeek-extras-freegeek
-Breaks: freegeek-extras (<= 1.2.2)
-Description: Freegeek Extras configuration for PDX specific stuff
- This contains freegeek-extras configuration files specific to
- Freegeek Portland's infrastructure.

@@ -1,4 +1,0 @@
-printme.yml etc/
-debian/*.list etc/freegeek-extras/apt/
-home/index.html usr/share/freegeek-extras/home/
-js/aboutHome.js usr/share/xul-ext/ubufox/components/

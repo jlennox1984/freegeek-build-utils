@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Freegeek Spec Sheet
-GenericName=Freegeek Spec Sheet
-Comment=
-Exec=firefox /var/lib/freegeek-extras/printme/index.html
-Icon=FreeGeek
-Terminal=false
-Type=Application
