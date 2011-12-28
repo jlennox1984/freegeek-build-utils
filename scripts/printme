@@ -176,9 +176,11 @@ def ask_and_send_stuff
       fgdb_printme_hash[:batterytest] = battery_results
     end
 
-    max_capacity = `sudo LANG=C dmidecode -t 16 | grep "Maximum Capacity" | cut -d : -f 2`.strip
-    unless max_capacity.empty?
-      fgdb_printme_hash[:max_capacity] = max_capacity
+    unless not File.exist?('/usr/sbin/dmidecode')
+      max_capacity = `sudo LANG=C dmidecode -t 16 | grep "Maximum Capacity" | cut -d : -f 2`.strip
+      unless max_capacity.empty?
+        fgdb_printme_hash[:max_capacity] = max_capacity
+      end
     end
 
     lshw_lines = @lshw_output.split("\n")

@@ -12,7 +12,7 @@ Depends: ${misc:Depends},
 # printme
  ruby, libtui-ruby (>= 1.11), lshw,
  libtui-ruby1.8 (>= 1.15),
- lsb-release, dmidecode,
+ lsb-release, dmidecode | sparc,
 # basiccheck
  pmount, alsa-utils, libgettext-ruby1.8,
 # stress-test
