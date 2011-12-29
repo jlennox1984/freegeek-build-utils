@@ -1,3 +1,9 @@
+freegeek-build-utils (1.2.34) UNRELEASED; urgency=low
+
+  * add ALLOW_ROOT=true to force allowing root user
+
+ -- Ryan Niebur <ryan@debian.org>  Wed, 28 Dec 2011 16:33:13 -0800
+
 freegeek-build-utils (1.2.33) freegeek-test; urgency=low
 
   * do not use dmidecode on sparc

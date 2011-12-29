@@ -100,7 +100,7 @@ def main
 end
 
 def check_for_people_who_dont_read_the_instructions
-  if ENV['USER'] == "root"
+  if ENV['USER'] == "root" and ENV['ALLOW_ROOT'] != 'true'
     puts "DO NOT RUN PRINTME AS ROOT. if you are typing 'sudo printme', then that is incorrect. Just type 'printme'."
     exit 1
   end
