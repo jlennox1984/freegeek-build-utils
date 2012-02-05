@@ -1,8 +1,10 @@
 freegeek-build-utils (1.2.34) UNRELEASED; urgency=low
 
   * add ALLOW_ROOT=true to force allowing root user
+  * MOSTLY IMPLEMENTED: add support for conditional questions, based on
+    printme input for specific areas
 
- -- Ryan Niebur <ryan@debian.org>  Wed, 28 Dec 2011 16:33:13 -0800
+ -- Ryan Niebur <ryan@debian.org>  Sat, 04 Feb 2012 16:58:39 -0800
 
 freegeek-build-utils (1.2.33) freegeek-test; urgency=low
 

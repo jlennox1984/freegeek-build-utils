@@ -152,9 +152,25 @@ class Hash
   end
 end
 
+# is there already an inverse to Hash.to_a ?
+def r_hash_parse(arr)
+  h = {}
+  arr.each{|x,y|
+    h[x] = y
+  }
+  h
+end
+
 def ask_and_send_stuff
   action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
   type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
+  action_id = @actions.select{|x| x.description == action}.first.thing_id
+  type_id = @types.select{|x| x.description == type}.first.thing_id
+  extra_questions = r_hash_parse(@driver.get_extra_questions(action_id, type_id))
+  questions = {}
+  extra_questions.each do |k,v|
+    questions[k] = prompt(v)
+  end
   contract = ask_contract
   @contract = @contracts.select{|x| x.label == contract}.first.thing_id
   covered = ask_covered
@@ -192,11 +208,12 @@ def ask_and_send_stuff
 
   data = {
     "contact_id" => uid,
-    "action_id" => @actions.select{|x| x.description == action}.first.thing_id,
-    "type_id" => @types.select{|x| x.description == type}.first.thing_id,
+    "action_id" => action_id,
+    "type_id" => type_id,
     "contract_id" => @contract,
     "old_id" => @old_system_id,
     "notes" => notes,
+    "questions" => questions.to_a.map{|x| x.map{|y| y.to_s}},
     "lshw_output" => @lshw_output,
     "os" => codename,
     "covered" => covered,
