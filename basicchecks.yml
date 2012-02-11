@@ -20,7 +20,7 @@ tests:
       Networking is not responding.  Your network card may be broken
       or misconfigured.
   checkSound: 
-    command: aplay /usr/share/sounds/alsa/Front_Left.wav /usr/share/sounds/alsa/Front_Right.wav
+    command: speaker-test -t wav -c2 -l1
     title: "Checking sound:"
     pretest: |-
       A sound is about to play.  Please make sure the speakers are
