@@ -2,7 +2,7 @@ freegeek-build-utils (1.2.34) UNRELEASED; urgency=low
 
   * add ALLOW_ROOT=true to force allowing root user
   * MOSTLY IMPLEMENTED: add support for conditional questions, based on
-    printme input for specific areas
+    printme input for specific areas (Closes: #26673)
   * use speaker-test instead of aplay so that it actually tests the
     channels separate, thanks to Max for noticing (Closes: #26671)
 
