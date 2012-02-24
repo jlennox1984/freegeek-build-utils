@@ -152,34 +152,81 @@ class Hash
   end
 end
 
-# is there already an inverse to Hash.to_a ?
-def r_hash_parse(arr)
-  h = {}
-  arr.each{|x,y|
-    h[x] = y
-  }
-  h
-end
-
 def ask_and_send_stuff
-  action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
-  type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
-  action_id = @actions.select{|x| x.description == action}.first.thing_id
-  type_id = @types.select{|x| x.description == type}.first.thing_id
-  extra_questions = r_hash_parse(@driver.get_extra_questions(action_id, type_id))
-  questions = {}
-  extra_questions.each do |k,v|
-    questions[k] = prompt(v)
+  @asked_data = {}
+  @asked_questions = {}
+  tmp_action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
+  tmp_type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
+  @asked_data['action_id'] = @actions.select{|x| x.description == tmp_action}.first.thing_id
+  @asked_data['type_id'] = @types.select{|x| x.description == tmp_type}.first.thing_id
+  @open_questions = @driver.get_extra_questions
+  @reject_questions = []
+  @asked_data["questions"] = []
+  def ask_this_question(x)
+    @asked_questions[x.name] = prompt(x.question)
+    @asked_data["questions"] << [x.id_name, @asked_questions[x.name]]
+  end
+  def does_satisfy_conditions(x)
+    lookfor = x.conditions.map{|y| y.field_name}.uniq
+    lookfor.select{|y| !(@reject_questions.include?(y) || @asked_data.keys.include?(y) || @asked_questions.keys.include?(y))}.length == 0
+  end
+  def conditions_are_true(x)
+    lookfor = x.conditions.map{|y| y.field_name}.uniq
+    lookfor.each{|y|
+      if @reject_questions.include?(y)
+        return false
+      end
+    }
+
+    x.conditions.each{|y|
+      value = @asked_questions.keys.include?(y.field_name) ? @asked_questions[y.field_name] : @asked_data[y.field_name]
+      case y.operator
+      when '='
+        return false unless value == y.expected_value
+      when '=~'
+        return false unless value =~ /#{y.expected_value}/
+      when '>'
+        return false unless value.to_i > y.expected_value.to_i
+      end
+    }
+
+    return true
+  end
+  def handle_questions
+    # check if all of the field_name it's looking for has been asked
+    good = @open_questions.select{|x|
+      does_satisfy_conditions(x)
+    }
+    @open_questions = @open_questions - good
+    # if so, check values for relevance, skip if not relevant
+    good.each{|x|
+      if conditions_are_true(x)
+        ask_this_question(x)
+      else
+        @reject_questions << x.name
+      end
+      # ask and remove, then check for ones which are now available
+      handle_questions # recursive so that followup questions are asked immediately
+    }
+  end
+  oldlength = -1
+  while @open_questions.length > 0 # shouldn't have to loop much
+    handle_questions
+    if oldlength == @open_questions.length
+      raise "Logic Error, remaining questions could not be asked or skipped, for unknown reasons."
+    end
+    oldlength = @open_questions.length
   end
   contract = ask_contract
-  @contract = @contracts.select{|x| x.label == contract}.first.thing_id
-  covered = ask_covered
-  uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
-  notes = prompt('What, if anything, is notable about this system?')
-  codename = (DIST == "mac" ? "Mac" : `lsb_release --description --short`)
+  @asked_data["contract_id"] = @contract = @contracts.select{|x| x.label == contract}.first.thing_id
+  @asked_data["covered"] = ask_covered
+  @asked_data["contact_id"] = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
+  @asked_data["notes"] = prompt('What, if anything, is notable about this system?')
+  @asked_data["os"] = (DIST == "mac" ? "Mac" : `lsb_release --description --short`)
+
   unless (@driver.version < 13)
     battery_results = ""
-    if File.exists?("/usr/bin/batterytest") and File.exists?("#{ENV["HOME"]}/bat_mon") and type.match(/laptop/i)
+    if File.exists?("/usr/bin/batterytest") and File.exists?("#{ENV["HOME"]}/bat_mon") and tmp_type.match(/laptop/i)
       battmp = `batterytest`.chomp
       if noYes("Do you want to include the results of the last battery test (#{battmp})?")
         battery_results = battmp
@@ -206,25 +253,15 @@ def ask_and_send_stuff
     @lshw_output = "#{first}\n<fgdb_root>\n#{fgdb_printme_hash.ryan52_to_xml("fgdb_printme")}\n<fgdb_data>#{lshw_lines.join("\n")}</fgdb_data></fgdb_root>"
   end
 
-  data = {
-    "contact_id" => uid,
-    "action_id" => action_id,
-    "type_id" => type_id,
-    "contract_id" => @contract,
-    "old_id" => @old_system_id,
-    "notes" => notes,
-    "questions" => questions.to_a.map{|x| x.map{|y| y.to_s}},
-    "lshw_output" => @lshw_output,
-    "os" => codename,
-    "covered" => covered,
-  }
+  @asked_data["old_id"] = @old_system_id
+  @asked_data["lshw_output"] = @lshw_output
 
   data_struct = @driver.empty_struct
-  data.each{|k,v|
+  @asked_data.each{|k,v|
     eval("data_struct.#{k} = v")
   }
 
-  @report_id = @driver.submit(RubyTUI::DIST == "mac" ? data : data_struct)
+  @report_id = @driver.submit(RubyTUI::DIST == "mac" ? @asked_data : data_struct)
   system_id=@driver.get_system_for_report(@report_id)
   if system_id != @old_system_id
     @old_system_id = system_id
