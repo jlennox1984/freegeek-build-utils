@@ -42,9 +42,18 @@ end
                         'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
 end
 
+def r_parse_hash(arr)
+  h = {}
+  arr.each{|x,y|
+    h[x] = y
+  }
+  h
+end
+
 def get_current_info
   @detected_system_id = @driver.get_system_id(@lshw_output)
   if @detected_system_id and !@driver.is_system_gone(@detected_system_id)
+    @question_defaults = r_parse_hash(@driver.question_defaults(@detected_system_id))
     @default_contract = @driver.contract_label_for_system(@detected_system_id)
     @default_type = @driver.type_description_for_system(@detected_system_id)
     covered = @driver.covered_for_system(@detected_system_id)
@@ -54,6 +63,7 @@ def get_current_info
       @default_uncovered = !covered
     end
   else
+    @question_defaults = {}
     @default_type = @driver.default_type_description
     @default_contract = nil
     @default_uncovered = nil
@@ -163,7 +173,11 @@ def ask_and_send_stuff
   @reject_questions = []
   @asked_data["questions"] = []
   def ask_this_question(x)
-    @asked_questions[x.name] = prompt(x.question, 'Please enter something.') {|num| num.strip.length > 0}
+    if @question_defaults.keys.include?(x.name)
+      @asked_questions[x.name] = promptWithDefault(x.question, @question_defaults[x.name])
+    else
+      @asked_questions[x.name] = prompt(x.question, 'Please enter something.') {|num| num.strip.length > 0}
+    end
     @asked_data["questions"] << [x.id_name, @asked_questions[x.name]]
   end
   def does_satisfy_conditions(x)
