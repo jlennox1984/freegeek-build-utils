@@ -163,7 +163,7 @@ def ask_and_send_stuff
   @reject_questions = []
   @asked_data["questions"] = []
   def ask_this_question(x)
-    @asked_questions[x.name] = prompt(x.question)
+    @asked_questions[x.name] = prompt(x.question, 'Please enter something.') {|num| num.strip.length > 0}
     @asked_data["questions"] << [x.id_name, @asked_questions[x.name]]
   end
   def does_satisfy_conditions(x)
