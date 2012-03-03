@@ -182,9 +182,9 @@ def ask_and_send_stuff
       value = @asked_questions.keys.include?(y.field_name) ? @asked_questions[y.field_name] : @asked_data[y.field_name]
       case y.operator
       when '='
-        return false unless value == y.expected_value
+        return false unless value.to_s == y.expected_value
       when '=~'
-        return false unless value =~ /#{y.expected_value}/
+        return false unless value.to_s =~ /#{y.expected_value}/
       when '>'
         return false unless value.to_i > y.expected_value.to_i
       end
