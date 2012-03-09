@@ -8,10 +8,10 @@ fi
 }
 
 test_for_file ../rubytui/lib/rubytui.rb
-test_for_file ../freegeek-extras/lib/printme.rb
-test_for_file ../freegeek-extras/scripts/printme
+test_for_file ../freegeek-build-utils/lib/printme.rb
+test_for_file ../freegeek-build-utils/scripts/printme
 
 set -e
 
 ssh llama.freegeek.org sudo mv /home/ryan52/public_html/mac/printme /home/ryan52/public_html/mac/printme.old
-{ head -1 ../freegeek-extras/scripts/printme; cat ../rubytui/lib/rubytui.rb ../freegeek-extras/lib/printme.rb ../freegeek-extras/scripts/printme; } | sed -e '/require.*printme/ d' -e '/require.*rubytui/ d' | ssh llama.freegeek.org sudo sponge /home/ryan52/public_html/mac/printme
+{ head -1 ../freegeek-build-utils/scripts/printme; cat ../rubytui/lib/rubytui.rb ../freegeek-build-utils/lib/printme.rb ../freegeek-build-utils/scripts/printme; } | sed -e '/require.*printme/ d' -e '/require.*rubytui/ d' | ssh llama.freegeek.org sudo sponge /home/ryan52/public_html/mac/printme
