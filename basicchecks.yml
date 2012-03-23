@@ -68,6 +68,19 @@ tests:
       If the sound is distorted, turn down the volume in both
       'alsamixer' and on the speakers, or decide that the speakers are
       bad.
+  - checkIntelVideo:
+    command: lspci | egrep 'VGA.*82845' && echo video card BAD || echo video card OK
+    title: "Checking for incompatible video cards:"
+    explanation: |-
+      If the result comes up with a BAD video card, it is a video card that is
+      poorly supported on recent versions of Ubuntu.
+  - checkMemory: 
+    command: "free -m | egrep '^Mem' | awk '{print $2}'"
+    title: "Checking amount of memory:"
+    explanation: |-
+      The value should be close to the number of megabytes of memory
+      you have installed in this system.  It will typically be a
+      bit smaller (e.g. 502 for a 512 megabyte system).
   - checkVideoResolution: 
     command: xdpyinfo | grep dimen
     title: "Checking video resolution:"
@@ -81,17 +94,4 @@ tests:
       
       If the resolution is larger, it is ok as long as you can read
       it.
-  - checkMemory: 
-    command: "free -m | egrep '^Mem' | awk '{print $2}'"
-    title: "Checking amount of memory:"
-    explanation: |-
-      The value should be close to the number of megabytes of memory
-      you have installed in this system.  It will typically be a
-      bit smaller (e.g. 502 for a 512 megabyte system).
-  - checkIntelVideo:
-    command: lspci | egrep 'VGA.*82845' && echo video card BAD || echo video card OK
-    title: "Checking for incompatible video cards:"
-    explanation: |-
-      If the result comes up with a BAD video card, it is a video card that is
-      poorly supported on recent versions of Ubuntu.
 server: pingme.freegeek.org.
