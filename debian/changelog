@@ -1,7 +1,8 @@
 freegeek-build-utils (1.2.36) UNRELEASED; urgency=low
 
   * Implement ordering logic when pulling from basicchecks.yml, to work
-    around unreliability of Ruby between versions (Closes: #27469)
+    around unreliability of Ruby between versions, and switch the order
+    of Sound and CPU tests as they requested (Closes: #27469)
 
  -- Ryan Niebur <ryan@debian.org>  Fri, 23 Mar 2012 12:04:29 -0700
 

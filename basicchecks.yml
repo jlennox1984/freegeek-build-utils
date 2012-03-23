@@ -19,29 +19,6 @@ tests:
     failure: |-
       Networking is not responding.  Your network card may be broken
       or misconfigured.
-  - checkSound: 
-    command: speaker-test -t wav -c2 -l1
-    title: "Checking sound:"
-    pretest: |-
-      A sound is about to play.  Please make sure the speakers are
-      plugged in and on, with the volume set to ~50%.
-    explanation: |-
-      A sound should have played just now at an audible level without
-      distortion.
-      
-      If a sound did not play, the speakers may be plugged into the
-      wrong port or may not be turned on.
-      
-      If error messages were displayed, the sound card may not be
-      physically installed, properly configured or it may be bad
-      hardware.
-      
-      If the sound was too quiet, try using the 'alsamixer' command to
-      adjust the volume levels, setting "Master" and "PCM" to ~90 each.
-      
-      If the sound is distorted, turn down the volume in both
-      'alsamixer' and on the speakers, or decide that the speakers are
-      bad.
   - checkCpuInfo: 
     title: "Checking CPU info:"
     commands: 
@@ -68,6 +45,29 @@ tests:
       cpu MHz rating, so we are sure that the cpu is not damaged.  If
       the bogomips rating is low, call over your friendly build
       instructor.
+  - checkSound: 
+    command: speaker-test -t wav -c2 -l1
+    title: "Checking sound:"
+    pretest: |-
+      A sound is about to play.  Please make sure the speakers are
+      plugged in and on, with the volume set to ~50%.
+    explanation: |-
+      A sound should have played just now at an audible level without
+      distortion.
+      
+      If a sound did not play, the speakers may be plugged into the
+      wrong port or may not be turned on.
+      
+      If error messages were displayed, the sound card may not be
+      physically installed, properly configured or it may be bad
+      hardware.
+      
+      If the sound was too quiet, try using the 'alsamixer' command to
+      adjust the volume levels, setting "Master" and "PCM" to ~90 each.
+      
+      If the sound is distorted, turn down the volume in both
+      'alsamixer' and on the speakers, or decide that the speakers are
+      bad.
   - checkVideoResolution: 
     command: xdpyinfo | grep dimen
     title: "Checking video resolution:"
