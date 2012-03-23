@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: freegeek-extras 1.2.26\n"
-"POT-Creation-Date: 2011-11-30 15:55-0800\n"
+"POT-Creation-Date: 2012-03-23 12:54-0700\n"
 "PO-Revision-Date: 2011-02-24 12:45-0800\n"
 "Last-Translator: Ricardo Varela <ricardovarela30@yahoo.com>\n"
 "Language-Team: Spanish Build <spanishbuild@lists.freegeek.org>\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-#: basiccheck:21 basiccheck:202 basiccheck:211
+#: basiccheck:21 basiccheck:263 basiccheck:272
 msgid "y"
 msgstr "s"
 
-#: basiccheck:22 basiccheck:211 basiccheck:215
+#: basiccheck:22 basiccheck:272 basiccheck:276
 msgid "n"
 msgstr "n"
 
-#: basiccheck:23 basiccheck:217
+#: basiccheck:23 basiccheck:278
 msgid "r"
 msgstr "r"
 
@@ -48,120 +48,120 @@ msgstr "¿Quiere repetir la prueba?"
 msgid "no"
 msgstr "no"
 
-#: basiccheck:37 basiccheck:46 basiccheck:180
+#: basiccheck:37 basiccheck:46 basiccheck:241
 msgid "Please enter 'yes' or 'no'"
 msgstr "Favor de ingresar 'si' or 'no'"
 
-#: basiccheck:45 basiccheck:180
+#: basiccheck:45 basiccheck:241
 msgid "yes"
 msgstr "si"
 
-#: basiccheck:86
+#: basiccheck:147
 msgid "Show this message"
 msgstr "Mostrar este mensaje"
 
-#: basiccheck:91
+#: basiccheck:152
 msgid "Turn debugging on"
 msgstr "Activar debbugging"
 
-#: basiccheck:95
+#: basiccheck:156
 msgid "Enable coloration of the output"
 msgstr "Habilitar coloracion del output"
 
-#: basiccheck:99
+#: basiccheck:160
 msgid "Create a menu for test selection"
 msgstr "Crear un menu para la seleccion de prueba?"
 
-#: basiccheck:103
+#: basiccheck:164
 msgid "Show a list of available tests"
 msgstr "Mostrar la lista de pruebas disponibles"
 
-#: basiccheck:104
+#: basiccheck:165
 msgid "Possible tests:"
 msgstr "Pruebas posibles:"
 
-#: basiccheck:117
+#: basiccheck:178
 msgid "Please choose from these available tests:"
 msgstr "Favor de escoger de estas pruebas disponibles:"
 
-#: basiccheck:118
+#: basiccheck:179
 msgid "Which test would you like to run?"
 msgstr "¿Cual prueba le gustaria ejecutar?"
 
-#: basiccheck:129
+#: basiccheck:190
 msgid "To see help on this program, run:"
 msgstr "Para ver la ayuda en este programa, ejecutar:"
 
-#: basiccheck:129
+#: basiccheck:190
 msgid "To view its contents, you can use these commands:"
 msgstr "Para ver estos contenidos, usted puede usar estos comandos:"
 
-#: basiccheck:129
+#: basiccheck:190
 msgid "To run it with colored output, use these commands:"
 msgstr "Para ejecutar esto con color output, use estos comandos:"
 
-#: basiccheck:140
+#: basiccheck:201
 msgid "The following tests failed:"
 msgstr "La siguiente prueba fallo:"
 
-#: basiccheck:143
+#: basiccheck:204
 msgid "Would you like to repeat the failed tests?"
 msgstr "¿Le gustaria repetir las pruebas fallidas?"
 
-#: basiccheck:152
+#: basiccheck:213
 msgid "The basic check is finished."
 msgstr "El chequeo basico a terminado"
 
-#: basiccheck:153
+#: basiccheck:214
 msgid "NOTE: Not all things that could go wrong have been checked."
 msgstr ""
 "NOTA: No todas las cosas que puedan salir con errores han sido probadas."
 
-#: basiccheck:194
+#: basiccheck:255
 msgid "The following is ruby code:"
 msgstr "Lo siguiente es codigo ruby:"
 
-#: basiccheck:200
+#: basiccheck:261
 msgid "Test succeeded."
 msgstr "Prueba exitosa."
 
-#: basiccheck:205 basiccheck:213
+#: basiccheck:266 basiccheck:274
 msgid "Test failed."
 msgstr "Prueba fallida."
 
-#: basiccheck:206
+#: basiccheck:267
 msgid "Trying fallback command:"
 msgstr "Pruebe comando alterno."
 
-#: basiccheck:208
+#: basiccheck:269
 msgid "With output of:"
 msgstr "Con output de:"
 
-#: basiccheck:220
+#: basiccheck:281
 msgid "The following commands:"
 msgstr "Los siguientes comandos:"
 
-#: basiccheck:222
+#: basiccheck:283
 msgid "have executed with the output:"
 msgstr "a sido ejecutado con el output:"
 
-#: basiccheck:232
+#: basiccheck:293
 msgid "The following command:"
 msgstr "El siguiente comando:"
 
-#: basiccheck:234
+#: basiccheck:295
 msgid "has executed with the output:"
 msgstr "a sido ejecutado con el output:"
 
-#: basiccheck:243
+#: basiccheck:304
 msgid "Malformed test"
 msgstr "Prueba defectuosa"
 
-#: basiccheck:262
+#: basiccheck:323
 msgid "User interrupt caught.  Exiting."
 msgstr "Usuario interrumpe la colecta. Saliendo."
 
-#: basiccheck:273
+#: basiccheck:334
 msgid "No tests found for the names:"
 msgstr "No pruebas encontradas para los nombres:"
 
@@ -303,37 +303,10 @@ msgstr ""
 "dañadas."
 
 #: po/tmpfile.rb:12
-msgid "Checking for incompatible video cards:"
-msgstr "Comprobando imcopatibilidad de las tarjetas de video:"
-
-#: po/tmpfile.rb:13
-msgid ""
-"If the result comes up with a BAD video card, it is a video card that is\n"
-"poorly supported on recent versions of Ubuntu."
-msgstr ""
-"Si el resulta viene con una tarjeta de video MALA, esto es a que la tarjeta "
-"de video es\n"
-"precariamente soportada en las versiones recientes de Ubuntu."
-
-#: po/tmpfile.rb:14
-msgid "Checking amount of memory:"
-msgstr "Comprobando el monto de memoria:"
-
-#: po/tmpfile.rb:15
-msgid ""
-"The value should be close to the number of megabytes of memory\n"
-"you have installed in this system.  It will typically be a\n"
-"bit smaller (e.g. 502 for a 512 megabyte system)."
-msgstr ""
-"El valor debe estar cercano al numero de megabytes de la memoria\n"
-"que a sido instalada en el sistema. Esto tipicamente debe ser un\n"
-"un poco menos (e.j. 502 para un sistema de 512 megabytes)."
-
-#: po/tmpfile.rb:16
 msgid "Checking video resolution:"
 msgstr "Comprobando resolucion de video:"
 
-#: po/tmpfile.rb:17
+#: po/tmpfile.rb:13
 msgid ""
 "This is the number of pixels displayed on the screen.  For\n"
 "usability purposes, this should be set to 1024x768 or larger (i.e., "
@@ -356,3 +329,30 @@ msgstr ""
 "\n"
 "Si la resolucion es mayor, esto esta bien mientras usted pueda leer\n"
 "esto."
+
+#: po/tmpfile.rb:14
+msgid "Checking amount of memory:"
+msgstr "Comprobando el monto de memoria:"
+
+#: po/tmpfile.rb:15
+msgid ""
+"The value should be close to the number of megabytes of memory\n"
+"you have installed in this system.  It will typically be a\n"
+"bit smaller (e.g. 502 for a 512 megabyte system)."
+msgstr ""
+"El valor debe estar cercano al numero de megabytes de la memoria\n"
+"que a sido instalada en el sistema. Esto tipicamente debe ser un\n"
+"un poco menos (e.j. 502 para un sistema de 512 megabytes)."
+
+#: po/tmpfile.rb:16
+msgid "Checking for incompatible video cards:"
+msgstr "Comprobando imcopatibilidad de las tarjetas de video:"
+
+#: po/tmpfile.rb:17
+msgid ""
+"If the result comes up with a BAD video card, it is a video card that is\n"
+"poorly supported on recent versions of Ubuntu."
+msgstr ""
+"Si el resulta viene con una tarjeta de video MALA, esto es a que la tarjeta "
+"de video es\n"
+"precariamente soportada en las versiones recientes de Ubuntu."
