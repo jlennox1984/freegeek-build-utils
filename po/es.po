@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: freegeek-extras 1.2.26\n"
-"POT-Creation-Date: 2012-03-23 12:54-0700\n"
+"POT-Creation-Date: 2012-03-23 13:36-0700\n"
 "PO-Revision-Date: 2011-02-24 12:45-0800\n"
 "Last-Translator: Ricardo Varela <ricardovarela30@yahoo.com>\n"
 "Language-Team: Spanish Build <spanishbuild@lists.freegeek.org>\n"
@@ -303,10 +303,37 @@ msgstr ""
 "dañadas."
 
 #: po/tmpfile.rb:12
+msgid "Checking for incompatible video cards:"
+msgstr "Comprobando imcopatibilidad de las tarjetas de video:"
+
+#: po/tmpfile.rb:13
+msgid ""
+"If the result comes up with a BAD video card, it is a video card that is\n"
+"poorly supported on recent versions of Ubuntu."
+msgstr ""
+"Si el resulta viene con una tarjeta de video MALA, esto es a que la tarjeta "
+"de video es\n"
+"precariamente soportada en las versiones recientes de Ubuntu."
+
+#: po/tmpfile.rb:14
+msgid "Checking amount of memory:"
+msgstr "Comprobando el monto de memoria:"
+
+#: po/tmpfile.rb:15
+msgid ""
+"The value should be close to the number of megabytes of memory\n"
+"you have installed in this system.  It will typically be a\n"
+"bit smaller (e.g. 502 for a 512 megabyte system)."
+msgstr ""
+"El valor debe estar cercano al numero de megabytes de la memoria\n"
+"que a sido instalada en el sistema. Esto tipicamente debe ser un\n"
+"un poco menos (e.j. 502 para un sistema de 512 megabytes)."
+
+#: po/tmpfile.rb:16
 msgid "Checking video resolution:"
 msgstr "Comprobando resolucion de video:"
 
-#: po/tmpfile.rb:13
+#: po/tmpfile.rb:17
 msgid ""
 "This is the number of pixels displayed on the screen.  For\n"
 "usability purposes, this should be set to 1024x768 or larger (i.e., "
@@ -329,30 +356,3 @@ msgstr ""
 "\n"
 "Si la resolucion es mayor, esto esta bien mientras usted pueda leer\n"
 "esto."
-
-#: po/tmpfile.rb:14
-msgid "Checking amount of memory:"
-msgstr "Comprobando el monto de memoria:"
-
-#: po/tmpfile.rb:15
-msgid ""
-"The value should be close to the number of megabytes of memory\n"
-"you have installed in this system.  It will typically be a\n"
-"bit smaller (e.g. 502 for a 512 megabyte system)."
-msgstr ""
-"El valor debe estar cercano al numero de megabytes de la memoria\n"
-"que a sido instalada en el sistema. Esto tipicamente debe ser un\n"
-"un poco menos (e.j. 502 para un sistema de 512 megabytes)."
-
-#: po/tmpfile.rb:16
-msgid "Checking for incompatible video cards:"
-msgstr "Comprobando imcopatibilidad de las tarjetas de video:"
-
-#: po/tmpfile.rb:17
-msgid ""
-"If the result comes up with a BAD video card, it is a video card that is\n"
-"poorly supported on recent versions of Ubuntu."
-msgstr ""
-"Si el resulta viene con una tarjeta de video MALA, esto es a que la tarjeta "
-"de video es\n"
-"precariamente soportada en las versiones recientes de Ubuntu."
