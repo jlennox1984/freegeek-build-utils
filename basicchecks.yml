@@ -1,5 +1,5 @@
 tests: 
-  checkCdromDrive: 
+  - checkCdromDrive: 
     command: /usr/lib/freegeek_show_cd_drives
     title: "Checking status of CD ROM:"
     explanation: |-
@@ -8,7 +8,7 @@ tests:
       If not, it is likely cabled or jumpered incorrectly.
       NOTE: The CD ROM may not show up in BIOS. This is not a
       problem.
-  checkNetwork: 
+  - checkNetwork: 
     title: "Checking networking:"
     test: "system(\"ping -c 1 #$SERVER\")"
     explanation: |-
@@ -19,7 +19,7 @@ tests:
     failure: |-
       Networking is not responding.  Your network card may be broken
       or misconfigured.
-  checkSound: 
+  - checkSound: 
     command: speaker-test -t wav -c2 -l1
     title: "Checking sound:"
     pretest: |-
@@ -42,7 +42,7 @@ tests:
       If the sound is distorted, turn down the volume in both
       'alsamixer' and on the speakers, or decide that the speakers are
       bad.
-  checkCpuInfo: 
+  - checkCpuInfo: 
     title: "Checking CPU info:"
     commands: 
     - grep 'model name' /proc/cpuinfo
@@ -68,7 +68,7 @@ tests:
       cpu MHz rating, so we are sure that the cpu is not damaged.  If
       the bogomips rating is low, call over your friendly build
       instructor.
-  checkVideoResolution: 
+  - checkVideoResolution: 
     command: xdpyinfo | grep dimen
     title: "Checking video resolution:"
     explanation: |-
@@ -81,14 +81,14 @@ tests:
       
       If the resolution is larger, it is ok as long as you can read
       it.
-  checkMemory: 
+  - checkMemory: 
     command: "free -m | egrep '^Mem' | awk '{print $2}'"
     title: "Checking amount of memory:"
     explanation: |-
       The value should be close to the number of megabytes of memory
       you have installed in this system.  It will typically be a
       bit smaller (e.g. 502 for a 512 megabyte system).
-  checkIntelVideo:
+  - checkIntelVideo:
     command: lspci | egrep 'VGA.*82845' && echo video card BAD || echo video card OK
     title: "Checking for incompatible video cards:"
     explanation: |-

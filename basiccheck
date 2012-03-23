@@ -70,7 +70,47 @@ File.open( File.join( directory, filename ) ) {|file|
     $CONFIG = YAML::load(file.read)
 }
 
-$TESTS = $CONFIG['tests']
+# very simple implementation, does not have all functionality working correctly
+# if RbConfig::CONFIG['ruby_version'] == "1.8" # TODO
+class OrderedHash
+  def initialize(*args)
+    @arr = []
+    @hash = Hash.new(*args)
+    self
+  end
+
+  def []=(key, val)
+    @arr.delete_if{|x| x == key}
+    @arr << key
+    @hash[key] = val
+  end
+
+  def each
+    @arr.each{|k|
+      yield(k, @hash[k])
+    }
+    nil
+  end
+end
+#else
+#OrderedHash = Hash # apparently they already are?
+#end
+
+# once all Hash instances are ordered by default, we can just set
+# $TESTS to $CONFIG['tests'], after changing it back to a hash instead
+# of array -- Ryan52
+$TESTS = OrderedHash.new
+$CONFIG['tests'].each{|x|
+  name = nil
+  x.each{|k,v|
+    if v == nil and k =~ /^check/
+      name = k
+    end
+  }
+  raise unless name
+  x.delete(name)
+  $TESTS[name] = x
+}
 $SERVER = $CONFIG['server']
 $DMESG = 'dmesg | cat /var/log/dmesg - | sed -e "s,^\\[[0-9 ].*[0-9 ]\\] ,," | sort -u' #:TODO: find out if anything in `dmesg` is needed
 
