@@ -73,6 +73,8 @@ File.open( File.join( directory, filename ) ) {|file|
 # very simple implementation, does not have all functionality working correctly
 # if RbConfig::CONFIG['ruby_version'] == "1.8" # TODO
 class OrderedHash
+  include Enumerable
+
   def initialize(*args)
     @arr = []
     @hash = Hash.new(*args)
