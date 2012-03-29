@@ -192,20 +192,28 @@ def ask_and_send_stuff
       end
     }
 
+    found = {}
+
     x.conditions.each{|y|
-      value = @asked_questions.keys.include?(y.field_name) ? @asked_questions[y.field_name] : @asked_data[y.field_name]
+      f = y.field_name
+      next if found[f] && found[f] == true
+      value = @asked_questions.keys.include?(f) ? @asked_questions[f] : @asked_data[f]
+      found[f] = true
       case y.operator
       when '='
-        return false unless value.to_s == y.expected_value
+        found[f] = false unless value.to_s == y.expected_value
       when '=~'
-        return false unless value.to_s =~ /#{y.expected_value}/
+        found[f] = false unless value.to_s =~ /#{y.expected_value}/
       when '>'
-        return false unless value.to_i > y.expected_value.to_i
+        found[f] = false unless value.to_i > y.expected_value.to_i
+      else
+        found[f] = false
       end
     }
 
-    return true
+    return found.values.select{|x| !x}.length == 0
   end
+
   def handle_questions
     # check if all of the field_name it's looking for has been asked
     good = @open_questions.select{|x|
