@@ -1,9 +1,9 @@
-freegeek-build-utils (1.2.37) UNRELEASED; urgency=low
+freegeek-build-utils (1.2.37) freegeek-test; urgency=low
 
   * implement OR'ed conditions for system specific questions (Closes:
     #26673)
 
- -- Ryan Niebur <ryan@debian.org>  Thu, 29 Mar 2012 14:22:48 -0700
+ -- Ryan Niebur <ryan@debian.org>  Sat, 31 Mar 2012 00:01:09 -0700
 
 freegeek-build-utils (1.2.36) freegeek-test; urgency=low
 
