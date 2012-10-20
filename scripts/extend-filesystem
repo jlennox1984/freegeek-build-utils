@@ -35,6 +35,8 @@ def detect_lv(group)
   volume = nil
   if v_groups.include?("root")
     volume = "root"
+  elsif v_groups.length == 1
+    volume = v_groups.first
   elsif v_groups.length > 1
     volume = menu("Choose a logical volume:", "Which logical volume would you like to extend?", *v_groups)
   else
@@ -57,7 +59,7 @@ def choose_drive
   if v_groups.length == 1
     volume = v_groups.first
   elsif v_groups.length > 1
-    volume = menu("Choose a physical drive to add:", "Which physical drive would you like to extend?", *v_groups)
+    volume = menu("Choose a physical drive to add:", "Which physical drive would you like to add?", *v_groups)
   else
     die("No available hard drives found, cannot continue.")
   end
@@ -75,7 +77,7 @@ def remove_partition_table(drive)
 end
 
 def extend_volume(group, volume, drive)
-  message("Extending logical volume #{group}/#{volume} with drive #{drive}..")
+  message("Extending logical volume #{group}/#{volume} using drive #{drive}..")
   system("pvcreate /dev/#{drive}") or die("Failed to run pvcreate.")
   system("vgextend #{group} /dev/#{drive}") or die("Failed to run vgextend.")
   system("lvextend -L+$(vgs --units b | sed '1 d' | awk '{print $1, $7}' | grep '^#{group} ' | awk '{print $2}') /dev/#{group}/#{volume}") or die("Failed to run lvextend.")
@@ -86,8 +88,8 @@ def main
   if `id -u`.strip != "0"
     die("Must have root privileges, cannot continue.")
   end
-  
-  header "Adding Drive to LVM volume\n\n"
+
+  header "= Adding a new drive to extend a filesystem on LVM =\n\n"
   group = detect_vg
   volume = detect_lv(group)
   drive = choose_drive
