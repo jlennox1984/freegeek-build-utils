@@ -1,3 +1,10 @@
+freegeek-build-utils (1.2.38) UNRELEASED; urgency=low
+
+  * Add a script named extend-filesystem which will add a new hard drive
+    to the root filesystem on LVM (Closes: #23339)
+
+ -- Ryan Niebur <ryan@debian.org>  Sat, 20 Oct 2012 15:43:10 -0700
+
 freegeek-build-utils (1.2.37) freegeek-test; urgency=low
 
   * implement OR'ed conditions for system specific questions (Closes:

@@ -1,0 +1,110 @@
+#!/usr/bin/ruby
+
+require 'rubytui'
+include RubyTUI
+
+def die(msg)
+  errorMessage(msg)
+  message("\n\n")
+  errorMessage("Exiting.")
+  message("\n")
+  exit 1
+end
+
+trap('SIGINT') {
+  die("Signal caught")
+}
+
+def detect_vg
+  message "Detecting volume groups..\n"
+  v_groups = `vgs | sed '1 d' | awk '{print $1}'`.split("\n")
+  volume = nil
+  if v_groups.length > 1
+    volume = menu("Choose a volume group:", "Which volume group would you like to extend?", *v_groups)
+  elsif v_groups.length == 1
+    volume = v_groups.first
+  else
+    die("No volume groups found, cannot continue.")
+  end
+  return volume
+end
+
+def detect_lv(group)
+  message "Detecting logical volumes..\n"
+  v_groups = `lvs #{group} | sed '1 d' | awk '{print $1}'`.split("\n")
+  volume = nil
+  if v_groups.include?("root")
+    volume = "root"
+  elsif v_groups.length > 1
+    volume = menu("Choose a logical volume:", "Which logical volume would you like to extend?", *v_groups)
+  else
+    die("No logical volumes found, cannot continue.")
+  end
+  return volume
+end
+
+def find_possible_drives
+  all_drives = `ls /sys/block/*/removable | cut -d / -f 4 | grep -vE '^(loop|md|ram|fd|dm|sr)'`.split("\n")
+  pv_partitions = `pvs | sed '1 d' | awk '{print $1}' | cut -d / -f 3`.split("\n")
+  all_drives = all_drives.select{|x| pv_partitions.select{|y| y.include?(x)}.length == 0}
+  return all_drives
+end
+
+def choose_drive
+  message "Detecting drives available for adding..\n"
+  v_groups = find_possible_drives
+  volume = nil
+  if v_groups.length == 1
+    volume = v_groups.first
+  elsif v_groups.length > 1
+    volume = menu("Choose a physical drive to add:", "Which physical drive would you like to extend?", *v_groups)
+  else
+    die("No available hard drives found, cannot continue.")
+  end
+  return volume
+end
+
+def has_partition_table(drive)
+  !system(%(env LANG=C fdisk -l /dev/#{drive} 2>&1 | grep -q "doesn't contain a valid partition table"))
+end
+
+def remove_partition_table(drive)
+  message("Removing partition table from drive #{drive}..")
+  system("dd if=/dev/zero of=/dev/#{drive} bs=1k count=1") or die("Failed to run dd.")
+  system("blockdev --rereadpt /dev/#{drive}") or die("Failed to run blockdev.")
+end
+
+def extend_volume(group, volume, drive)
+  message("Extending logical volume #{group}/#{volume} with drive #{drive}..")
+  system("pvcreate /dev/#{drive}") or die("Failed to run pvcreate.")
+  system("vgextend #{group} /dev/#{drive}") or die("Failed to run vgextend.")
+  system("lvextend -L+$(vgs --units b | sed '1 d' | awk '{print $1, $7}' | grep '^#{group} ' | awk '{print $2}') /dev/#{group}/#{volume}") or die("Failed to run lvextend.")
+  system("resize2fs /dev/#{group}/#{volume}") or die("Failed to run resize2fs.")
+end
+
+def main
+  if `id -u`.strip != "0"
+    die("Must have root privileges, cannot continue.")
+  end
+  
+  header "Adding Drive to LVM volume\n\n"
+  group = detect_vg
+  volume = detect_lv(group)
+  drive = choose_drive
+  message("Drive #{drive} will be added to #{group}/#{volume}..\n")
+
+  if !yes_or_no("Are you sure you want to add drive #{drive}, permanently destroying all data?")
+    die("Cancelled.")
+  end
+  if has_partition_table(drive)
+    errorMessage("Warning: drive #{drive} already has a partition table and may contain data!\n")
+    if !yes_or_no("Are you sure you want to remove the existing partition table from #{drive}?")
+      die("Cancelled.")
+    end
+    remove_partition_table(drive)
+  end
+  extend_volume(group, volume, drive)
+  highlight("\n\nSuccessfully extended the filesystem!\n")
+end
+
+main
