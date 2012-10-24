@@ -89,6 +89,10 @@ def main
     die("Must have root privileges, cannot continue.")
   end
 
+  if `which vgs` == ""
+    die("Must have LVM installed, cannot continue.")
+  end
+
   header "= Adding a new drive to extend a filesystem on LVM =\n\n"
   group = detect_vg
   volume = detect_lv(group)
