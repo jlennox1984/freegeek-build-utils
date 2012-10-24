@@ -86,7 +86,7 @@ end
 
 def main
   if `id -u`.strip != "0"
-    die("Must have root privileges, cannot continue.")
+    exec("sudo " + $0)
   end
 
   if `which vgs` == ""
