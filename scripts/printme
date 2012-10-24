@@ -4,8 +4,7 @@ require 'printme'
 
 def run_lshw_and_test_stuff
   lshwname = DIST == "mac" ? '/tmp/lshw.xml' : '/var/lib/freegeek-extras/printme/lshw.xml'
-#  runit(lshwname)
-  FileUtils.cp("/public/scratch/printme.xml", lshwname)
+  runit(lshwname)
   lshw = File.open(lshwname, "rb")
   @lshw_output = lshw.read
   lshw.close
