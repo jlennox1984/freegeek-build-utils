@@ -18,6 +18,15 @@ return if DIST == "mac"
   if ! File.writable?('/var/lib/freegeek-extras/')
     system_check_ret "sudo chown -R #{ENV['USER']} /var/lib/freegeek-extras/"
   end
+  if ! File.exists?('/var/log/freegeek-extras/')
+    system_check_ret 'sudo mkdir /var/log/freegeek-extras/'
+  end
+  if ! File.writable?('/var/log/freegeek-extras/')
+    system_check_ret "sudo chown -R #{ENV['USER']} /var/log/freegeek-extras/"
+  end
+  if File.exists?('/var/log/freegeek-extras/printme.log') && ! File.writable?('/var/log/freegeek-extras/printme.log')
+    system_check_ret "sudo chown -R #{ENV['USER']} /var/log/freegeek-extras/printme.log"
+  end
   if ! File.exist?('/var/lib/freegeek-extras/printme')
     mkdir('/var/lib/freegeek-extras/printme/')
   end

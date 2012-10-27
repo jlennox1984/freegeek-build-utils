@@ -185,7 +185,13 @@ end
 
 def look_at_url(path)
   url="http://#{$server}#{path}"
-  if ! system "#{DIST == "mac" ? "open" : "firefox"} #{url}"
+  command = "firefox #{url}"
+  if DIST == "mac"
+    command = command.sub("firefox", "open")
+  else
+    command = command + " 2>&1 | tee -a /var/log/freegeek-extras/printme.log >/dev/null"
+  end
+  if ! system command
     puts url
   end
 end

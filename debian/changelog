@@ -1,8 +1,10 @@
 freegeek-build-utils (1.2.41) UNRELEASED; urgency=low
 
   * Switch printme to use ruby1.8 for SOAP4R (Closes: #27164)
+  * Add a new directory /var/log/freegeek-extras to write a printme.log
+    into for the firefox output (Closes: #31488)
 
- -- Ryan Niebur <ryan@debian.org>  Sat, 27 Oct 2012 11:20:38 -0700
+ -- Ryan Niebur <ryan@debian.org>  Sat, 27 Oct 2012 16:20:16 -0700
 
 freegeek-build-utils (1.2.40) freegeek-test; urgency=low
 
