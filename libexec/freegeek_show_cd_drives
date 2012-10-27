@@ -15,7 +15,7 @@ myudevinfo() {
 
 TEMPDIR=`mktemp -d`
 for i in $(
-    for i in $(ls /sys/block/); do
+    for i in $(ls /sys/block/ | grep -v "^dm-"); do
         myudevinfo --query all --name $i > $TEMPDIR/$i
         if grep -q "E: ID_TYPE=cd" $TEMPDIR/$i; then
             printf "$i "
