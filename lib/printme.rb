@@ -19,7 +19,7 @@ if File.exists?(conffile)
 end
 $server = yaml['server'] + ':' + yaml['port'].to_s
 
-$PRINTME_VERSION=16
+$PRINTME_VERSION=17
 
 require 'rubytui'
 require 'fileutils'
@@ -128,6 +128,7 @@ def client_hash
   client_versions[14] = [14] # previous systems
   client_versions[15] = [15] # conditional Q's
   client_versions[16] = [16] # OR'ed conditional Q's
+  client_versions[17] = [17] # requires updated server
   client_versions
 end
 

@@ -251,7 +251,7 @@ def ask_and_send_stuff
   contract = ask_contract
   @asked_data["contract_id"] = @contract = @contracts.select{|x| x.label == contract}.first.thing_id
   @asked_data["covered"] = ask_covered
-  @asked_data["contact_id"] = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
+  @asked_data["contact_id"] = prompt('What is your volunteer id?', 'Please enter a valid contact ID number.') {|num| num.to_i.to_s == num && @driver.is_valid_contact(num.to_i)}
   @asked_data["notes"] = prompt('What, if anything, is notable about this system?')
   @asked_data["os"] = (DIST == "mac" ? "Mac" : `lsb_release --description --short`)
 
