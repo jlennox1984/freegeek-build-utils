@@ -1,9 +1,9 @@
-freegeek-build-utils (1.2.42) UNRELEASED; urgency=low
+freegeek-build-utils (1.2.42) freegeek-test; urgency=low
 
   * Validate the contact ID number when asking the question in printme,
     and also allow re-entry if it is invalid
 
- -- Ryan Niebur <ryan@debian.org>  Wed, 31 Oct 2012 14:31:26 -0700
+ -- Ryan Niebur <ryan@debian.org>  Sat, 03 Nov 2012 09:10:46 -0700
 
 freegeek-build-utils (1.2.41) freegeek-test; urgency=low
 
