@@ -1,3 +1,9 @@
+freegeek-build-utils (1.2.44) UNRELEASED; urgency=low
+
+  * basiccheck: improve parsing of the udevadm output for CD drives
+
+ -- Ryan Niebur <ryan@debian.org>  Tue, 20 Nov 2012 14:36:31 -0800
+
 freegeek-build-utils (1.2.43) freegeek-test; urgency=low
 
   * Do not require dmidecode on powerpc
