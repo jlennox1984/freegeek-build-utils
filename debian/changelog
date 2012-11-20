@@ -1,8 +1,8 @@
-freegeek-build-utils (1.2.43) UNRELEASED; urgency=low
+freegeek-build-utils (1.2.43) freegeek-test; urgency=low
 
   * Do not require dmidecode on powerpc
 
- -- Ryan Niebur <ryan@debian.org>  Tue, 20 Nov 2012 11:44:06 -0800
+ -- Ryan Niebur <ryan@debian.org>  Tue, 20 Nov 2012 11:44:12 -0800
 
 freegeek-build-utils (1.2.42) freegeek-test; urgency=low
 
