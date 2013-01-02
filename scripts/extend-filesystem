@@ -3,6 +3,15 @@
 require 'rubytui'
 include RubyTUI
 
+# TODO TODO TODO: If we ever use,
+#
+# I'm uploading the version of freegeek-build-utils with an
+# extend-filesystem script that doesn't do this right now, but if we start
+# using it then fgdiag-disktest-verification can generate a .deb too and
+# it will be very easy to check against this, as the udeb is a wrapper
+# around a script than can be reused here as is.
+#
+
 def die(msg)
   errorMessage(msg)
   message("\n\n")
