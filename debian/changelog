@@ -1,6 +1,8 @@
 freegeek-build-utils (1.2.44) UNRELEASED; urgency=low
 
   * basiccheck: improve parsing of the udevadm output for CD drives
+  * batterytest: implement question to take to laptops if doing a QC
+    and the script has not been ran yet (Closes: #35121)
 
  -- Ryan Niebur <ryan@debian.org>  Tue, 20 Nov 2012 14:36:31 -0800
 
