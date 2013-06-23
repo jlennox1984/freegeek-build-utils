@@ -18,6 +18,8 @@ Depends: ${misc:Depends},
 # stress-test
  stress,
  cpufrequtils,
+# dvd-wipe
+ dvd+rw-tools
 Recommends: freegeek-extras-pdx | freegeek-extras-freegeek
 Breaks: freegeek-extras (<= 1.2.5)
 Replaces: freegeek-extras
