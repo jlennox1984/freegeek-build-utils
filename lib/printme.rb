@@ -192,7 +192,6 @@ def look_at_url(path)
   else
     command = command + " 2>&1 | tee -a /var/log/freegeek-extras/printme.log >/dev/null"
   end
-  if ! system command
-    puts url
-  end
+  puts "Opening spec sheet in web browser: #{url}"
+  system command
 end
