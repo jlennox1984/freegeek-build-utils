@@ -2,6 +2,7 @@
 
 #Daniel's DVD wiping script.
 
+# should really be 0, user choosing to exit is not an error 
 CODE=1
 
 while true; do
@@ -19,10 +20,14 @@ while true; do
     dvd+rw-format -force /dev/dvd
     CODE="$?"
     echo
-    echo "Your DVD should now be blank."
-    echo "Please check that the DVD is blank."
-    echo "If it's not, try rerunning $(basename $0)"
-    echo "or talk to your friendly Build Instructor."
+    if [ $CODE -ne 0 ]; then
+        echo "DVD Blanking failed with error code: $CODE"
+    else
+        echo "Your DVD should now be blank."
+        echo "Please check that the DVD is blank."
+        echo "If it's not, try rerunning $(basename $0)"
+        echo "or talk to your friendly Build Instructor."
+    fi
     break
   else
     echo "Invalid response \"$BLANK\", please answer either yes or no."
