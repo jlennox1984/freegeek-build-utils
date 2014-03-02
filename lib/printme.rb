@@ -5,7 +5,7 @@ require 'rubytui'
 
 require 'yaml'
 conffile = ENV["PRINTME_CONFIG"] || '/etc/printme.yml'
-defaults = {'server' => 'printme', 'port' => 80}
+defaults = {'server' => 'fgdb.shop.lan', 'port' => 80}
 yaml = defaults
 if File.exists?(conffile)
   f = File.open(conffile)
