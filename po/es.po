@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: freegeek-extras 1.2.26\n"
-"POT-Creation-Date: 2012-03-23 13:36-0700\n"
+"POT-Creation-Date: 2014-03-02 02:11-0800\n"
 "PO-Revision-Date: 2011-02-24 12:45-0800\n"
 "Last-Translator: Ricardo Varela <ricardovarela30@yahoo.com>\n"
 "Language-Team: Spanish Build <spanishbuild@lists.freegeek.org>\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-#: basiccheck:21 basiccheck:263 basiccheck:272
+#: basiccheck:21 basiccheck:265 basiccheck:274
 msgid "y"
 msgstr "s"
 
-#: basiccheck:22 basiccheck:272 basiccheck:276
+#: basiccheck:22 basiccheck:274 basiccheck:278
 msgid "n"
 msgstr "n"
 
-#: basiccheck:23 basiccheck:278
+#: basiccheck:23 basiccheck:280
 msgid "r"
 msgstr "r"
 
@@ -48,120 +48,134 @@ msgstr "¿Quiere repetir la prueba?"
 msgid "no"
 msgstr "no"
 
-#: basiccheck:37 basiccheck:46 basiccheck:241
+#: basiccheck:37 basiccheck:46 basiccheck:243
 msgid "Please enter 'yes' or 'no'"
 msgstr "Favor de ingresar 'si' or 'no'"
 
-#: basiccheck:45 basiccheck:241
+#: basiccheck:45 basiccheck:243
 msgid "yes"
 msgstr "si"
 
-#: basiccheck:147
+#: basiccheck:149
 msgid "Show this message"
 msgstr "Mostrar este mensaje"
 
-#: basiccheck:152
+#: basiccheck:154
 msgid "Turn debugging on"
 msgstr "Activar debbugging"
 
-#: basiccheck:156
+#: basiccheck:158
 msgid "Enable coloration of the output"
 msgstr "Habilitar coloracion del output"
 
-#: basiccheck:160
+#: basiccheck:162
 msgid "Create a menu for test selection"
 msgstr "Crear un menu para la seleccion de prueba?"
 
-#: basiccheck:164
+#: basiccheck:166
 msgid "Show a list of available tests"
 msgstr "Mostrar la lista de pruebas disponibles"
 
-#: basiccheck:165
+#: basiccheck:167
 msgid "Possible tests:"
 msgstr "Pruebas posibles:"
 
-#: basiccheck:178
+#: basiccheck:180
 msgid "Please choose from these available tests:"
 msgstr "Favor de escoger de estas pruebas disponibles:"
 
-#: basiccheck:179
+#: basiccheck:181
 msgid "Which test would you like to run?"
 msgstr "¿Cual prueba le gustaria ejecutar?"
 
-#: basiccheck:190
+#: basiccheck:191
+msgid ""
+"This program is called -e\n"
+"\n"
+msgstr ""
+
+#: basiccheck:192
 msgid "To see help on this program, run:"
 msgstr "Para ver la ayuda en este programa, ejecutar:"
 
-#: basiccheck:190
+#: basiccheck:192
 msgid "To view its contents, you can use these commands:"
 msgstr "Para ver estos contenidos, usted puede usar estos comandos:"
 
-#: basiccheck:190
+#: basiccheck:192
 msgid "To run it with colored output, use these commands:"
 msgstr "Para ejecutar esto con color output, use estos comandos:"
 
-#: basiccheck:201
+#: basiccheck:203
 msgid "The following tests failed:"
 msgstr "La siguiente prueba fallo:"
 
-#: basiccheck:204
+#: basiccheck:206
 msgid "Would you like to repeat the failed tests?"
 msgstr "¿Le gustaria repetir las pruebas fallidas?"
 
-#: basiccheck:213
+#: basiccheck:210
+msgid ""
+"\n"
+"\n"
+"Please fix these problems and rerun -e.\n"
+"\n"
+msgstr ""
+
+#: basiccheck:215
 msgid "The basic check is finished."
 msgstr "El chequeo basico a terminado"
 
-#: basiccheck:214
+#: basiccheck:216
 msgid "NOTE: Not all things that could go wrong have been checked."
 msgstr ""
 "NOTA: No todas las cosas que puedan salir con errores han sido probadas."
 
-#: basiccheck:255
+#: basiccheck:257
 msgid "The following is ruby code:"
 msgstr "Lo siguiente es codigo ruby:"
 
-#: basiccheck:261
+#: basiccheck:263
 msgid "Test succeeded."
 msgstr "Prueba exitosa."
 
-#: basiccheck:266 basiccheck:274
+#: basiccheck:268 basiccheck:276
 msgid "Test failed."
 msgstr "Prueba fallida."
 
-#: basiccheck:267
+#: basiccheck:269
 msgid "Trying fallback command:"
 msgstr "Pruebe comando alterno."
 
-#: basiccheck:269
+#: basiccheck:271
 msgid "With output of:"
 msgstr "Con output de:"
 
-#: basiccheck:281
+#: basiccheck:283
 msgid "The following commands:"
 msgstr "Los siguientes comandos:"
 
-#: basiccheck:283
+#: basiccheck:285
 msgid "have executed with the output:"
 msgstr "a sido ejecutado con el output:"
 
-#: basiccheck:293
+#: basiccheck:295
 msgid "The following command:"
 msgstr "El siguiente comando:"
 
-#: basiccheck:295
+#: basiccheck:297
 msgid "has executed with the output:"
 msgstr "a sido ejecutado con el output:"
 
-#: basiccheck:304
+#: basiccheck:306
 msgid "Malformed test"
 msgstr "Prueba defectuosa"
 
-#: basiccheck:323
+#: basiccheck:325
 msgid "User interrupt caught.  Exiting."
 msgstr "Usuario interrumpe la colecta. Saliendo."
 
-#: basiccheck:334
+#: basiccheck:336
 msgid "No tests found for the names:"
 msgstr "No pruebas encontradas para los nombres:"
 
