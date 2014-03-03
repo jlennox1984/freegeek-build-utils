@@ -1,0 +1,38 @@
+#!/bin/bash
+
+function help {
+    echo -e "stress-test - runs a 3 minute stress test"
+    echo -e
+    echo -e "usage:"
+    echo -e "\t-h, --help    -  displays this message"
+    echo -e "\t-v, --verbose -  runs stress in verbose mode"
+    echo -e "\t-q, --quiet   -  runs stress in quiet mode, this is the default"
+}
+
+case "$1" in
+    --verbose|-v)
+        ARG="--verbose"
+        ;;
+    --quiet|-q|"")
+        ARG="--quiet"
+        ;;
+    --help|-h)
+        help
+        exit 0
+        ;;
+    *)
+        echo "Unknown option: $1"
+        echo
+        help
+        exit 1
+        ;;
+esac
+
+echo "Running stress test..."
+echo "This will take 3 minutes"
+echo
+
+stress --cpu 10 --io 4 --vm 10 --vm-bytes 10M --hdd 2 --timeout 180 $ARG
+
+echo "Done!"
+

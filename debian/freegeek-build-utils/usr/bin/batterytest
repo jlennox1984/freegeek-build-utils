@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#apm battery monitor test thingy
+
+BATFI=$HOME/bat_mon
+
+if [ -f "$BATFI" ]; then
+  MINZ=$(wc -l "$BATFI" | awk '{print $1}')
+  echo "Battery lasted $MINZ minutes"
+else
+  echo -e "$(basename $0) hasn't been run."
+  echo -n "Are you performing a QC? "
+  read QC
+  if echo "$QC" | grep -q -i '^y'; then
+    echo -e "\nPlease take this machine to Laptops for battery testing."
+  else
+    clear
+    echo "Testing battery life!"
+    while sleep 60; do
+      echo "Testing battery life!"
+    done | tee -a "$BATFI"
+  fi
+fi

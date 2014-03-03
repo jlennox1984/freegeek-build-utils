@@ -1,0 +1,5 @@
+#!/bin/sh
+ echo "Signoff from freegeek Vancouver"
+sudo rm /etc/apt/sources.list.d/freegeekvancouver.list
+sudo apt-get update
+echo "Now ready to return to owner"

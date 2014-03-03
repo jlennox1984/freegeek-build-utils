@@ -1,0 +1,382 @@
+#!/usr/bin/ruby1.8
+
+require 'printme'
+
+def run_lshw_and_test_stuff
+  lshwname = DIST == "mac" ? '/tmp/lshw.xml' : '/var/lib/freegeek-extras/printme/lshw.xml'
+  runit(lshwname)
+  lshw = File.open(lshwname, "rb")
+  @lshw_output = lshw.read
+  lshw.close
+end
+
+def make_dirs
+return if DIST == "mac"
+  if ! File.exist?('/var/lib/freegeek-extras/')
+    system_check_ret 'sudo mkdir /var/lib/freegeek-extras/'
+  end
+  if ! File.writable?('/var/lib/freegeek-extras/')
+    system_check_ret "sudo chown -R #{ENV['USER']} /var/lib/freegeek-extras/"
+  end
+  if ! File.exists?('/var/log/freegeek-extras/')
+    system_check_ret 'sudo mkdir /var/log/freegeek-extras/'
+  end
+  if ! File.writable?('/var/log/freegeek-extras/')
+    system_check_ret "sudo chown -R #{ENV['USER']} /var/log/freegeek-extras/"
+  end
+  if File.exists?('/var/log/freegeek-extras/printme.log') && ! File.writable?('/var/log/freegeek-extras/printme.log')
+    system_check_ret "sudo chown -R #{ENV['USER']} /var/log/freegeek-extras/printme.log"
+  end
+  if ! File.exist?('/var/lib/freegeek-extras/printme')
+    mkdir('/var/lib/freegeek-extras/printme/')
+  end
+end
+
+def get_id_and_stuff
+unless DIST == "mac"
+  if File.exist?('/var/lib/freegeek-extras/printme/system_id')
+    @old_system_id ||= File.read('/var/lib/freegeek-extras/printme/system_id').strip.to_i
+  elsif File.exist?('/var/lib/freegeek-extras/printme/system.xml') # old new printme has been ran
+    require 'rexml/document'
+    @old_system_id ||= REXML::XPath.match(REXML::Document.new(File.read("/var/lib/freegeek-extras/printme/system.xml")), '/system/id').first.get_text.to_s.to_i
+  end
+end
+
+  @actions = @driver.actions
+  @contracts = @driver.contracts
+  @types = @driver.types
+  @coveredness_enabled = @driver.coveredness_enabled
+
+  @old_system_id ||= prompt('If the system had an id on it already, enter that here',
+                        'Please supply a number or nothing at all') {|num| num.empty? or (num.to_i.to_s == num)}
+end
+
+def r_parse_hash(arr)
+  h = {}
+  arr.each{|x,y|
+    h[x] = y
+  }
+  h
+end
+
+def get_current_info
+  @detected_system_id = @driver.get_system_id(@lshw_output)
+  if @detected_system_id and !@driver.is_system_gone(@detected_system_id)
+    @question_defaults = r_parse_hash(@driver.question_defaults(@detected_system_id))
+    @default_contract = @driver.contract_label_for_system(@detected_system_id)
+    @default_type = @driver.type_description_for_system(@detected_system_id)
+    covered = @driver.covered_for_system(@detected_system_id)
+    if covered.nil?
+      @default_uncovered = nil
+    else
+      @default_uncovered = !covered
+    end
+  else
+    @question_defaults = {}
+    @default_type = @driver.default_type_description
+    @default_contract = nil
+    @default_uncovered = nil
+    @detected_system_id = nil
+  end
+  @default_action = @driver.default_action_description
+end
+
+
+def show_a_message(first)
+  second = "Are you sure that you entered it correctly (HINT: look for the sticker)?"
+  puts
+  puts colored(first, 'bold', 'green')
+  out = prompt second, "Please type yes or no" do |x|
+    x.match(/yes/i) || x.match(/no/i)
+  end
+  return out.match(/yes/i)
+end
+
+def show_message
+  return show_a_message("You are are changing the contract.")
+end
+
+def show_covered_message
+  return show_a_message("You are are changing the uncovered electronic device value.")
+end
+
+class Array
+  def to_my_array(thing)
+    arr = []
+    self.each{|x|
+      arr[x.thing_id] = eval("x.#{thing}")
+    }
+    arr
+  end
+end
+
+def ask_contract
+  # FIXME: all of this logic needs to be cleaned up
+  first_time = @detected_system_id.nil?
+  contract = nil
+  loop do
+    contract = nil
+    checkable_contracts = @contracts.to_my_array("label").select{|x| !x.nil?}.select{|x| x != "No Sticker"} # TODO: sort so that the current contract is the first asked question. or the last. not sure how we want to do it.
+    for this_contract in checkable_contracts
+      if yes_or_no("Does the system have a #{this_contract} sticker?#{(!@default_contract.nil?) ? " [The previous technician said #{@default_contract == this_contract ? "yes" : "no"}, but you should check as well]" : ""}")
+        contract = this_contract
+        break
+      end
+    end
+    if contract.nil?
+      contract = "No Sticker"
+    end
+    if contract != @default_contract && !first_time
+      if show_message
+        break
+      end
+    else
+      break
+    end
+  end
+  return contract
+end
+
+def ask_covered
+  covered = nil
+  if @coveredness_enabled
+    return false if @contract.to_i != 1 # FIXME: this logic needs to be elsewhere
+    loop do
+      covered = !yes_or_no("Does the system have an uncovered electronic device sticker?#{(!@default_uncovered.nil?) ? " [The previous technician said #{@default_uncovered ? "yes" : "no"}, but you should check as well]" : ""}")
+      if covered != (!@default_uncovered) && !@default_uncovered.nil?
+        if show_covered_message
+          break
+        end
+      else
+        break
+      end
+    end
+  end
+  return covered
+end
+
+class Hash
+  def ryan52_to_xml(name)
+    if self.length == 0
+      return "<#{name} />"
+    else
+      s = "<#{name}>\n"
+      self.each{|k,v|
+        ks = k.to_s
+        s += "<#{ks}>#{v}</#{ks}>\n"
+      }
+      s += "</#{name}>"
+      return s
+    end
+  end
+end
+
+def ask_and_send_stuff
+  @asked_data = {}
+  @asked_questions = {}
+  tmp_action = numberedMenuWithDefault('Work Tasks', 'Which job did you perform?', @default_action, @actions.to_my_array("description"))
+  tmp_type = numberedMenuWithDefault('System Type', 'What kind of system is this intended to be?', @default_type, @types.to_my_array("description"))
+  @asked_data['action_id'] = @actions.select{|x| x.description == tmp_action}.first.thing_id
+  @asked_data['type_id'] = @types.select{|x| x.description == tmp_type}.first.thing_id
+  @open_questions = @driver.get_extra_questions
+  @reject_questions = []
+  @asked_data["questions"] = []
+  def ask_this_question(x)
+    if @question_defaults.keys.include?(x.name)
+      @asked_questions[x.name] = promptWithDefault(x.question, @question_defaults[x.name])
+    else
+      @asked_questions[x.name] = prompt(x.question, 'Please enter something.') {|num| num.strip.length > 0}
+    end
+    @asked_data["questions"] << [x.id_name, @asked_questions[x.name]]
+  end
+  def does_satisfy_conditions(x)
+    lookfor = x.conditions.map{|y| y.field_name}.uniq
+    lookfor.select{|y| !(@reject_questions.include?(y) || @asked_data.keys.include?(y) || @asked_questions.keys.include?(y))}.length == 0
+  end
+  def conditions_are_true(x)
+    lookfor = x.conditions.map{|y| y.field_name}.uniq
+    lookfor.each{|y|
+      if @reject_questions.include?(y)
+        return false
+      end
+    }
+
+    found = {}
+
+    x.conditions.each{|y|
+      f = y.field_name
+      next if found[f] && found[f] == true
+      value = @asked_questions.keys.include?(f) ? @asked_questions[f] : @asked_data[f]
+      found[f] = true
+      case y.operator
+      when '='
+        found[f] = false unless value.to_s == y.expected_value
+      when '=~'
+        found[f] = false unless value.to_s =~ /#{y.expected_value}/
+      when '>'
+        found[f] = false unless value.to_i > y.expected_value.to_i
+      else
+        found[f] = false
+      end
+    }
+
+    return found.values.select{|x| !x}.length == 0
+  end
+
+  def handle_questions
+    # check if all of the field_name it's looking for has been asked
+    good = @open_questions.select{|x|
+      does_satisfy_conditions(x)
+    }
+    @open_questions = @open_questions - good
+    # if so, check values for relevance, skip if not relevant
+    good.each{|x|
+      if conditions_are_true(x)
+        ask_this_question(x)
+      else
+        @reject_questions << x.name
+      end
+      # ask and remove, then check for ones which are now available
+      handle_questions # recursive so that followup questions are asked immediately
+    }
+  end
+  oldlength = -1
+  while @open_questions.length > 0 # shouldn't have to loop much
+    handle_questions
+    if oldlength == @open_questions.length
+      raise "Logic Error, remaining questions could not be asked or skipped, for unknown reasons."
+    end
+    oldlength = @open_questions.length
+  end
+  contract = ask_contract
+  @asked_data["contract_id"] = @contract = @contracts.select{|x| x.label == contract}.first.thing_id
+  @asked_data["covered"] = ask_covered
+  @asked_data["contact_id"] = prompt('What is your volunteer id?', 'Please enter a valid contact ID number.') {|num| num.to_i.to_s == num && @driver.is_valid_contact(num.to_i)}
+  @asked_data["notes"] = prompt('What, if anything, is notable about this system?')
+  @asked_data["os"] = (DIST == "mac" ? "Mac" : `lsb_release --description --short`)
+
+  unless (@driver.version < 13)
+    battery_results = ""
+    if File.exists?("/usr/bin/batterytest") and File.exists?("#{ENV["HOME"]}/bat_mon") and tmp_type.match(/laptop/i)
+      battmp = `batterytest`.chomp
+      if noYes("Do you want to include the results of the last battery test (#{battmp})?")
+        battery_results = battmp
+      end
+    end
+
+    fgdb_printme_hash = {}
+
+    if !battery_results.empty?
+      fgdb_printme_hash[:batterytest] = battery_results
+    end
+
+    unless not File.exist?('/usr/sbin/dmidecode')
+      max_capacity = `sudo LANG=C dmidecode -t 16 | grep "Maximum Capacity" | cut -d : -f 2`.strip
+      unless max_capacity.empty?
+        fgdb_printme_hash[:max_capacity] = max_capacity
+      end
+    end
+
+    lshw_lines = @lshw_output.split("\n")
+    first = lshw_lines.shift
+    lshw_lines.shift if lshw_lines.first.match(/DOCTYPE/)
+
+    @lshw_output = "#{first}\n<fgdb_root>\n#{fgdb_printme_hash.ryan52_to_xml("fgdb_printme")}\n<fgdb_data>#{lshw_lines.join("\n")}</fgdb_data></fgdb_root>"
+  end
+
+  @asked_data["old_id"] = @old_system_id
+  @asked_data["lshw_output"] = @lshw_output
+
+  data_struct = @driver.empty_struct
+  @asked_data.each{|k,v|
+    eval("data_struct.#{k} = v")
+  }
+
+  @report_id = @driver.submit(RubyTUI::DIST == "mac" ? @asked_data : data_struct)
+  system_id=@driver.get_system_for_report(@report_id)
+  if system_id != @old_system_id
+    @old_system_id = system_id
+  end
+
+  return if DIST == "mac"
+  system=File.open('/var/lib/freegeek-extras/printme/system_id', 'w')
+  system.puts(@old_system_id)
+  system.close
+  Dir.glob("/var/lib/freegeek-extras/printme/{system,report.*,spec_sheet.*}.xml").each{|x| rm x} # remove teh cruft
+end
+
+def printer_there?(printer)
+  `lpstat -p`.split("\n").map{|x| x.split(" ")[1]}.include?(printer)
+end
+
+def printer_setup
+  printer = ARGV[1]
+  system_check_ret('sudo su - -c "echo \"Browsing Yes #freegeek-extras\" >> /etc/cups/cupsd.conf"')
+  if File.exists?("/etc/init.d/cups")
+    system_check_ret('sudo /etc/init.d/cups restart >/dev/null')
+  elsif File.exists?("/etc/init.d/cupsys")
+    system_check_ret('sudo /etc/init.d/cupsys restart >/dev/null')
+  else
+    errorMessage "ERROR: Can't figure out how to restart cups\n\n"
+    exit 1
+  end
+  num = 0
+  found=false
+  if printer.nil? || printer.empty?
+    errorMessage "the #{ARGV[0]} option required an option (the printer's name)" + "\n"
+    exit 1
+  end
+  # in my tests it took about 27 seconds for cups to figure it out
+  while num < 10
+    num += 1
+    printf "looking for printer #{printer}..."
+    if printer_there?(printer)
+      found=true
+      puts "found it"
+      break
+    else
+      found=false
+      printf "not found "
+      if num < 10
+        sleep 5
+        puts "(will try again in a few seconds)"
+      else
+        puts "(giving up)"
+      end
+    end
+  end
+  puts
+  if !found
+    errorMessage "Please specify a valid printer." + "\n\n"
+    exit 1
+  end
+  system_check_ret("sudo su - -c \"echo \\\"Default #{printer} #freegeek-extras\\\" >> /etc/cups/lpoptions\"")
+end
+
+def mymain
+  if ARGV[0] == "-p" || ARGV[0] == "--printer"
+    printer_setup
+  end
+  if ARGV[0] == "-h" || ARGV[0] == "--help"
+    system("man 1 printme | cat -")
+    exit 0
+  end
+  color "Making directories"
+  make_dirs
+  color "Running lshw..."
+  run_lshw_and_test_stuff
+  color "Getting information about this system's past..."
+  get_current_info
+  color "Asking questions and submitting to server..."
+  get_id_and_stuff
+  ask_and_send_stuff
+  url = @driver.spec_sheet_url(@report_id)
+unless DIST == "mac"
+  download_url("/stylesheets/fgss.css", "/var/lib/freegeek-extras/printme/fgss.css")
+  download_url(url, "/var/lib/freegeek-extras/printme/index.html")
+  system(%q{sed -i -e '/link/ s/\/stylesheets\///' -e '/id="hidden"/,/<\/div>/ d' /var/lib/freegeek-extras/printme/index.html})
+end
+  look_at_url url
+end
+
+main

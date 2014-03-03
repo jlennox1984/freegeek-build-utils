@@ -1,0 +1,97 @@
+tests: 
+  - checkCdromDrive: 
+    command: /usr/lib/freegeek_show_cd_drives
+    title: "Checking status of CD ROM:"
+    explanation: |-
+      The output should contain reference to a CD ROM and possibly a
+      DVD ROM which should each show up as one of scd? or sg?.
+      If not, it is likely cabled or jumpered incorrectly.
+      NOTE: The CD ROM may not show up in BIOS. This is not a
+      problem.
+  - checkNetwork: 
+    title: "Checking networking:"
+    test: "system(\"ping -c 1 #$SERVER\")"
+    explanation: |-
+      This command tests communication over the network by requesting
+      a simple message be sent back from our build server.
+    fallback_command: sudo /etc/init.d/networking restart
+    success: Networking seems to work.
+    failure: |-
+      Networking is not responding.  Your network card may be broken
+      or misconfigured.
+  - checkCpuInfo: 
+    title: "Checking CPU info:"
+    commands: 
+    - grep 'model name' /proc/cpuinfo
+    - grep 'cpu MHz' /proc/cpuinfo
+    - grep 'bogomips' /proc/cpuinfo
+    - cpufreq-info -l | cut -d ' ' -f 2 | sed -r -e 's/^/Maximum CPU MHz ; /' -e 's/([0-9]{3})$/.\\1/'
+    explanation: |-
+      cpu MHz or model number* should match what was written on the
+      label on the case. If it does not you must stop and figure out
+      why.
+      
+      * For various AMD chips, the model name will differ from the
+      MHz.  The model number (e.g. "1800+") will be the rating off of
+      which you should determine the system's inclusion into a given
+      spec, and should therefore also be the number written on the
+      case tag.  Ask somebody what this means if these instructions
+      are not clear.
+      
+      Make sure that this info fits within the specifications of the
+      box that you are building.
+      
+      It is expected that the bogomips rating is close to twice the
+      cpu MHz rating, so we are sure that the cpu is not damaged.  If
+      the bogomips rating is low, call over your friendly build
+      instructor.
+  - checkSound: 
+    command: speaker-test -t wav -c2 -l1
+    title: "Checking sound:"
+    pretest: |-
+      A sound is about to play.  Please make sure the speakers are
+      plugged in and on, with the volume set to ~50%.
+    explanation: |-
+      A sound should have played just now at an audible level without
+      distortion.
+      
+      If a sound did not play, the speakers may be plugged into the
+      wrong port or may not be turned on.
+      
+      If error messages were displayed, the sound card may not be
+      physically installed, properly configured or it may be bad
+      hardware.
+      
+      If the sound was too quiet, try using the 'alsamixer' command to
+      adjust the volume levels, setting "Master" and "PCM" to ~90 each.
+      
+      If the sound is distorted, turn down the volume in both
+      'alsamixer' and on the speakers, or decide that the speakers are
+      bad.
+  - checkIntelVideo:
+    command: lspci | egrep 'VGA.*82845' && echo video card BAD || echo video card OK
+    title: "Checking for incompatible video cards:"
+    explanation: |-
+      If the result comes up with a BAD video card, it is a video card that is
+      poorly supported on recent versions of Ubuntu.
+  - checkMemory: 
+    command: "free -m | egrep '^Mem' | awk '{print $2}'"
+    title: "Checking amount of memory:"
+    explanation: |-
+      The value should be close to the number of megabytes of memory
+      you have installed in this system.  It will typically be a
+      bit smaller (e.g. 502 for a 512 megabyte system).
+  - checkVideoResolution: 
+    command: xdpyinfo | grep dimen
+    title: "Checking video resolution:"
+    explanation: |-
+      This is the number of pixels displayed on the screen.  For
+      usability purposes, this should be set to 1024x768 or larger (i.e., 1280x1024).
+      If it is smaller than this, your video display is probably
+      misconfigured. Read through the instructions at:
+      http://wiki.freegeek.org/index.php/Build_tips
+      under the "Video" section to fix this.
+      
+      If the resolution is larger, it is ok as long as you can read
+      it.
+server: pingme.freegeek.org.

@@ -1,0 +1,30 @@
+#!/usr/bin/ruby
+
+require 'printme'
+
+def mymain
+  file = Tempfile.new("printme-note")
+  runit(file.path)
+  newfile = File.open(file.path)
+  @lshw_output = newfile.read
+  newfile.close
+  file.close
+  File.unlink(newfile.path)
+  uid = prompt('What is your volunteer id?', 'Please enter a number.') {|num| num.to_i.to_s == num}
+  text = prompt('What do you want to say?') # todo: have nano edit this
+  data = {
+    "contact_id" => uid,
+    "body" => text,
+    "lshw_output" => @lshw_output
+  }
+
+  data_struct = @driver.empty_notes_struct
+  data.each{|k,v|
+    eval("data_struct.#{k} = v")
+  }
+
+  num = @driver.submit_notes(data_struct)
+  look_at_url(@driver.system_url(@driver.get_system_for_note(num)))
+end
+
+main

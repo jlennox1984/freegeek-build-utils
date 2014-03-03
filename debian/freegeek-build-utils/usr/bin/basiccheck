@@ -1,0 +1,343 @@
+#!/usr/bin/ruby 
+#
+#
+# $Id: basiccheck 316 2005-12-13 01:10:55Z stillflame $
+#
+
+require 'yaml'
+require 'rubytui'
+include RubyTUI
+
+######################################################################
+# slight variations
+#def yesNoRepeat( msg )
+#    return promptWithDefault( msg, "No/yes/repeat",
+#        "Please enter 'yes', 'no', or 'repeat'" ) {|response|
+#        response.match(/^[ynr]/i)
+#    }
+#end
+
+if false # gettext doesn't look inside of #{} in regexps, apparently...so lets cheat.
+  _("y")
+  _("n")
+  _("r")
+end
+
+def noYesRepeat( msg = nil )
+  msg ||= _("Does this test pass?")
+    return promptWithDefault( msg, _("Yes/no/repeat"),
+        _("Please enter 'yes', 'no', or 'repeat'") ) {|response|
+    response.match(/^[#{_("y")}#{_("n")}#{_("r")}]/i)
+    }
+end
+
+def repeatNo( msg = nil )
+  msg ||= _("Would you like to repeat this test?")
+    response = promptWithDefault( msg, _("no"),
+        _("Please enter 'yes' or 'no'") ) {|response|
+        response.match(/^[#{_("y")}#{_("n")}]/i)
+    }
+    return response.match(/^#{_("y")}/i)
+end
+
+def repeatYes( msg = nil )
+  msg ||= _("Would you like to repeat this test?")
+    response = promptWithDefault( msg, _("yes"),
+        _("Please enter 'yes' or 'no'") ) {|response|
+        response.match(/^[#{_("y")}#{_("n")}]/i)
+    }
+    return response.match(/^#{_("y")}/i)
+end
+
+######################################################################
+# configuration
+
+# if i'm developing, the file is in ../data/, if i'm in production,
+# the file is in /usr/share/freekbox/, which would also be
+# ../share/freekbox from where this script is installed.
+filename = 'basicchecks.yml'
+this_dir = File.dirname( File.expand_path( __FILE__ ) )
+directory = [ "/usr/share/freekbox",
+    "#{this_dir}/../share/freekbox",
+    "#{this_dir}/../data",
+    "#{this_dir}"
+].find {|dir|
+    FileTest.exists?( File.join( dir, filename ) )
+} or
+    abort "Could not find the #{filename} file."
+
+File.open( File.join( directory, filename ) ) {|file|
+    $CONFIG = YAML::load(file.read)
+}
+
+# very simple implementation, does not have all functionality working correctly
+# if RbConfig::CONFIG['ruby_version'] == "1.8" # TODO
+class OrderedHash
+  include Enumerable
+
+  def initialize(*args)
+    @arr = []
+    @hash = Hash.new(*args)
+    self
+  end
+
+  def [](key)
+    @hash[key]
+  end
+
+  def keys
+    @arr
+  end
+
+  def []=(key, val)
+    @arr.delete_if{|x| x == key}
+    @arr << key
+    @hash[key] = val
+  end
+
+  def each
+    @arr.each{|k|
+      yield(k, @hash[k])
+    }
+    nil
+  end
+
+  def find_all
+    result = []
+    @arr.each{|k|
+      if yield(k, @hash[k])
+        result << [k, @hash[k]]
+      end
+    }
+    result
+  end
+end
+#else
+#OrderedHash = Hash # apparently they already are?
+#end
+
+# once all Hash instances are ordered by default, we can just set
+# $TESTS to $CONFIG['tests'], after changing it back to a hash instead
+# of array -- Ryan52
+$TESTS = OrderedHash.new
+$CONFIG['tests'].each{|x|
+  name = nil
+  x.each{|k,v|
+    if v == nil and k =~ /^check/
+      name = k
+    end
+  }
+  raise unless name
+  x.delete(name)
+  $TESTS[name] = x
+}
+#$TESTS.each{|name,x|
+#  puts "#{name}: #{x.inspect}"
+#}
+$SERVER = $CONFIG['server']
+$DMESG = 'dmesg | cat /var/log/dmesg - | sed -e "s,^\\[[0-9 ].*[0-9 ]\\] ,," | sort -u' #:TODO: find out if anything in `dmesg` is needed
+
+
+######################################################################
+# alter our behavior based on options passed at the commandline
+def parseoptions
+    $PRETEND = $COLOR = false
+    asked_args = false
+    ARGV.options {|oparser|
+        oparser.banner = "Usage: #$0 [options] [tests ...]\n"
+
+        oparser.on( "--help", "-h", _("Show this message" )) {
+            $stderr.puts oparser
+            exit!(0)
+        }
+
+        oparser.on( "--debug", "-d", _("Turn debugging on") ) {
+            $DEBUG = true
+        }
+
+        oparser.on( "--color", "-C", _("Enable coloration of the output") ) {
+            $COLOR = true
+        }
+
+        oparser.on( "--menu", "-m", _("Create a menu for test selection") ) {
+            asked_args = true
+        }
+
+        oparser.on( "--show-tests", "-s", _("Show a list of available tests") ) {
+            header _("Possible tests:") + "\n\n"
+            $TESTS.each {|name,info|
+                message "#{name} "
+                display "- For #{info['title'].downcase.gsub(/:/,'')}\n"
+            }
+            exit!(0)
+        }
+
+        oparser.parse!
+    }
+    args = []
+    if asked_args
+        clear
+        args << menu( _("Please choose from these available tests:").dup,
+                      _("Which test would you like to run?").dup,
+            *$TESTS.keys )
+    end
+    return args + ARGV
+end
+
+######################################################################
+# a welcoming message
+def startup
+    clear
+    title = _("This program is called #$0\n\n")
+    welcome = _("To see help on this program, run:") + "\n# #$0 -h\n\n" + _("To view its contents, you can use these commands:") + ("\n\n# less #$0\n\n") + _("To run it with colored output, use these commands:") + "\n # #$0 -C"
+    header title
+    message welcome.gsub(/^[ \t]+/, '')
+    waitasec
+end
+
+######################################################################
+# say goodbye
+def finishup( failures = [] )
+    clear
+    unless failures.empty?
+        errorMessage _("The following tests failed:") + "\n\n"
+        highlight failures.map {|name,data| name}.join("\n\n")
+        display "\n\n"
+        if repeatYes( _("Would you like to repeat the failed tests?") )
+            failures = doTests( *failures )
+            return( finishup( failures ) )
+        else
+            highlight _("\n\nPlease fix these problems and rerun #$0.\n\n")
+            divider(10)
+            display "\n"
+        end
+    end
+    header _("The basic check is finished.") + "\n\n"
+    goodbye = _("NOTE: Not all things that could go wrong have been checked.")
+    message goodbye.gsub(/^\s+/, '')
+end
+
+######################################################################
+# runs the specified tests, returning a list of failures
+def doTests( *tests )
+    tests.find_all {|name,data|
+        ! doTest(name)
+    }
+end
+######################################################################
+# run a test
+def doTest( test )
+    instructions = $TESTS[test].dup
+
+  for i in [:title, :success, :failure, :pretest, :explanation, :question]
+    instructions[i.to_s] = _(instructions[i.to_s]).dup if instructions.keys.include?(i.to_s)
+  end
+
+    title = instructions['title']
+
+    clear
+    header title
+    divider(50)
+
+    if instructions.has_key?('question')
+      response = promptWithDefault(instructions['question'], _("yes"), _("Please enter 'yes' or 'no'") ) {|response|
+      response.match(/^[#{_("y")}#{_("n")}]/i)
+    }
+      return true if response.match(/^#{_("n")}/i)
+    end
+    
+    if instructions.has_key?('pretest')
+        message instructions['pretest'] + "\n\n"
+        pausePrompt
+        display "\n"
+    end
+    
+    if instructions.has_key?('test')
+        rubytest = instructions['test']
+        echo _("The following is ruby code:") + "\n\n"
+        display rubytest + "\n\n"
+        message instructions['explanation'] + "\n\n"
+        retval = eval( rubytest )
+        
+        if retval
+            display _("Test succeeded.") + "\n\n"
+            message instructions['success'] + "\n\n"
+            answer = _("y")
+        elsif instructions.has_key?('fallback_command')
+            command = eval( %Q/%Q,#{instructions['fallback_command']},/ )
+            highlight _("Test failed.") + "\n\n"
+            message _("Trying fallback command:") + "\n\n"
+            display command + "\n\n"
+            message _("With output of:") + "\n\n"
+            display `#{command}`
+            retval = eval( rubytest )
+            answer = retval ? _("y") : _("n")
+        else
+            highlight _("Test failed.") + "\n\n"
+            message instructions['failure'] + "\n\n"
+            answer = _("n")
+        end
+        answer = _("r") if repeatNo
+    elsif instructions.has_key?('commands')
+        commands = instructions['commands'].map {|c| eval( %Q/%Q,#{c},/ )}
+        echo _("The following commands:") + "\n\n"
+        display commands.join("\n")
+        echo "\n\n" + _("have executed with the output:") + "\n\n"
+        output = commands.inject('') {|out,command|
+            out += `#{command}`
+        }
+        display output
+        echo "\n" + instructions['explanation'] + "\n\n"
+        divider(10)
+        answer = noYesRepeat
+    elsif instructions.has_key?('command')
+        command = eval( %Q/%Q,#{instructions['command']},/ )
+        echo _("The following command:") + "\n\n"
+        display command
+        echo "\n\n" + _("has executed with the output:") + "\n\n"
+        output = `#{command}`
+        display output
+        echo "\n" + instructions['explanation'] + "\n\n" if
+            instructions['explanation']
+        divider(10)
+        answer = noYesRepeat
+    else
+        display instructions.to_yaml
+        abort _("Malformed test") + " '#{test}'\n\n"
+    end
+    
+    if answer.match(/^#{_("r")}/i)
+        return doTest( test )
+    else
+        return answer.match(/^#{_("y")}/i)
+    end
+end
+
+if __FILE__ == $0
+  require 'gettext'
+  include GetText
+  bindtextdomain("basiccheck")
+
+    require 'optparse'
+
+    trap( "SIGINT" ) {
+        `reset -Q`
+        errorMessage "\n\n" + _("User interrupt caught.  Exiting.") + "\n\n"
+        exit!( 1 )
+    }
+
+    testargs = parseoptions
+    unless testargs.empty?
+        tests = $TESTS.find_all {|name,data|
+            testargs.find {|arg|
+                name.match(/#{arg}/i)
+            }
+        }
+        abort _("No tests found for the names:") + " '#{testargs.join("', '")}'" if tests.empty?
+    else
+        startup
+        tests = $TESTS
+    end
+    failures = doTests( *tests )
+    finishup( failures )
+end

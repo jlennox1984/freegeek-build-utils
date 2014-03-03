@@ -1,0 +1,4 @@
+#!/bin/sh
+echo  "deb http://apt.dev.lan	precise main"  >/etc/apt/sources.list.d/freegeekvancouver.list
+
+apt-get update
