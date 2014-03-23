@@ -10,8 +10,7 @@ Package: freegeek-build-utils
 Architecture: all
 Depends: ${misc:Depends},
 # printme
- ruby1.8, libtui-ruby (>= 1.11), lshw,
- libtui-ruby1.8 (>= 1.15),
+ ruby1.8, libtui-ruby (>= 1.11), lshw,libtui-ruby1.8 (>= 1.15),
  lsb-release, dmidecode | sparc | powerpc,
 # basiccheck
  ruby, pmount, alsa-utils, libgettext-ruby1.8,
@@ -20,8 +19,8 @@ Depends: ${misc:Depends},
  cpufrequtils,
 # dvd-wipe
  dvd+rw-tools
-Recommends: freegeek-extras-pdx | freegeek-extras-freegeek
+# Recommends: freegeek-extras-pdx | freegeek-extras-freegeek
 Breaks: freegeek-extras (<= 1.2.5)
-Replaces: freegeek-extras
+# Replaces: freegeek-extras
 Description: tools used in freegeek's build process
  Freegeek's diagnostic scripts.

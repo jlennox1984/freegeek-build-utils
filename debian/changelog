@@ -1,12 +1,15 @@
-freegeek-build-utils (1.2.51) UNRELEASED; urgency=low
+freegeek-build-utils (1.2.53) UNRELEASED; urgency=low
 
+	change depences
+	
   [ jeffrey Dean moncrieff ]
   * Updated printme.rb for Freegeek  Vancouver also add a wrapper called checkme for printme  gnome term 
 
   [ jmoncrieff ]
   * added fgvsignin for connecting to resportiey at FGV and fgvsignoff when returned to  client
+  * 
 
- -- jmoncrieff <jmoncrieff@jeff-laptop.caa.local>  Sun, 02 Mar 2014 23:39:16 -0800
+ -- jmoncrieff <jmoncrieff@jeff-laptop.caa.local>  Wed, 12 Mar 2014 22:53:19 -0700
 
 freegeek-build-utils (1.2.45) precise; urgency=low
 

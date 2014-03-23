@@ -1,12 +1,10 @@
 Package: freegeek-build-utils
-Version: 1.2.51
+Version: 1.2.53
 Architecture: all
 Maintainer: Freegeek Coders <coders@freegeek.org>
 Installed-Size: 137
 Depends: ruby1.8, libtui-ruby (>= 1.11), lshw, libtui-ruby1.8 (>= 1.15), lsb-release, dmidecode | sparc | powerpc, ruby, pmount, alsa-utils, libgettext-ruby1.8, stress, cpufrequtils, dvd+rw-tools
-Recommends: freegeek-extras-pdx | freegeek-extras-freegeek
 Breaks: freegeek-extras (<= 1.2.5)
-Replaces: freegeek-extras
 Section: utils
 Priority: optional
 Description: tools used in freegeek's build process
